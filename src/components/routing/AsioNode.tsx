@@ -42,11 +42,14 @@ export function AsioNode({
             <strong className="asio-port">
               stereo <em>· ch 3+4</em>
             </strong>
-            {/* Jack sits on the card edge, vertically centered on the ch line. */}
-            <NodeJack side={isInput ? "right" : "left"} placement="port" jackRef={jackRef} />
           </div>
         </div>
       </div>
+      {/*
+        Jack is a direct child of the node so absolute edges resolve against the
+        card (desktop side edges; mobile top/bottom edges) — same model as PluginNode.
+      */}
+      <NodeJack side={isInput ? "right" : "left"} placement="port" jackRef={jackRef} />
     </div>
   );
 }
