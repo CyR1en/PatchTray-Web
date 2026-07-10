@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import { pageMeta } from "./lib/pageMeta";
 import { ConceptPage } from "./pages/ConceptPage";
 import { DownloadPage } from "./pages/DownloadPage";
@@ -21,9 +22,14 @@ export function App() {
     }
   }, [cleanPath, page]);
 
-  if (cleanPath === "/") return <HomePage />;
-  if (cleanPath === "/download") return <DownloadPage />;
-  if (cleanPath === "/guide") return <GuidePage />;
-  if (cleanPath === "/concepts") return <ConceptPage />;
-  return <NotFoundPage />;
+  return (
+    <>
+      {cleanPath === "/" && <HomePage />}
+      {cleanPath === "/download" && <DownloadPage />}
+      {cleanPath === "/guide" && <GuidePage />}
+      {cleanPath === "/concepts" && <ConceptPage />}
+      {cleanPath !== "/" && cleanPath !== "/download" && cleanPath !== "/guide" && cleanPath !== "/concepts" && <NotFoundPage />}
+      <Analytics />
+    </>
+  );
 }
