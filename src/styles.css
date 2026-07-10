@@ -1588,8 +1588,19 @@ img { display: block; max-width: 100%; }
   .routing-demo__topline h2 span { display: none; }
   .routing-demo__scroll-track { height: 260vh; }
   .routing-demo--compact .routing-demo__scroll-track { height: 220vh; }
-  .routing-demo__sticky { --demo-sticky-top: 66px; padding-block: 8px; }
-  .routing-demo__canvas { min-height: 0; padding: 28px 20px 24px; overflow: visible; }
+  /*
+    Phone immersive stages use the dynamic viewport, rather than the legacy
+    viewport unit. Their contents start at the pin edge: centering a vertical
+    lane that is taller than the visible space would otherwise hide both ends
+    of the story behind the browser chrome.
+  */
+  .routing-demo__sticky {
+    --demo-sticky-top: 66px;
+    min-height: calc(100dvh - var(--demo-sticky-top) - 16px);
+    justify-content: flex-start;
+    padding-block: 8px;
+  }
+  .routing-demo__canvas { min-height: 0; padding: 20px 16px 16px; overflow: visible; }
   .hero-demo-wrap { margin-top: 40px; }
   /*
     Vertical signal lane: flex stack with equal gaps.
@@ -1604,8 +1615,8 @@ img { display: block; max-width: 100%; }
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    gap: 40px;
-    padding-block: 8px;
+    gap: 24px;
+    padding-block: 4px;
   }
   .signal-node--asio,
   .signal-node--plugin {
@@ -1627,15 +1638,20 @@ img { display: block; max-width: 100%; }
   .signal-node--plugin.is-visible {
     transform: scale(1);
   }
-  .signal-node--asio {
-    min-height: 180px;
-  }
+  .signal-node--asio { min-height: 144px; }
   .signal-node--plugin {
     min-height: 0;
   }
   .signal-node--plugin .plugin-node__body {
-    padding: 28px 16px;
+    padding: 14px 12px;
   }
+  .signal-node--plugin .signal-node__head { min-height: 34px; }
+  .signal-node--plugin .plugin-node__foot { min-height: 28px; }
+  .signal-node--plugin .plugin-parameter-grid { gap: 8px; }
+  .signal-node--plugin .demo-knob { min-height: 54px; }
+  .signal-node--plugin .demo-knob__svg { width: 34px; height: 34px; }
+  .signal-node--plugin .demo-knob__label,
+  .signal-node--plugin .demo-knob__value { font-size: 7px; }
   /* Edge jacks: centered on top/bottom of the card (same as plugin). */
   .signal-node--input .node-jack--port {
     top: auto !important;
@@ -1672,15 +1688,20 @@ img { display: block; max-width: 100%; }
     transform: none !important;
   }
   .port-label { display: none; }
+  /* On the vertical lane, the pause toggle is the only useful footer action.
+     The live route state remains visible in the demo topline. */
   .routing-demo__footer {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    justify-items: start;
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+    padding-block: 8px;
   }
+  .routing-demo__footer > div:first-child,
+  .routing-demo__footer > p,
+  .routing-demo__controls .button--text { display: none; }
   .routing-demo__controls { justify-content: flex-start; }
-  .routing-demo__footer p { justify-self: start; }
   .routing-demo__footer .button { min-height: 37px; padding-inline: 8px; font-size: 9px; }
-  .canvas-corner--bottom { max-width: 145px; line-height: 1.3; text-align: right; }
+  /* These decorative coordinates collide with the compact vertical node lane. */
+  .routing-demo__canvas > .canvas-corner { display: none; }
   .canvas-statement {
     margin-top: 24px;
   }
@@ -1689,31 +1710,55 @@ img { display: block; max-width: 100%; }
   }
   .canvas-statement__sticky {
     --demo-sticky-top: 66px;
+    min-height: calc(100dvh - var(--demo-sticky-top) - 16px);
+    /* Flex centers only when the complete composition fits its pinned space;
+       otherwise the content height wins and it naturally begins at the top. */
+    justify-content: center;
     padding-block: 8px;
   }
   .canvas-statement__frame {
     width: min(calc(100% - 28px), var(--content));
   }
   .canvas-statement h2 {
-    font-size: clamp(1.85rem, 8.5vw, 2.6rem);
-    margin-top: 22px;
+    font-size: clamp(1.8rem, 8.2vw, 2.45rem);
+    margin-top: 18px;
   }
   .canvas-statement__copy > p {
-    font-size: 15px;
+    margin-top: 16px;
+    font-size: 14px;
+    line-height: 1.45;
     max-width: none;
   }
+  .path-ledger { gap: 10px; }
   .path-ledger__place {
     grid-template-columns: 36px minmax(0, 1fr);
     gap: 12px;
     min-height: 0;
-    padding: 16px 0 18px;
+    padding: 10px 0 12px;
   }
+  .path-ledger__place-copy { gap: 3px; }
+  .path-ledger__place-copy strong { font-size: 14px; }
+  .path-ledger__place-copy span { font-size: 12px; line-height: 1.3; }
+  .path-ledger__modes { grid-template-columns: 1fr 1fr; }
   .path-mode {
     min-height: 0;
+    gap: 8px;
+    padding: 10px;
   }
+  .path-mode header { gap: 4px; }
+  .path-mode header strong { font-size: 11px; }
   .path-mode li {
-    grid-template-columns: 64px 1fr auto;
+    grid-template-columns: minmax(0, 1fr) auto;
+    min-height: 22px;
+    gap: 6px;
+    padding: 4px 0;
+    font-size: 8px;
   }
+  .path-mode__bar { display: none; }
+  .path-mode > p { font-size: 10px; line-height: 1.3; }
+  .path-mode__window { min-height: 64px; }
+  .path-mode__window-body { min-height: 34px; }
+  .path-mode__window-bar { min-height: 24px; padding-inline: 7px; font-size: 8px; }
   .product-statement { padding-top: 82px; }
   .product-statement h2, .tray-presence h2, .license-band h2, .download-details h2, .plan-module h2, .guide-content h2 {
     font-size: clamp(2.1rem, 11vw, 3.15rem);
@@ -1755,6 +1800,67 @@ img { display: block; max-width: 100%; }
   .concept-main { padding-top: 57px; }
   .concept-stage { margin-top: 42px; }
   .concept-notes { grid-template-columns: 1fr; }
+}
+
+/* Preserve the complete lane on 320px phones and constrained phone heights. */
+@media (max-width: 360px), (max-width: 600px) and (max-height: 760px) {
+  .routing-demo__canvas { padding: 16px 14px 14px; }
+  .graph-stage { gap: 16px; }
+  .signal-node--asio { min-height: 136px; }
+  .signal-node--asio .signal-node__body { gap: 8px; padding: 9px; }
+  .signal-node--plugin .plugin-node__body { padding: 10px; }
+  .signal-node--plugin .demo-knob { min-height: 48px; }
+  .signal-node--plugin .demo-knob__svg { width: 30px; height: 30px; }
+  .routing-demo__footer { padding-block: 6px; }
+  .canvas-statement__grid { gap: 18px; }
+  .canvas-statement h2 { margin-top: 14px; }
+  .canvas-statement__copy > p { margin-top: 12px; }
+  .path-ledger__place { padding-block: 8px 10px; }
+  .path-mode { padding: 8px; }
+}
+
+/*
+  There is no useful pinned composition below this height. Let the document
+  flow normally instead of creating a clipped stage or a nested scroll area.
+  The final visual state remains readable while the full content stays in the
+  page's single, native scroll.
+*/
+@media (max-width: 600px) and (max-height: 700px) {
+  .routing-demo__scroll-track,
+  .canvas-statement__scroll-track { height: auto; }
+
+  .routing-demo__sticky,
+  .canvas-statement__sticky {
+    position: relative;
+    top: auto;
+    min-height: 0;
+    padding-block: 0;
+    background: transparent;
+  }
+
+  .routing-demo .signal-node {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .routing-demo .signal-node--input,
+  .routing-demo .signal-node--output,
+  .routing-demo .signal-node--plugin {
+    transform: scale(1);
+  }
+  .routing-demo .graph-cable--orange,
+  .routing-demo .graph-cable--green {
+    opacity: 1 !important;
+    stroke-dasharray: 6 4 !important;
+    stroke-dashoffset: 0 !important;
+  }
+  .canvas-statement__copy > *,
+  .canvas-statement .path-ledger__place,
+  .canvas-statement .path-ledger__status,
+  .canvas-statement .path-ledger__modes {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .canvas-statement .path-ledger__places { --places-line: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
