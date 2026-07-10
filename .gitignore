@@ -1,0 +1,56 @@
+# Dependencies
+node_modules/
+
+# Build
+dist/
+dist-ssr/
+*.local
+
+# Env (keep .env.example committed)
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.test
+
+# Logs / debug
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+ehthumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# TypeScript / tooling
+*.tsbuildinfo
+.turbo/
+.cache/
+.eslintcache
+.stylelintcache
+coverage/
+.nyc_output/
+
+# Agent / local-only project notes (not shipped)
+.opencode/
+.claude/
+local_doc/
+local_docs/
+AGENTS.md
+
+# Optional local tooling
+.vercel/
+.vite/
