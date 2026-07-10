@@ -29,8 +29,8 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; background: var(--carbon); }
-body { margin: 0; min-width: 320px; overflow-x: clip; background: var(--carbon); color: var(--steel); }
+html { scroll-behavior: smooth; background: var(--carbon); overflow-x: clip; }
+body { margin: 0; min-width: 320px; max-width: 100%; overflow-x: clip; background: var(--carbon); color: var(--steel); }
 button, a { -webkit-tap-highlight-color: transparent; }
 button, input { font: inherit; }
 button { border: 0; }
@@ -211,6 +211,22 @@ img { display: block; max-width: 100%; }
 }
 .hero-aside__meta > p,
 .hero-aside p {
+  margin: 24px 0 0;
+  color: var(--graphite);
+  font: 400 13px/1.45 var(--sans);
+}
+.hero-aside__status {
+  display: none;
+  margin: 0;
+  color: var(--graphite);
+  font: 400 11px/1.35 var(--mono);
+  letter-spacing: 0.04em;
+}
+.hero-aside__status strong {
+  color: var(--steel);
+  font-weight: 400;
+}
+.hero-aside__note {
   margin: 24px 0 0;
   color: var(--graphite);
   font: 400 13px/1.45 var(--sans);
@@ -463,7 +479,8 @@ img { display: block; max-width: 100%; }
 
 .signal-node--asio {
   width: 192px;
-  min-height: 280px;
+  /* Content-sized: equal field gaps (no flex stretch above the port bar). */
+  min-height: 0;
   top: 50%;
   transform: translateY(-50%) scale(0.96);
 }
@@ -477,6 +494,10 @@ img { display: block; max-width: 100%; }
   flex-direction: column;
   gap: 12px;
   padding: 12px;
+}
+.signal-node--asio .signal-node__body {
+  /* Do not grow past content; keeps status→port spacing equal to source→status. */
+  flex: 0 0 auto;
 }
 .asio-field p {
   margin: 0 0 4px;
@@ -497,7 +518,8 @@ img { display: block; max-width: 100%; }
 .signal-node.is-active .node-state { color: var(--green); }
 .asio-field--port {
   position: relative;
-  margin-top: auto;
+  /* Same 12px body gap as fields above — no auto-push to the card floor. */
+  margin-top: 0;
   padding-top: 11px;
   border-top: 1px solid rgb(229 229 229 / 10%);
 }
@@ -539,21 +561,23 @@ img { display: block; max-width: 100%; }
   background: var(--carbon);
 }
 /*
-  ASIO port jack is a direct child of .signal-node.
-  Body padding is 12px, so -18px reaches the card border and
-  leaves 6px outside (half of the 12px jack) — centered on the side edge.
+  ASIO port jacks remain direct node children so the phone lane can move them
+  to the card edges. On desktop, 12px body padding plus the 16px port row puts
+  its centre 20px above the node edge; anchor each jack to that same line.
 */
 .signal-node--input .node-jack--port {
-  top: 50%;
+  top: auto;
+  bottom: 20px;
   right: -6px;
   left: auto;
-  transform: translateY(-50%);
+  transform: translateY(50%);
 }
 .signal-node--output .node-jack--port {
-  top: 50%;
+  top: auto;
+  bottom: 20px;
   left: -6px;
   right: auto;
-  transform: translateY(-50%);
+  transform: translateY(50%);
 }
 /* Plugin: footer-aligned, half-out. */
 .node-jack--footer {
@@ -580,7 +604,7 @@ img { display: block; max-width: 100%; }
   font: 400 9px/1 var(--mono);
   letter-spacing: .08em;
 }
-.plugin-node__body { display: flex; flex: 1; flex-direction: column; padding: 36px 16px; }
+.plugin-node__body { display: flex; flex: 1; flex-direction: column; padding: 24px 16px; }
 .plugin-parameter-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -675,11 +699,11 @@ img { display: block; max-width: 100%; }
 
 .routing-demo--compact .routing-demo__canvas { min-height: 0; padding: 24px 20px 20px; }
 .routing-demo--compact .graph-stage { height: 450px; }
-.routing-demo--compact .signal-node--asio { width: 168px; min-height: 240px; }
+.routing-demo--compact .signal-node--asio { width: 168px; min-height: 0; }
 .routing-demo--compact .signal-node--plugin { width: 280px; }
 .routing-demo--compact .demo-knob { min-height: 88px; }
 .routing-demo--compact .demo-knob__svg { width: 44px; height: 44px; }
-.routing-demo--compact .plugin-node__body { padding: 26px 12px; }
+.routing-demo--compact .plugin-node__body { padding: 20px 12px; }
 .routing-demo--compact .plugin-parameter-grid { gap: 12px; }
 
 @keyframes cable-flow {
@@ -960,10 +984,14 @@ img { display: block; max-width: 100%; }
 */
 .tray-presence {
   margin-top: 48px;
+  max-width: 100%;
+  overflow-x: clip;
 }
 .tray-presence__scroll-track {
   position: relative;
   height: 260vh;
+  max-width: 100%;
+  overflow-x: clip;
 }
 .tray-presence__sticky {
   --demo-sticky-top: 88px;
@@ -976,10 +1004,14 @@ img { display: block; max-width: 100%; }
   min-height: calc(100vh - var(--demo-sticky-top) - 24px);
   padding-block: 16px;
   background: var(--carbon);
+  max-width: 100%;
+  overflow-x: clip;
 }
 .tray-presence__frame {
   width: min(calc(100% - 48px), var(--content));
+  max-width: 100%;
   margin-inline: auto;
+  overflow-x: clip;
 }
 .tray-presence__grid {
   display: grid;
@@ -1018,14 +1050,19 @@ img { display: block; max-width: 100%; }
 /* Schematic tray stage — placeholder window + menu (not app chrome) */
 .tray-stage {
   min-width: 0;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   gap: 16px;
   will-change: opacity, transform;
+  /* Minimize uses translate+scale; clip so it cannot expand page width. */
+  overflow: hidden;
 }
 .tray-stage__field {
   position: relative;
   min-height: 360px;
+  max-width: 100%;
+  overflow: hidden;
   /* open stage — no frame; dock anchors the lower-right without a box */
 }
 .tray-window {
@@ -1037,6 +1074,8 @@ img { display: block; max-width: 100%; }
   background: var(--surface);
   transform-origin: 100% 100%;
   will-change: opacity, transform;
+  /* Contain paint/layout overflow from the minimize transform. */
+  contain: layout paint;
 }
 .tray-window__bar {
   min-height: 34px;
@@ -1224,7 +1263,8 @@ img { display: block; max-width: 100%; }
 }
 .tray-presence--static .tray-window {
   opacity: 0 !important;
-  transform: translate(52%, 48%) scale(0.1) !important;
+  /* Match compact end-state: stay inside the stage (no wide translate). */
+  transform: translate(8%, 18%) scale(0.04) !important;
 }
 .tray-presence--static .tray-icon {
   opacity: 1 !important;
@@ -1458,9 +1498,9 @@ img { display: block; max-width: 100%; }
 
 @media (max-width: 1100px) {
   .graph-stage { height: 480px; }
-  .signal-node--asio { width: 168px; min-height: 255px; }
+  .signal-node--asio { width: 168px; min-height: 0; }
   .signal-node--plugin { width: 280px; }
-  .plugin-node__body { padding: 30px 14px; }
+  .plugin-node__body { padding: 22px 14px; }
   .demo-knob { min-height: 92px; }
   .demo-knob__svg { width: 48px; height: 48px; }
 }
@@ -1507,7 +1547,18 @@ img { display: block; max-width: 100%; }
   .tray-presence h2 {
     font-size: clamp(2rem, 5.5vw, 3rem);
   }
-  .tray-stage__field { min-height: 300px; }
+  .tray-stage__field {
+    min-height: 300px;
+    /* Keep minimize animation inside the column on tablet/phone. */
+    overflow: hidden;
+  }
+  .tray-presence,
+  .tray-presence__scroll-track,
+  .tray-presence__sticky,
+  .tray-presence__frame {
+    overflow-x: clip;
+    max-width: 100%;
+  }
   .license-band__head, .plan-module__grid { grid-template-columns: 1fr; gap: 28px; }
   .license-table { margin-top: 32px; }
   .license-row { grid-template-columns: .65fr .85fr .85fr 1.55fr; gap: 10px; padding-inline: 7px; }
@@ -1555,9 +1606,9 @@ img { display: block; max-width: 100%; }
   .graph-stage { height: 450px; }
   .signal-node--input { left: 10px; }
   .signal-node--output { right: 10px; }
-  .signal-node--asio { width: 150px; min-height: 230px; }
+  .signal-node--asio { width: 150px; min-height: 0; }
   .signal-node--plugin { width: 240px; }
-  .plugin-node__body { padding: 26px 12px; }
+  .plugin-node__body { padding: 20px 12px; }
   .plugin-parameter-grid { gap: 10px; }
   .demo-knob { min-height: 80px; }
   .demo-knob__svg { width: 40px; height: 40px; }
@@ -1580,9 +1631,38 @@ img { display: block; max-width: 100%; }
   }
   .hero-lead, .page-lead { font-size: 16px; }
   .hero-actions { align-items: flex-start; flex-direction: column; gap: 16px; margin-top: 40px; }
-  .hero-aside { gap: 0; }
-  .hero-mark { width: min(112px, 48%); }
-  .hero-mark-slot { margin-bottom: 18px; }
+  /*
+    Phone hero aside: keep the animated plug mark, collapse the three-row
+    readout into one quiet status line, drop the redundant body note.
+  */
+  .hero-aside {
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 0 0;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+  .hero-mark-slot {
+    width: auto;
+    margin: 0;
+    place-items: start center;
+  }
+  .hero-mark {
+    width: 56px;
+  }
+  .hero-aside__meta {
+    flex: 1;
+    min-width: 0;
+  }
+  .hero-aside__rows,
+  .hero-aside__note {
+    display: none;
+  }
+  .hero-aside__status {
+    display: block;
+    margin: 0;
+  }
   .hero-demo-wrap { width: 100%; margin-top: 0; }
   .hero-demo-wrap .routing-demo__frame { border-right: 0; border-left: 0; }
   .routing-demo__topline h2 span { display: none; }
@@ -1638,7 +1718,7 @@ img { display: block; max-width: 100%; }
   .signal-node--plugin.is-visible {
     transform: scale(1);
   }
-  .signal-node--asio { min-height: 144px; }
+  .signal-node--asio { min-height: 0; }
   .signal-node--plugin {
     min-height: 0;
   }
@@ -1806,7 +1886,7 @@ img { display: block; max-width: 100%; }
 @media (max-width: 360px), (max-width: 600px) and (max-height: 760px) {
   .routing-demo__canvas { padding: 16px 14px 14px; }
   .graph-stage { gap: 16px; }
-  .signal-node--asio { min-height: 136px; }
+  .signal-node--asio { min-height: 0; }
   .signal-node--asio .signal-node__body { gap: 8px; padding: 9px; }
   .signal-node--plugin .plugin-node__body { padding: 10px; }
   .signal-node--plugin .demo-knob { min-height: 48px; }
@@ -1897,7 +1977,7 @@ img { display: block; max-width: 100%; }
   .tray-presence--static .tray-window,
   .tray-window {
     opacity: 0 !important;
-    transform: translate(52%, 48%) scale(0.1) !important;
+    transform: translate(8%, 18%) scale(0.04) !important;
   }
   .tray-icon {
     opacity: 1 !important;

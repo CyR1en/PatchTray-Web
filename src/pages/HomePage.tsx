@@ -77,19 +77,30 @@ export function HomePage() {
               </div>
             </div>
             <div className="hero-aside__meta">
-              <div className="hero-aside__row">
-                <span>release</span>
+              <div className="hero-aside__rows">
+                <div className="hero-aside__row">
+                  <span>release</span>
+                  <strong>{siteConfig.releaseVersion}</strong>
+                </div>
+                <div className="hero-aside__row">
+                  <span>place</span>
+                  <strong>system tray</strong>
+                </div>
+                <div className="hero-aside__row">
+                  <span>format</span>
+                  <strong>VST3</strong>
+                </div>
+              </div>
+              <p className="hero-aside__status" aria-label="Product summary">
                 <strong>{siteConfig.releaseVersion}</strong>
-              </div>
-              <div className="hero-aside__row">
-                <span>place</span>
-                <strong>system tray</strong>
-              </div>
-              <div className="hero-aside__row">
-                <span>format</span>
-                <strong>VST3</strong>
-              </div>
-              <p>built for real-time mic chains before a stream, during a fix, and between takes.</p>
+                <span aria-hidden="true"> · </span>
+                <span>system tray</span>
+                <span aria-hidden="true"> · </span>
+                <span>VST3</span>
+              </p>
+              <p className="hero-aside__note">
+                built for real-time mic chains before a stream, during a fix, and between takes.
+              </p>
             </div>
           </aside>
         </div>

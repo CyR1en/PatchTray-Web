@@ -20,22 +20,38 @@ const MENU_ITEMS = [
   { id: "exit", label: "exit", danger: true },
 ] as const;
 
-function TrayStage({ progress }: { progress: number }) {
+function TrayStage({ progress, compact }: { progress: number; compact: boolean }) {
   // Hold the window readable for most of the first half of the pin,
   // then minimize → tray icon → menu.
+  // On phone the stage sits under the copy, so the minimize must finish
+  // earlier or the window still reads as a large ghost while the menu is up.
   const stageIn = phaseAmount(progress, 0.04, 0.16);
-  const minimize = phaseAmount(progress, 0.48, 0.76);
-  const trayPulse = phaseAmount(progress, 0.62, 0.82);
-  const menuIn = phaseAmount(progress, 0.76, 0.92);
-  const live = progress >= 0.9;
+  const minimize = phaseAmount(
+    progress,
+    compact ? 0.36 : 0.48,
+    compact ? 0.58 : 0.76,
+  );
+  const trayPulse = phaseAmount(
+    progress,
+    compact ? 0.48 : 0.62,
+    compact ? 0.68 : 0.82,
+  );
+  const menuIn = phaseAmount(
+    progress,
+    compact ? 0.58 : 0.76,
+    compact ? 0.78 : 0.92,
+  );
+  const live = progress >= (compact ? 0.78 : 0.9);
 
-  const windowScale = 1 - minimize * 0.92;
-  const windowX = minimize * 52;
-  const windowY = minimize * 48;
-  // Fade fully out by the end of the minimize so no ghost remains at the tray.
-  const windowOpacity = 1 - Math.min(1, minimize * 1.15);
-
-
+  // Phone: shrink harder and fade out sooner so no large residual remains.
+  // Prefer scale (origin bottom-right) over large % translates — those expand
+  // the scrollable overflow width on narrow viewports.
+  const shrink = compact ? 0.96 : 0.92;
+  const fade = compact ? 1.45 : 1.15;
+  const windowScale = 1 - minimize * shrink;
+  const windowX = minimize * (compact ? 8 : 52);
+  const windowY = minimize * (compact ? 18 : 48);
+  const windowOpacity = 1 - Math.min(1, minimize * fade);
 
   return (
     <div
@@ -52,6 +68,7 @@ function TrayStage({ progress }: { progress: number }) {
           style={{
             opacity: Math.max(windowOpacity, 0),
             transform: `translate(${windowX}%, ${windowY}%) scale(${windowScale})`,
+            visibility: windowOpacity <= 0.02 ? "hidden" : "visible",
           }}
         >
           <div className="tray-window__bar">
@@ -125,6 +142,16 @@ export function TrayPresence() {
   const trackRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(reducedMotion ? 1 : 0);
+  const [compact, setCompact] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const mq = window.matchMedia("(max-width: 600px)");
+    const sync = () => setCompact(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
 
   useEffect(() => {
     if (reducedMotion) {
@@ -166,7 +193,6 @@ export function TrayPresence() {
   const bodyAmount = phaseAmount(progress, 0.1, 0.24);
   const ctaAmount = phaseAmount(progress, 0.18, 0.32);
 
-
   return (
     <section
       className={`tray-presence ${reducedMotion ? "tray-presence--static" : ""}`}
@@ -176,7 +202,7 @@ export function TrayPresence() {
         <div className="tray-presence__sticky" ref={stickyRef}>
           <div className="tray-presence__frame content-width">
             <div className="tray-presence__grid">
-              <TrayStage progress={progress} />
+              <TrayStage progress={progress} compact={compact} />
 
               <div className="tray-presence__copy">
                 <div style={revealStyle(Math.max(ruleAmount, 0.001), 8)}>
