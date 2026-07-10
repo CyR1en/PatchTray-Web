@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
-import { clamp01, phaseAmount } from "../../lib/math";
+import { useScrollPinProgress } from "../../hooks/useScrollPinProgress";
+import { useShortViewportStatic } from "../../hooks/useShortViewportStatic";
+import { phaseAmount } from "../../lib/math";
 import type { Point } from "../../lib/types";
 import { AsioNode } from "./AsioNode";
 import { GraphCables } from "./GraphCables";
@@ -9,6 +11,8 @@ import { PluginNode } from "./PluginNode";
 
 export function RoutingDemo({ compact = false }: { compact?: boolean }) {
   const reducedMotion = usePrefersReducedMotion();
+  const shortViewport = useShortViewportStatic();
+  const staticStage = reducedMotion || shortViewport;
   const trackRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -17,8 +21,12 @@ export function RoutingDemo({ compact = false }: { compact?: boolean }) {
   const pluginOutJackRef = useRef<HTMLSpanElement>(null);
   const outputJackRef = useRef<HTMLSpanElement>(null);
 
-  const [progress, setProgress] = useState(reducedMotion ? 1 : 0);
   const [paused, setPaused] = useState(false);
+  const [stageInView, setStageInView] = useState(true);
+  const progress = useScrollPinProgress(trackRef, stickyRef, {
+    active: !staticStage && !paused,
+    forceProgress: staticStage ? 1 : undefined,
+  });
   const [vertical, setVertical] = useState(false);
   const [points, setPoints] = useState<{
     input: Point;
@@ -27,6 +35,12 @@ export function RoutingDemo({ compact = false }: { compact?: boolean }) {
     output: Point;
   } | null>(null);
   const frozenProgress = useRef(0);
+  const layoutStateRef = useRef<{
+    showInput: boolean;
+    showPlugin: boolean;
+    showOutput: boolean;
+    vertical: boolean;
+  } | null>(null);
 
   const measureJacks = useCallback(() => {
     // Measure in graph-stage space — same coordinate system as the SVG overlay.
@@ -49,7 +63,20 @@ export function RoutingDemo({ compact = false }: { compact?: boolean }) {
     const output = read(outputJackRef.current);
     if (!input || !pluginIn || !pluginOut || !output) return;
 
-    setPoints({ input, pluginIn, pluginOut, output });
+    const nextPoints = { input, pluginIn, pluginOut, output };
+    const matches = (a: Point, b: Point) => Math.abs(a.x - b.x) < 0.5 && Math.abs(a.y - b.y) < 0.5;
+    setPoints((current) => {
+      if (
+        current &&
+        matches(current.input, nextPoints.input) &&
+        matches(current.pluginIn, nextPoints.pluginIn) &&
+        matches(current.pluginOut, nextPoints.pluginOut) &&
+        matches(current.output, nextPoints.output)
+      ) {
+        return current;
+      }
+      return nextPoints;
+    });
   }, []);
 
   useLayoutEffect(() => {
@@ -57,64 +84,31 @@ export function RoutingDemo({ compact = false }: { compact?: boolean }) {
     const stage = stageRef.current;
     if (!stage) return;
 
+    let measureFrame = 0;
     const observer = new ResizeObserver(() => {
-      setVertical(window.matchMedia("(max-width: 600px)").matches);
-      measureJacks();
+      if (measureFrame) return;
+      measureFrame = requestAnimationFrame(() => {
+        measureFrame = 0;
+        setVertical(window.matchMedia("(max-width: 600px)").matches);
+        measureJacks();
+      });
     });
     observer.observe(stage);
     setVertical(window.matchMedia("(max-width: 600px)").matches);
-    return () => observer.disconnect();
+    return () => {
+      if (measureFrame) cancelAnimationFrame(measureFrame);
+      observer.disconnect();
+    };
   }, [measureJacks, compact]);
 
   useEffect(() => {
-    if (reducedMotion) {
-      setProgress(1);
-      return;
-    }
+    const stage = stageRef.current;
+    if (!stage || !("IntersectionObserver" in window)) return;
 
-    const track = trackRef.current;
-    const sticky = stickyRef.current;
-    if (!track || !sticky) return;
-
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      if (paused) {
-        setProgress(frozenProgress.current);
-        return;
-      }
-
-      const trackRect = track.getBoundingClientRect();
-      const stickyHeight = sticky.offsetHeight;
-      // Distance the sticky unit can travel inside the track.
-      const scrollRange = Math.max(track.offsetHeight - stickyHeight, 1);
-      // 0 when sticky first pins under the header; 1 when track is exhausted.
-      const stickyTop = parseFloat(getComputedStyle(sticky).top) || 0;
-      const scrolled = clamp01((stickyTop - trackRect.top) / scrollRange);
-      frozenProgress.current = scrolled;
-      setProgress(scrolled);
-    };
-
-    const onScroll = () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(update);
-    };
-
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (frame) window.cancelAnimationFrame(frame);
-    };
-  }, [paused, reducedMotion, compact]);
-
-  useEffect(() => {
-    // Re-measure after visibility / transform transitions settle.
-    const id = window.setTimeout(measureJacks, 50);
-    return () => window.clearTimeout(id);
-  }, [progress, measureJacks, vertical]);
+    const observer = new IntersectionObserver(([entry]) => setStageInView(entry.isIntersecting));
+    observer.observe(stage);
+    return () => observer.disconnect();
+  }, []);
 
   const showInput = phaseAmount(progress, 0.02, 0.18) > 0.02;
   const showPlugin = phaseAmount(progress, 0.16, 0.34) > 0.02;
@@ -123,6 +117,25 @@ export function RoutingDemo({ compact = false }: { compact?: boolean }) {
   const greenProgress = phaseAmount(progress, 0.68, 0.9);
   const live = progress >= 0.9 && !paused;
   const nodesActive = orangeProgress > 0.5;
+
+  useEffect(() => {
+    const nextLayoutState = { showInput, showPlugin, showOutput, vertical };
+    const previousLayoutState = layoutStateRef.current;
+    layoutStateRef.current = nextLayoutState;
+    if (!previousLayoutState) return;
+    if (
+      previousLayoutState.showInput === showInput &&
+      previousLayoutState.showPlugin === showPlugin &&
+      previousLayoutState.showOutput === showOutput &&
+      previousLayoutState.vertical === vertical
+    ) {
+      return;
+    }
+
+    // Re-measure only after a node visibility or layout-mode transition settles.
+    const id = window.setTimeout(measureJacks, 50);
+    return () => window.clearTimeout(id);
+  }, [showInput, showPlugin, showOutput, measureJacks, vertical]);
 
   const stateLabel = paused
     ? "[ route paused ]"
@@ -139,7 +152,7 @@ export function RoutingDemo({ compact = false }: { compact?: boolean }) {
       : "[ scroll to patch the route ]";
 
   const onTogglePause = () => {
-    if (reducedMotion) {
+    if (staticStage) {
       setPaused((value) => !value);
       return;
     }
@@ -154,9 +167,8 @@ export function RoutingDemo({ compact = false }: { compact?: boolean }) {
   const onReplay = () => {
     frozenProgress.current = 0;
     setPaused(false);
-    setProgress(reducedMotion ? 1 : 0);
     const track = trackRef.current;
-    if (track && !reducedMotion) {
+    if (track && !staticStage) {
       const top = window.scrollY + track.getBoundingClientRect().top - 80;
       window.scrollTo({ top, behavior: "smooth" });
     }
@@ -164,7 +176,7 @@ export function RoutingDemo({ compact = false }: { compact?: boolean }) {
 
   return (
     <section
-      className={`routing-demo ${compact ? "routing-demo--compact" : ""} ${reducedMotion ? "routing-demo--static" : ""}`}
+      className={`routing-demo ${compact ? "routing-demo--compact" : ""} ${staticStage ? "routing-demo--static" : ""}`}
       aria-labelledby="routing-demo-title"
     >
       <div className="routing-demo__scroll-track" ref={trackRef}>
@@ -187,7 +199,7 @@ export function RoutingDemo({ compact = false }: { compact?: boolean }) {
                   points={points}
                   orangeProgress={orangeProgress}
                   greenProgress={greenProgress}
-                  flowing={live}
+                  flowing={live && stageInView}
                   vertical={vertical}
                 />
                 <AsioNode type="input" active={nodesActive} visible={showInput} jackRef={inputJackRef} />

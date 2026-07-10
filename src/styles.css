@@ -809,7 +809,6 @@ img { display: block; max-width: 100%; }
   min-height: 84px;
   padding: 18px 0 22px;
   border-bottom: 1px solid var(--line);
-  will-change: opacity, transform;
 }
 .path-ledger__index {
   color: var(--orange);
@@ -840,7 +839,6 @@ img { display: block; max-width: 100%; }
   color: var(--graphite);
   font: 400 11px / 1 var(--mono);
   letter-spacing: 0.05em;
-  will-change: opacity, transform;
 }
 .path-ledger__status.is-live {
   color: var(--green);
@@ -854,7 +852,6 @@ img { display: block; max-width: 100%; }
   gap: 1px;
   border: 1px solid var(--line-strong);
   background: var(--line-strong);
-  will-change: opacity, transform;
 }
 .path-mode {
   display: flex;
@@ -1796,6 +1793,12 @@ img { display: block; max-width: 100%; }
     justify-content: center;
     padding-block: 8px;
   }
+  .tray-presence__sticky {
+    --demo-sticky-top: 66px;
+    min-height: calc(100dvh - var(--demo-sticky-top) - 16px);
+    justify-content: flex-start;
+    padding-block: 8px;
+  }
   .canvas-statement__frame {
     width: min(calc(100% - 28px), var(--content));
   }
@@ -1900,17 +1903,18 @@ img { display: block; max-width: 100%; }
 }
 
 /*
-  There is no useful pinned composition below this height. Let the document
-  flow normally instead of creating a clipped stage or a nested scroll area.
-  The final visual state remains readable while the full content stays in the
-  page's single, native scroll.
+  Safety net for cramped phone viewports. Keep the 850px gate in sync with
+  useShortViewportStatic. Let the document flow normally while the final state
+  remains readable in the page's single, native scroll.
 */
-@media (max-width: 600px) and (max-height: 700px) {
+@media (max-width: 600px) and (max-height: 850px) {
   .routing-demo__scroll-track,
-  .canvas-statement__scroll-track { height: auto; }
+  .canvas-statement__scroll-track,
+  .tray-presence__scroll-track { height: auto; }
 
   .routing-demo__sticky,
-  .canvas-statement__sticky {
+  .canvas-statement__sticky,
+  .tray-presence__sticky {
     position: relative;
     top: auto;
     min-height: 0;
@@ -1933,6 +1937,7 @@ img { display: block; max-width: 100%; }
     stroke-dasharray: 6 4 !important;
     stroke-dashoffset: 0 !important;
   }
+  .routing-demo .graph-cable.is-flowing { animation: none !important; }
   .canvas-statement__copy > *,
   .canvas-statement .path-ledger__place,
   .canvas-statement .path-ledger__status,
@@ -1941,6 +1946,24 @@ img { display: block; max-width: 100%; }
     transform: none !important;
   }
   .canvas-statement .path-ledger__places { --places-line: 1; }
+
+  .tray-presence__copy > *,
+  .tray-presence .tray-stage {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .tray-presence .tray-window {
+    opacity: 0 !important;
+    transform: translate(8%, 18%) scale(0.04) !important;
+  }
+  .tray-presence .tray-icon {
+    opacity: 1 !important;
+    transform: scale(1) !important;
+  }
+  .tray-presence .tray-menu {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

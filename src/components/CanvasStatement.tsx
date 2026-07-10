@@ -1,5 +1,7 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useRef, type CSSProperties } from "react";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
+import { useScrollPinProgress } from "../hooks/useScrollPinProgress";
+import { useShortViewportStatic } from "../hooks/useShortViewportStatic";
 import { clamp01, phaseAmount } from "../lib/math";
 import { SectionRule } from "./SectionRule";
 
@@ -100,44 +102,14 @@ function PathLedger({ progress }: { progress: number }) {
 
 export function CanvasStatement() {
   const reducedMotion = usePrefersReducedMotion();
+  const shortViewport = useShortViewportStatic();
+  const staticStage = reducedMotion || shortViewport;
   const trackRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
-  const [progress, setProgress] = useState(reducedMotion ? 1 : 0);
-
-  useEffect(() => {
-    if (reducedMotion) {
-      setProgress(1);
-      return;
-    }
-
-    const track = trackRef.current;
-    const sticky = stickyRef.current;
-    if (!track || !sticky) return;
-
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      const trackRect = track.getBoundingClientRect();
-      const stickyHeight = sticky.offsetHeight;
-      const scrollRange = Math.max(track.offsetHeight - stickyHeight, 1);
-      const stickyTop = parseFloat(getComputedStyle(sticky).top) || 0;
-      setProgress(clamp01((stickyTop - trackRect.top) / scrollRange));
-    };
-
-    const onScroll = () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(update);
-    };
-
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (frame) window.cancelAnimationFrame(frame);
-    };
-  }, [reducedMotion]);
+  const progress = useScrollPinProgress(trackRef, stickyRef, {
+    active: !staticStage,
+    forceProgress: staticStage ? 1 : undefined,
+  });
 
   const ruleAmount = phaseAmount(progress, 0.0, 0.12);
   const headAmount = phaseAmount(progress, 0.06, 0.22);
@@ -145,7 +117,7 @@ export function CanvasStatement() {
 
   return (
     <section
-      className={`canvas-statement ${reducedMotion ? "canvas-statement--static" : ""}`}
+      className={`canvas-statement ${staticStage ? "canvas-statement--static" : ""}`}
       aria-labelledby="canvas-statement-title"
     >
       <div className="canvas-statement__scroll-track" ref={trackRef}>

@@ -2,6 +2,8 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { ArrowMark } from "./marks";
 import { SectionRule } from "./SectionRule";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
+import { useScrollPinProgress } from "../hooks/useScrollPinProgress";
+import { useShortViewportStatic } from "../hooks/useShortViewportStatic";
 import { clamp01, phaseAmount } from "../lib/math";
 
 function revealStyle(amount: number, rise = 8): CSSProperties {
@@ -139,9 +141,14 @@ function TrayStage({ progress, compact }: { progress: number; compact: boolean }
 
 export function TrayPresence() {
   const reducedMotion = usePrefersReducedMotion();
+  const shortViewport = useShortViewportStatic();
+  const staticStage = reducedMotion || shortViewport;
   const trackRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
-  const [progress, setProgress] = useState(reducedMotion ? 1 : 0);
+  const progress = useScrollPinProgress(trackRef, stickyRef, {
+    active: !staticStage,
+    forceProgress: staticStage ? 1 : undefined,
+  });
   const [compact, setCompact] = useState(false);
 
   useEffect(() => {
@@ -153,41 +160,6 @@ export function TrayPresence() {
     return () => mq.removeEventListener("change", sync);
   }, []);
 
-  useEffect(() => {
-    if (reducedMotion) {
-      setProgress(1);
-      return;
-    }
-
-    const track = trackRef.current;
-    const sticky = stickyRef.current;
-    if (!track || !sticky) return;
-
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      const trackRect = track.getBoundingClientRect();
-      const stickyHeight = sticky.offsetHeight;
-      const scrollRange = Math.max(track.offsetHeight - stickyHeight, 1);
-      const stickyTop = parseFloat(getComputedStyle(sticky).top) || 0;
-      setProgress(clamp01((stickyTop - trackRect.top) / scrollRange));
-    };
-
-    const onScroll = () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(update);
-    };
-
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (frame) window.cancelAnimationFrame(frame);
-    };
-  }, [reducedMotion]);
-
   const ruleAmount = phaseAmount(progress, 0.0, 0.1);
   const headAmount = phaseAmount(progress, 0.04, 0.16);
   const bodyAmount = phaseAmount(progress, 0.1, 0.24);
@@ -195,7 +167,7 @@ export function TrayPresence() {
 
   return (
     <section
-      className={`tray-presence ${reducedMotion ? "tray-presence--static" : ""}`}
+      className={`tray-presence ${staticStage ? "tray-presence--static" : ""}`}
       aria-labelledby="tray-presence-title"
     >
       <div className="tray-presence__scroll-track" ref={trackRef}>
