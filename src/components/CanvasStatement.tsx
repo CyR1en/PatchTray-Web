@@ -132,9 +132,8 @@ export function CanvasStatement() {
                   Change the path.
                 </h2>
                 <p style={revealStyle(bodyAmount, 8)}>
-                  ASIO inputs, VST3 instances, and ASIO outputs each get a place on the canvas. You see what is
-                  connected before you go live — keep parameters on the graph, or open the native editor when you
-                  need it.
+                  ASIO inputs, VST3 instances, and ASIO outputs each have a place on the canvas. See connections
+                  before going live, then adjust parameters on the graph or open the native editor.
                 </p>
               </div>
 

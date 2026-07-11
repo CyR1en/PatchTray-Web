@@ -57,8 +57,8 @@ export function HomePage() {
               </span>
             </h1>
             <p className="hero-lead">
-              PatchTray turns your mic chain into a visible canvas: ASIO input, VST3 processing, and ASIO
-              output in one clear path — built for Voicemeeter and any mixer that can take an ASIO insert.
+              PatchTray makes your mic chain visible: ASIO input, VST3 processing, and ASIO output in one clear
+              path. Built for Voicemeeter and any mixer that can take an ASIO insert.
             </p>
             <div className="hero-actions">
               <a className="button button--primary" href="/download">
@@ -98,7 +98,7 @@ export function HomePage() {
                 <span>VST3</span>
               </p>
               <p className="hero-aside__note">
-                built for real-time mic chains before a stream, during a fix, and between takes.
+                built for real-time mic chains before a stream, during fixes, and between takes.
               </p>
             </div>
           </aside>
