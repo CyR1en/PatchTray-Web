@@ -1,7 +1,6 @@
 import { useRef, type CSSProperties } from "react";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
 import { useScrollPinProgress } from "../hooks/useScrollPinProgress";
-import { useShortViewportStatic } from "../hooks/useShortViewportStatic";
 import { clamp01, phaseAmount } from "../lib/math";
 import { SectionRule } from "./SectionRule";
 
@@ -102,8 +101,7 @@ function PathLedger({ progress }: { progress: number }) {
 
 export function CanvasStatement() {
   const reducedMotion = usePrefersReducedMotion();
-  const shortViewport = useShortViewportStatic();
-  const staticStage = reducedMotion || shortViewport;
+  const staticStage = reducedMotion;
   const trackRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const progress = useScrollPinProgress(trackRef, stickyRef, {
@@ -134,9 +132,8 @@ export function CanvasStatement() {
                   Change the path.
                 </h2>
                 <p style={revealStyle(bodyAmount, 8)}>
-                  ASIO inputs, VST3 instances, and ASIO outputs each get a place on the canvas. You see what is
-                  connected before you go live — keep parameters on the graph, or open the native editor when you
-                  need it.
+                  ASIO inputs, VST3 instances, and ASIO outputs each have a place on the canvas. See connections
+                  before going live, then adjust parameters on the graph or open the native editor.
                 </p>
               </div>
 

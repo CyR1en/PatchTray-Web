@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 import { useScrollPinProgress } from "../../hooks/useScrollPinProgress";
-import { useShortViewportStatic } from "../../hooks/useShortViewportStatic";
 import { phaseAmount } from "../../lib/math";
 import type { Point } from "../../lib/types";
 import { AsioNode } from "./AsioNode";
@@ -11,8 +10,7 @@ import { PluginNode } from "./PluginNode";
 
 export function RoutingDemo({ compact = false }: { compact?: boolean }) {
   const reducedMotion = usePrefersReducedMotion();
-  const shortViewport = useShortViewportStatic();
-  const staticStage = reducedMotion || shortViewport;
+  const staticStage = reducedMotion;
   const trackRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
