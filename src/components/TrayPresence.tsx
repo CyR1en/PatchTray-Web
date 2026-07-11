@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { ArrowMark } from "./marks";
 import { SectionRule } from "./SectionRule";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";

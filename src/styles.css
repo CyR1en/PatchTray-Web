@@ -981,14 +981,10 @@ img { display: block; max-width: 100%; }
 */
 .tray-presence {
   margin-top: 48px;
-  max-width: 100%;
-  overflow-x: clip;
 }
 .tray-presence__scroll-track {
   position: relative;
   height: 260vh;
-  max-width: 100%;
-  overflow-x: clip;
 }
 .tray-presence__sticky {
   --demo-sticky-top: 88px;
@@ -998,17 +994,15 @@ img { display: block; max-width: 100%; }
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: calc(100vh - var(--demo-sticky-top) - 24px);
+  /* Fill remaining viewport under the pin so flex centering is true mid-viewport. */
+  min-height: calc(100vh - var(--demo-sticky-top));
   padding-block: 16px;
   background: var(--carbon);
-  max-width: 100%;
-  overflow-x: clip;
+  box-sizing: border-box;
 }
 .tray-presence__frame {
   width: min(calc(100% - 48px), var(--content));
-  max-width: 100%;
   margin-inline: auto;
-  overflow-x: clip;
 }
 .tray-presence__grid {
   display: grid;
@@ -1853,9 +1847,12 @@ img { display: block; max-width: 100%; }
   }
   .tray-presence__sticky {
     --demo-sticky-top: 66px;
-    min-height: calc(100svh - var(--demo-sticky-top) - 16px);
-    justify-content: flex-start;
+    min-height: calc(100svh - var(--demo-sticky-top));
+    /* Flex centers only when the complete composition fits its pinned space;
+       otherwise the content height wins and it naturally begins at the top. */
+    justify-content: center;
     padding-block: 8px;
+    box-sizing: border-box;
   }
   .tray-presence__scroll-track { height: 220vh; }
   .tray-stage__field { min-height: 220px; }
