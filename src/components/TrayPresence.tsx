@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { ArrowMark } from "./marks";
 import { SectionRule } from "./SectionRule";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
 import { useScrollPinProgress } from "../hooks/useScrollPinProgress";
-import { useShortViewportStatic } from "../hooks/useShortViewportStatic";
 import { clamp01, phaseAmount } from "../lib/math";
 
 function revealStyle(amount: number, rise = 8): CSSProperties {
@@ -23,6 +22,42 @@ const MENU_ITEMS = [
 ] as const;
 
 function TrayStage({ progress, compact }: { progress: number; compact: boolean }) {
+  const fieldRef = useRef<HTMLDivElement>(null);
+  const windowRef = useRef<HTMLDivElement>(null);
+  const iconRef = useRef<HTMLDivElement>(null);
+  const [minimizeTarget, setMinimizeTarget] = useState({ x: 0, y: 0 });
+
+  // The stage changes width at each breakpoint, while the window has a capped
+  // width. Measure its lower-right transform origin against the icon centre so
+  // the collapse lands on the tray rather than a guessed percentage nearby.
+  useLayoutEffect(() => {
+    const field = fieldRef.current;
+    const windowEl = windowRef.current;
+    const icon = iconRef.current;
+    if (!field || !windowEl || !icon) return;
+
+    const measure = () => {
+      const iconBounds = icon.getBoundingClientRect();
+      const targetX = iconBounds.left - field.getBoundingClientRect().left + iconBounds.width / 2;
+      const targetY = iconBounds.top - field.getBoundingClientRect().top + iconBounds.height / 2;
+      const next = {
+        x: targetX - windowEl.offsetLeft - windowEl.offsetWidth,
+        y: targetY - windowEl.offsetTop - windowEl.offsetHeight,
+      };
+
+      setMinimizeTarget((current) =>
+        Math.abs(current.x - next.x) < 0.5 && Math.abs(current.y - next.y) < 0.5 ? current : next,
+      );
+    };
+
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(field);
+    observer.observe(windowEl);
+    observer.observe(icon);
+    return () => observer.disconnect();
+  }, []);
+
   // Hold the window readable for most of the first half of the pin,
   // then minimize → tray icon → menu.
   // On phone the stage sits under the copy, so the minimize must finish
@@ -141,8 +176,7 @@ function TrayStage({ progress, compact }: { progress: number; compact: boolean }
 
 export function TrayPresence() {
   const reducedMotion = usePrefersReducedMotion();
-  const shortViewport = useShortViewportStatic();
-  const staticStage = reducedMotion || shortViewport;
+  const staticStage = reducedMotion;
   const trackRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const progress = useScrollPinProgress(trackRef, stickyRef, {
