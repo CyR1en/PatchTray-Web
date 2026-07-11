@@ -1,7 +1,6 @@
 import { useRef, type CSSProperties } from "react";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
 import { useScrollPinProgress } from "../hooks/useScrollPinProgress";
-import { useShortViewportStatic } from "../hooks/useShortViewportStatic";
 import { clamp01, phaseAmount } from "../lib/math";
 import { SectionRule } from "./SectionRule";
 
@@ -102,8 +101,7 @@ function PathLedger({ progress }: { progress: number }) {
 
 export function CanvasStatement() {
   const reducedMotion = usePrefersReducedMotion();
-  const shortViewport = useShortViewportStatic();
-  const staticStage = reducedMotion || shortViewport;
+  const staticStage = reducedMotion;
   const trackRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const progress = useScrollPinProgress(trackRef, stickyRef, {
