@@ -1732,7 +1732,7 @@ img { display: block; max-width: 100%; }
   .routing-demo__canvas { min-height: 0; padding: 16px 14px 14px; overflow: visible; }
   .hero-demo-wrap { margin-top: 40px; }
   /*
-    Vertical signal lane: flex stack with equal gaps.
+    Vertical signal lane: flex stack with deliberately long cable runs.
     Jacks re-parent to the node (not the bottom port row) so ASIO output
     can sit on the top edge for jack-to-jack green cables.
   */
@@ -1744,13 +1744,20 @@ img { display: block; max-width: 100%; }
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    gap: 16px;
+    gap: 52px;
     padding-block: 4px;
   }
   .signal-node--asio,
   .signal-node--plugin {
     position: relative;
-    width: min(100%, 320px);
+    /*
+      `zoom` scales the complete node and contributes its scaled size to flex
+      layout. Unlike transform-only scaling, the lane reserves the visual
+      footprint, so both cable measurement and the spaces between cards remain
+      true to what is on screen.
+    */
+    width: 320px;
+    zoom: .75;
     left: auto;
     right: auto;
     top: auto;
@@ -1767,20 +1774,19 @@ img { display: block; max-width: 100%; }
   .signal-node--plugin.is-visible {
     transform: scale(1);
   }
+  /* Start from the desktop node recipe, then scale it as one complete unit. */
   .signal-node--asio { min-height: 0; }
-  .signal-node--plugin {
-    min-height: 0;
-  }
+  .signal-node--plugin { min-height: 0; }
   .signal-node--plugin .plugin-node__body {
-    padding: 14px 12px;
+    padding: 24px 16px;
   }
-  .signal-node--plugin .signal-node__head { min-height: 34px; }
-  .signal-node--plugin .plugin-node__foot { min-height: 28px; }
-  .signal-node--plugin .plugin-parameter-grid { gap: 8px; }
-  .signal-node--plugin .demo-knob { min-height: 48px; }
-  .signal-node--plugin .demo-knob__svg { width: 30px; height: 30px; }
+  .signal-node--plugin .signal-node__head { min-height: 36px; }
+  .signal-node--plugin .plugin-node__foot { min-height: 32px; }
+  .signal-node--plugin .plugin-parameter-grid { gap: 16px; }
+  .signal-node--plugin .demo-knob { min-height: 100px; }
+  .signal-node--plugin .demo-knob__svg { width: 54px; height: 54px; }
   .signal-node--plugin .demo-knob__label,
-  .signal-node--plugin .demo-knob__value { font-size: 7px; }
+  .signal-node--plugin .demo-knob__value { max-width: 56px; font-size: 9px; }
   /* Edge jacks: centered on top/bottom of the card (same as plugin). */
   .signal-node--input .node-jack--port {
     top: auto !important;
@@ -1949,15 +1955,9 @@ img { display: block; max-width: 100%; }
   .concept-notes { grid-template-columns: 1fr; }
 }
 
-/* Preserve the complete lane on 320px phones and constrained phone heights. */
+/* Keep surrounding phone content compact without changing the signal lane scale. */
 @media (max-width: 360px), (max-width: 600px) and (max-height: 780px) {
   .routing-demo__canvas { padding: 16px 14px 14px; }
-  .graph-stage { gap: 16px; }
-  .signal-node--asio { min-height: 0; }
-  .signal-node--asio .signal-node__body { gap: 8px; padding: 9px; }
-  .signal-node--plugin .plugin-node__body { padding: 10px; }
-  .signal-node--plugin .demo-knob { min-height: 48px; }
-  .signal-node--plugin .demo-knob__svg { width: 30px; height: 30px; }
   .routing-demo__footer { padding-block: 6px; }
   .canvas-statement__grid { gap: 18px; }
   .canvas-statement h2 { margin-top: 14px; }
