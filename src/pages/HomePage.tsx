@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { siteConfig } from "../config";
 import { ArrowMark, WindowsMark } from "../components/marks";
 import { CanvasStatement } from "../components/CanvasStatement";
-import { ProPriceNote } from "../components/ProPriceNote";
-import { SectionRule } from "../components/SectionRule";
+import { LicenseComparisonStrip } from "../components/LicenseComparisonStrip";
 import { TrayPresence } from "../components/TrayPresence";
 import { PageFrame } from "../components/layout/PageFrame";
 import { HeroPlugMark } from "../components/routing/HeroPlugMark";
@@ -114,45 +113,7 @@ export function HomePage() {
 
       <TrayPresence />
 
-      <section className="license-band content-width">
-        <SectionRule>start where you are</SectionRule>
-        <div className="license-band__head">
-          <h2>
-            free to route.
-            <br />
-            pro to keep building.
-          </h2>
-          <p>
-            Public beta begins with a useful Free tier: 2 VST3 nodes and 1 preset. Pro unlocks unlimited nodes
-            and presets — monthly or lifetime.
-          </p>
-        </div>
-        <div className="license-table" role="table" aria-label="PatchTray Free and Pro features">
-          <div className="license-row license-row--head" role="row">
-            <span role="columnheader">license</span>
-            <span role="columnheader">VST3 nodes</span>
-            <span role="columnheader">presets</span>
-            <span role="columnheader">price</span>
-          </div>
-          <div className="license-row" role="row">
-            <strong role="cell">free</strong>
-            <span role="cell">up to 2</span>
-            <span role="cell">1</span>
-            <span role="cell">included</span>
-          </div>
-          <div className="license-row license-row--pro" role="row">
-            <strong role="cell">pro</strong>
-            <span role="cell">unlimited</span>
-            <span role="cell">unlimited</span>
-            <span role="cell">
-              <ProPriceNote />
-            </span>
-          </div>
-        </div>
-        <a href="/download" className="button button--line">
-          [ view beta download ] <ArrowMark />
-        </a>
-      </section>
+      <LicenseComparisonStrip />
     </PageFrame>
   );
 }
