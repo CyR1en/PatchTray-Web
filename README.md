@@ -64,7 +64,7 @@ The app never references the Rust project at runtime. Captures are framed respon
 
 ## Content guardrails
 
-- Keep the core promise: “stop fighting the signal path.” Voicemeeter is the primary example, not the only supported path.
+- Keep the core promise clear: “process live audio with your VST3 plugins.” Describe PatchTray as a visible Windows VST3 host for live ASIO audio. Voicemeeter is the primary example, not the only supported path.
 
 - Keep claims to verified product facts. Do not add latency figures, hardware requirements, broad driver compatibility, user counts, testimonials, or a release date without a source of truth.
 - Pro is unlimited VST3 nodes + unlimited presets; monthly `$4.99` or lifetime `$29.99`. Do not invent other prices or claims.

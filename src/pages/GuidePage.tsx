@@ -9,13 +9,13 @@ export function GuidePage() {
       <section className="page-hero content-width page-hero--guide">
         <p className="terminal-label">patchtray / starter guide</p>
         <h1>
-          make the signal path
+          build your first
           <br />
-          explicit.
+          live plugin chain.
         </h1>
         <p className="page-lead">
-          This is the short version: select the audio endpoints first, connect the processing chain second, and
-          save a preset when it reads the way you expect.
+          Choose your ASIO input and output, add the VST3 processors you want, connect the route, and save it as
+          a preset.
         </p>
       </section>
 
@@ -32,9 +32,9 @@ export function GuidePage() {
             <SectionRule>get oriented</SectionRule>
             <h2>the canvas holds the route.</h2>
             <p>
-              PatchTray is built around a visual node graph. An ASIO input node is where the mic enters. VST3
-              nodes are the processing chain. An ASIO output node is where the finished signal leaves for the
-              rest of your setup.
+              PatchTray is built around a visual node graph. An ASIO input node is where the live audio enters.
+              VST3 nodes are the processing chain. An ASIO output node is where the finished signal leaves for
+              the rest of your setup.
             </p>
             <p>
               The product stays available in the system tray, so the canvas can be there when you need to change
@@ -70,7 +70,7 @@ export function GuidePage() {
 
           <section id="chain">
             <SectionRule>build a chain</SectionRule>
-            <h2>put the mic through the work it needs.</h2>
+            <h2>process the signal in the order you want.</h2>
             <ol className="guide-steps">
               <li>
                 <strong>add the VST3 nodes</strong>

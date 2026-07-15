@@ -40,10 +40,13 @@ export function LicenseComparisonStrip() {
 
   return (
     <section className="license-strip content-width" ref={sectionRef} aria-labelledby="license-strip-title">
-      <SectionRule>start where you are</SectionRule>
+      <SectionRule>start free</SectionRule>
       <div className="license-strip__head">
-        <h2 id="license-strip-title">free to route. pro to keep building.</h2>
-        <p>Start with a useful free signal path, then unlock room as your graph grows.</p>
+        <h2 id="license-strip-title">start with a small chain. expand when you need more.</h2>
+        <p>
+          Free includes 2 VST3 nodes and 1 preset. Pro unlocks unlimited nodes and presets with monthly or
+          lifetime options.
+        </p>
       </div>
 
       <div className="license-strip__scroll" tabIndex={0} aria-label="PatchTray Free and Pro comparison">

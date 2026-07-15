@@ -182,7 +182,7 @@ export function RoutingDemo({ compact = false }: { compact?: boolean }) {
           <div className="routing-demo__frame">
             <div className="routing-demo__topline">
               <h2 id="routing-demo-title">
-                routing view <span>— graph demo</span>
+                live plugin chain <span>— interactive demo</span>
               </h2>
               <span className={live ? "demo-state demo-state--live" : "demo-state"}>
                 <i className="state-square" aria-hidden="true" />
@@ -209,7 +209,7 @@ export function RoutingDemo({ compact = false }: { compact?: boolean }) {
                 />
                 <AsioNode type="output" active={greenProgress > 0.5} visible={showOutput} jackRef={outputJackRef} />
               </div>
-              <div className="canvas-corner canvas-corner--bottom">signal path: mic → VST3 → stream</div>
+              <div className="canvas-corner canvas-corner--bottom">signal path: ASIO → VST3 → ASIO</div>
             </div>
 
             <div className="routing-demo__footer">

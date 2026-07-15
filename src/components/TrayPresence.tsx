@@ -25,7 +25,7 @@ function TrayStage({ progress, compact }: { progress: number; compact: boolean }
   const fieldRef = useRef<HTMLDivElement>(null);
   const windowRef = useRef<HTMLDivElement>(null);
   const iconRef = useRef<HTMLDivElement>(null);
-  const [minimizeTarget, setMinimizeTarget] = useState({ x: 0, y: 0 });
+  const [minimizeTarget, setMinimizeTarget] = useState({ x: 0, y: 0, endScale: 1 });
 
   // The stage changes width at each breakpoint, while the window has a capped
   // width. Measure its lower-right transform origin against the icon centre so
@@ -38,15 +38,30 @@ function TrayStage({ progress, compact }: { progress: number; compact: boolean }
 
     const measure = () => {
       const iconBounds = icon.getBoundingClientRect();
-      const targetX = iconBounds.left - field.getBoundingClientRect().left + iconBounds.width / 2;
-      const targetY = iconBounds.top - field.getBoundingClientRect().top + iconBounds.height / 2;
+      const fieldBounds = field.getBoundingClientRect();
+      const windowWidth = windowEl.offsetWidth;
+      const windowHeight = windowEl.offsetHeight;
+      const iconWidth = icon.offsetWidth;
+      const iconHeight = icon.offsetHeight;
+      if (!windowWidth || !windowHeight || !iconWidth || !iconHeight) return;
+
+      const targetX = iconBounds.left - fieldBounds.left + iconBounds.width / 2;
+      const targetY = iconBounds.top - fieldBounds.top + iconBounds.height / 2;
+      const endScale = Math.min(iconWidth / windowWidth, iconHeight / windowHeight);
       const next = {
-        x: targetX - windowEl.offsetLeft - windowEl.offsetWidth,
-        y: targetY - windowEl.offsetTop - windowEl.offsetHeight,
+        // The transform origin is the window's lower-right corner. Offset by
+        // half the scaled window so its final visual centre meets the icon.
+        x: targetX - windowEl.offsetLeft - windowWidth + (windowWidth * endScale) / 2,
+        y: targetY - windowEl.offsetTop - windowHeight + (windowHeight * endScale) / 2,
+        endScale,
       };
 
       setMinimizeTarget((current) =>
-        Math.abs(current.x - next.x) < 0.5 && Math.abs(current.y - next.y) < 0.5 ? current : next,
+        Math.abs(current.x - next.x) < 0.5 &&
+        Math.abs(current.y - next.y) < 0.5 &&
+        Math.abs(current.endScale - next.endScale) < 0.001
+          ? current
+          : next,
       );
     };
 
@@ -80,15 +95,12 @@ function TrayStage({ progress, compact }: { progress: number; compact: boolean }
   );
   const live = progress >= (compact ? 0.78 : 0.9);
 
-  // Phone: shrink harder and fade out sooner so no large residual remains.
-  // Prefer scale (origin bottom-right) over large % translates — those expand
-  // the scrollable overflow width on narrow viewports.
-  const shrink = compact ? 0.96 : 0.92;
-  const fade = compact ? 1.45 : 1.15;
-  const windowScale = 1 - minimize * shrink;
-  const windowX = minimize * (compact ? 8 : 52);
-  const windowY = minimize * (compact ? 18 : 48);
-  const windowOpacity = 1 - Math.min(1, minimize * fade);
+  // Collapse toward the measured icon centre at every stage size. Keep the
+  // window visible through most of the travel so the final convergence reads.
+  const windowScale = 1 + (minimizeTarget.endScale - 1) * minimize;
+  const windowX = minimizeTarget.x * minimize;
+  const windowY = minimizeTarget.y * minimize;
+  const windowOpacity = 1 - phaseAmount(minimize, 0.82, 1);
 
   return (
     <div
@@ -99,12 +111,13 @@ function TrayStage({ progress, compact }: { progress: number; compact: boolean }
       }}
       aria-hidden="true"
     >
-      <div className="tray-stage__field">
+      <div className="tray-stage__field" ref={fieldRef}>
         <div
           className="tray-window"
+          ref={windowRef}
           style={{
             opacity: Math.max(windowOpacity, 0),
-            transform: `translate(${windowX}%, ${windowY}%) scale(${windowScale})`,
+            transform: `translate(${windowX}px, ${windowY}px) scale(${windowScale})`,
             visibility: windowOpacity <= 0.02 ? "hidden" : "visible",
           }}
         >
@@ -131,6 +144,7 @@ function TrayStage({ progress, compact }: { progress: number; compact: boolean }
         <div className="tray-dock">
           <div
             className={`tray-icon ${trayPulse > 0.45 ? "is-lit" : ""} ${live ? "is-live" : ""}`}
+            ref={iconRef}
             style={{
               opacity: 0.4 + trayPulse * 0.6,
               transform: `scale(${0.88 + trayPulse * 0.12})`,
@@ -212,17 +226,16 @@ export function TrayPresence() {
 
               <div className="tray-presence__copy">
                 <div style={revealStyle(Math.max(ruleAmount, 0.001), 8)}>
-                  <SectionRule>the details stay in reach</SectionRule>
+                  <SectionRule>keep it running</SectionRule>
                 </div>
                 <h2 id="tray-presence-title" style={revealStyle(headAmount, 12)}>
-                  available when
+                  Close the window.
                   <br />
-                  the window is not.
+                  Keep the chain.
                 </h2>
                 <p style={revealStyle(bodyAmount, 8)}>
-                  PatchTray is designed to minimize to the system tray while the audio work continues. When you
-                  come back, there are presets for the routes you return to and real-time telemetry for the state
-                  you need to read.
+                  Minimize PatchTray to the system tray and your audio processing continues. Reopen it when you
+                  want to adjust the route, load a preset, or check real-time telemetry.
                 </p>
                 <div style={revealStyle(ctaAmount, 6)}>
                   <a href="/guide" className="button button--text">

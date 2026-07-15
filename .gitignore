@@ -47,6 +47,8 @@ coverage/
 # Agent / local-only project notes (not shipped)
 .opencode/
 .claude/
+/assets/
+/docs/
 local_doc/
 local_docs/
 AGENTS.md

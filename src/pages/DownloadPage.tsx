@@ -12,13 +12,13 @@ export function DownloadPage() {
       <section className="page-hero content-width page-hero--download">
         <p className="terminal-label">patchtray / release channel</p>
         <h1>
-          the public beta is
+          get PatchTray
           <br />
-          for windows.
+          for Windows.
         </h1>
         <p className="page-lead">
-          PatchTray is a low-latency, system-tray VST3 host for Windows ASIO inserts. Start with the Free tier
-          and make the route visible — Voicemeeter or any mixer that can take an ASIO patch.
+          Download the public beta and build a live VST3 chain between your ASIO input and output. Start with
+          Free, then upgrade if you need more nodes or presets.
         </p>
       </section>
 
@@ -95,7 +95,7 @@ export function DownloadPage() {
           <div>
             <h2>the limits are stated plainly.</h2>
             <p>
-              Free covers a compact mic chain: 2 VST3 nodes and 1 preset. Pro removes those limits with
+              Free covers a compact live-audio chain: 2 VST3 nodes and 1 preset. Pro removes those limits with
               unlimited nodes and presets — pay monthly or buy once.
             </p>
           </div>
