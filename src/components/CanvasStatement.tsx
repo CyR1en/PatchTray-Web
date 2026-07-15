@@ -13,9 +13,9 @@ function revealStyle(amount: number, rise = 8): CSSProperties {
 }
 
 const PLACES = [
-  { id: "01", title: "asio input", detail: "mic enters here" },
+  { id: "01", title: "asio input", detail: "live audio enters here" },
   { id: "02", title: "vst3 instance", detail: "processing stays on the path" },
-  { id: "03", title: "asio output", detail: "to mixer / stream" },
+  { id: "03", title: "asio output", detail: "processed audio leaves here" },
 ] as const;
 
 const PARAMS = [
@@ -124,16 +124,16 @@ export function CanvasStatement() {
             <div className="canvas-statement__grid">
               <div className="canvas-statement__copy">
                 <div style={revealStyle(Math.max(ruleAmount, 0.001), 8)}>
-                  <SectionRule>the canvas is the setting</SectionRule>
+                  <SectionRule>build the chain</SectionRule>
                 </div>
                 <h2 id="canvas-statement-title" style={revealStyle(headAmount, 12)}>
-                  See the path.
+                  Build the route.
                   <br />
-                  Change the path.
+                  See every stage.
                 </h2>
                 <p style={revealStyle(bodyAmount, 8)}>
-                  ASIO inputs, VST3 instances, and ASIO outputs each have a place on the canvas. See connections
-                  before going live, then adjust parameters on the graph or open the native editor.
+                  Place an ASIO input, your VST3 processors, and an ASIO output on one canvas. Connect them in the
+                  order you want, adjust parameters on the graph, or open a plugin’s native editor.
                 </p>
               </div>
 

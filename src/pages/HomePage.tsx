@@ -46,19 +46,19 @@ export function HomePage() {
         <div className="hero content-width">
           <div className="hero-copy">
             <p className="terminal-label hero-label">
-              patchtray / windows / {siteConfig.releaseState}
+              windows / asio / vst3 host / {siteConfig.releaseState}
             </p>
             <h1>
               <span className="hero-line">
-                <span className="hero-line__inner">stop fighting</span>
+                <span className="hero-line__inner">process live audio</span>
               </span>
               <span className="hero-line">
-                <span className="hero-line__inner hero__word">the signal path.</span>
+                <span className="hero-line__inner hero__word">with your VST3 plugins.</span>
               </span>
             </h1>
             <p className="hero-lead">
-              PatchTray makes your mic chain visible: ASIO input, VST3 processing, and ASIO output in one clear
-              path. Built for Voicemeeter and any mixer that can take an ASIO insert.
+              PatchTray connects an ASIO input, your VST3 processing, and an ASIO output in one visible route.
+              Build the chain on the canvas, then keep it running from the system tray.
             </p>
             <div className="hero-actions">
               <a className="button button--primary" href="/download">
@@ -98,7 +98,7 @@ export function HomePage() {
                 <span>VST3</span>
               </p>
               <p className="hero-aside__note">
-                built for real-time mic chains before a stream, during fixes, and between takes.
+                built for live audio chains that need to stay visible, adjustable, and close at hand.
               </p>
             </div>
           </aside>

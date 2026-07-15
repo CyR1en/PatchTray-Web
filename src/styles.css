@@ -1626,7 +1626,7 @@ img { display: block; max-width: 100%; }
     font-size: clamp(2rem, 5.5vw, 3rem);
   }
   .path-ledger__modes {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
   .path-mode {
     min-height: 0;
@@ -1720,14 +1720,18 @@ img { display: block; max-width: 100%; }
   .routing-demo__scroll-track { height: 220vh; }
   .routing-demo--compact .routing-demo__scroll-track { height: 200vh; }
   /*
-    Pin against svh so Safari toolbar show/hide does not reflow the sticky shell
-    mid-scroll. Contents start at the pin edge to keep the vertical lane readable.
+    Fill the stable viewport below the mobile header. `svh` prevents browser
+    chrome show/hide from resizing the sticky shell during the scroll scrub.
   */
   .routing-demo__sticky {
     --demo-sticky-top: 66px;
-    min-height: calc(100svh - var(--demo-sticky-top) - 16px);
-    justify-content: flex-start;
+    --routing-lane-gap: 38px;
+    --routing-node-scale: .75;
+    height: calc(100svh - var(--demo-sticky-top));
+    min-height: 0;
+    justify-content: center;
     padding-block: 8px;
+    box-sizing: border-box;
   }
   .routing-demo__canvas { min-height: 0; padding: 16px 14px 14px; overflow: visible; }
   .hero-demo-wrap { margin-top: 40px; }
@@ -1744,7 +1748,7 @@ img { display: block; max-width: 100%; }
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    gap: 52px;
+    gap: var(--routing-lane-gap);
     padding-block: 4px;
   }
   .signal-node--asio,
@@ -1757,7 +1761,7 @@ img { display: block; max-width: 100%; }
       true to what is on screen.
     */
     width: 320px;
-    zoom: .75;
+    zoom: var(--routing-node-scale);
     left: auto;
     right: auto;
     top: auto;
@@ -1834,7 +1838,7 @@ img { display: block; max-width: 100%; }
   .routing-demo__footer > p,
   .routing-demo__controls .button--text { display: none; }
   .routing-demo__controls { justify-content: flex-start; }
-  .routing-demo__footer .button { min-height: 37px; padding-inline: 8px; font-size: 9px; }
+  .routing-demo__footer .button { min-height: 44px; padding-inline: 8px; font-size: 9px; }
   /* These decorative coordinates collide with the compact vertical node lane. */
   .routing-demo__canvas > .canvas-corner { display: none; }
   .canvas-statement {
@@ -1845,11 +1849,15 @@ img { display: block; max-width: 100%; }
   }
   .canvas-statement__sticky {
     --demo-sticky-top: 66px;
-    min-height: calc(100svh - var(--demo-sticky-top) - 16px);
-    /* Flex centers only when the complete composition fits its pinned space;
-       otherwise the content height wins and it naturally begins at the top. */
+    height: calc(100svh - var(--demo-sticky-top));
+    min-height: 0;
     justify-content: center;
     padding-block: 8px;
+    box-sizing: border-box;
+  }
+  .routing-demo--static .routing-demo__sticky,
+  .canvas-statement--static .canvas-statement__sticky {
+    height: auto;
   }
   .tray-presence__sticky {
     --demo-sticky-top: 66px;
@@ -1955,7 +1963,7 @@ img { display: block; max-width: 100%; }
   .concept-notes { grid-template-columns: 1fr; }
 }
 
-/* Keep surrounding phone content compact without changing the signal lane scale. */
+/* Keep surrounding phone content compact on narrow and shorter phones. */
 @media (max-width: 360px), (max-width: 600px) and (max-height: 780px) {
   .routing-demo__canvas { padding: 16px 14px 14px; }
   .routing-demo__footer { padding-block: 6px; }
@@ -1964,9 +1972,90 @@ img { display: block; max-width: 100%; }
   .canvas-statement__copy > p { margin-top: 12px; }
   .path-ledger__place { padding-block: 8px 10px; }
   .path-mode { padding: 8px; }
+  .tray-presence__grid { gap: 18px; }
   .tray-stage__field { min-height: 180px; }
   .tray-presence h2 { font-size: clamp(1.7rem, 9vw, 2.4rem); }
   .tray-presence__copy > p { font-size: 14px; margin-top: 12px; }
+}
+
+/* Scale the complete routing nodes and cable runs to the available phone height. */
+@media (max-width: 600px) and (max-height: 880px) {
+  .routing-demo__sticky {
+    --routing-lane-gap: 28px;
+    --routing-node-scale: .68;
+  }
+  .routing-demo__topline { min-height: 39px; }
+  .routing-demo__canvas { padding: 10px 14px; }
+  .graph-stage { padding-block: 2px; }
+  .routing-demo__footer { padding-block: 4px; }
+}
+
+@media (max-width: 600px) and (max-height: 720px) {
+  .routing-demo__sticky {
+    --routing-lane-gap: 18px;
+    --routing-node-scale: .6;
+  }
+  .routing-demo__topline { min-height: 36px; }
+  .routing-demo__canvas { padding-block: 8px; }
+  .graph-stage { padding-block: 0; }
+  .signal-node--plugin .plugin-node__body { padding: 10px 12px; }
+  .signal-node--plugin .signal-node__head { min-height: 34px; }
+  .signal-node--plugin .plugin-node__foot { min-height: 28px; }
+  .signal-node--plugin .plugin-parameter-grid { gap: 8px; }
+  .signal-node--plugin .demo-knob { min-height: 58px; }
+  .signal-node--plugin .demo-knob__svg { width: 34px; height: 34px; }
+  .signal-node--plugin .demo-knob__label,
+  .signal-node--plugin .demo-knob__value { font-size: 8px; }
+}
+
+/* The 320x568 floor keeps every routing node present as one scaled unit. */
+@media (max-width: 600px) and (max-height: 640px) {
+  .routing-demo__sticky {
+    --routing-lane-gap: 8px;
+    --routing-node-scale: .58;
+    padding-block: 4px;
+  }
+  .routing-demo__topline { min-height: 34px; }
+  .routing-demo__canvas { padding-block: 6px; }
+}
+
+/* Keep the full stacked canvas composition centred without removing content. */
+@media (max-width: 600px) and (max-height: 680px) {
+  .canvas-statement__sticky { padding-block: 4px; }
+  .canvas-statement__grid { gap: 10px; }
+  .canvas-statement h2 {
+    margin-top: 8px;
+    font-size: 1.55rem;
+    line-height: 1;
+  }
+  .canvas-statement__copy > p {
+    margin-top: 8px;
+    font-size: 13px;
+    line-height: 1.35;
+  }
+  .path-ledger { gap: 4px; }
+  .path-ledger__place {
+    grid-template-columns: 32px minmax(0, 1fr);
+    gap: 8px;
+    padding-block: 3px 4px;
+  }
+  .path-ledger__place-copy { gap: 2px; }
+  .path-ledger__place-copy strong { font-size: 13px; }
+  .path-ledger__place-copy span { font-size: 11px; line-height: 1.2; }
+  .path-ledger__status { font-size: 10px; }
+  .path-mode { gap: 4px; padding: 5px; }
+  .path-mode header { gap: 2px; }
+  .path-mode header span { font-size: 8px; }
+  .path-mode header strong { font-size: 10px; }
+  .path-mode li {
+    min-height: 18px;
+    gap: 4px;
+    padding-block: 2px;
+  }
+  .path-mode > p { font-size: 9px; line-height: 1.2; }
+  .path-mode__window { min-height: 42px; }
+  .path-mode__window-bar { min-height: 20px; padding-inline: 4px; font-size: 8px; }
+  .path-mode__window-body { min-height: 20px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
