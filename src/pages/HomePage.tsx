@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { siteConfig } from "../config";
 import { ArrowMark, WindowsMark } from "../components/marks";
 import { CanvasStatement } from "../components/CanvasStatement";
+import { HostStatement } from "../components/HostStatement";
 import { LicenseComparisonStrip } from "../components/LicenseComparisonStrip";
 import { TrayPresence } from "../components/TrayPresence";
 import { PageFrame } from "../components/layout/PageFrame";
@@ -108,6 +109,8 @@ export function HomePage() {
       <div className="content-width hero-demo-wrap">
         <RoutingDemo />
       </div>
+
+      <HostStatement />
 
       <CanvasStatement />
 
