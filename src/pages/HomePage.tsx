@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { siteConfig } from "../config";
 import { ArrowMark, WindowsMark } from "../components/marks";
 import { CanvasStatement } from "../components/CanvasStatement";
+import { ClosingCta } from "../components/ClosingCta";
 import { HostStatement } from "../components/HostStatement";
+import { ProductProof } from "../components/ProductProof";
+import { UseCaseStrip } from "../components/UseCaseStrip";
 import { LicenseComparisonStrip } from "../components/LicenseComparisonStrip";
 import { TrayPresence } from "../components/TrayPresence";
 import { PageFrame } from "../components/layout/PageFrame";
@@ -101,6 +104,17 @@ export function HomePage() {
               <p className="hero-aside__note">
                 built for live audio chains that need to stay visible, adjustable, and close at hand.
               </p>
+              <div className="hero-meter" aria-hidden="true">
+                <div className="hero-meter__bars">
+                  {Array.from({ length: 14 }, (_, i) => (
+                    <i key={i} />
+                  ))}
+                </div>
+                <span className="hero-meter__label">
+                  <i className="state-square state-square--green" />
+                  signal live
+                </span>
+              </div>
             </div>
           </aside>
         </div>
@@ -110,13 +124,19 @@ export function HomePage() {
         <RoutingDemo />
       </div>
 
+      <ProductProof />
+
       <HostStatement />
 
       <CanvasStatement />
 
+      <UseCaseStrip />
+
       <TrayPresence />
 
       <LicenseComparisonStrip />
+
+      <ClosingCta />
     </PageFrame>
   );
 }
