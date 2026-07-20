@@ -87,12 +87,12 @@ export function RoutingDemo({ compact = false }: { compact?: boolean }) {
       if (measureFrame) return;
       measureFrame = requestAnimationFrame(() => {
         measureFrame = 0;
-        setVertical(window.matchMedia("(max-width: 600px)").matches);
+        setVertical(window.matchMedia("(max-width: 760px)").matches);
         measureJacks();
       });
     });
     observer.observe(stage);
-    setVertical(window.matchMedia("(max-width: 600px)").matches);
+    setVertical(window.matchMedia("(max-width: 760px)").matches);
     return () => {
       if (measureFrame) cancelAnimationFrame(measureFrame);
       observer.disconnect();
