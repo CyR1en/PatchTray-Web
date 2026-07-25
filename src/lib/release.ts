@@ -9,9 +9,10 @@
  * { "version": "0.3.2", "platforms": { "windows-x86_64": { "url": "https://…msi" } } }
  * ```
  *
- * This module is shared by the browser bundle, the `/api/release` function, and
- * the build-time fetch in `vite.config.ts`, so it must stay free of
- * `import.meta.env` and DOM access.
+ * This module is shared by the browser bundle and the build-time fetch in
+ * `vite.config.ts`, so it must stay free of `import.meta.env` and DOM access.
+ * `api/release.js` cannot import it (Vercel's TS compile step breaks on
+ * TypeScript 7), so it carries its own copy of the URL below.
  */
 export const RELEASE_REPOSITORY = "CyR1en/PatchTray";
 
