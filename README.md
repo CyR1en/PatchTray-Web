@@ -31,7 +31,7 @@ The version number and the Windows download link are **not** maintained by hand.
 | Piece | Role |
 | --- | --- |
 | `src/lib/release.ts` | manifest URL + parser, shared by browser, function, and build |
-| `api/release.ts` | Vercel function that proxies `latest.json` (release assets send no CORS headers) and caches it at the edge for 5 minutes, serving stale for a day while revalidating |
+| `api/release.js` | Vercel function that proxies `latest.json` (release assets send no CORS headers) and caches it at the edge for 5 minutes, serving stale for a day while revalidating. Plain JS: Vercel compiles `api/*.ts` with the project's `typescript`, and TypeScript 7 removed the JS compiler API it calls |
 | `vite.config.ts` | fetches the manifest at build time into `__RELEASE_MANIFEST__` so the first paint is already correct; also serves `/api/release` during `vite dev` |
 | `src/hooks/useLatestRelease.ts` | shared store every version/download UI reads from |
 
@@ -91,7 +91,7 @@ The app never references the Rust project at runtime. Captures are framed respon
 src/App.tsx        routes, page content, interactive routing demo
 src/config.ts      external destinations + release fallbacks
 src/lib/release.ts latest.json manifest URL and parser
-api/release.ts     serverless proxy for the release manifest
+api/release.js     serverless proxy for the release manifest
 src/styles.css     tokens, components, responsive and motion rules
 public/assets/     local product imagery and app mark
 DESIGN_SPEC.md     visual and accessibility specification
