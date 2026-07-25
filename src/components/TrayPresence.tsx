@@ -1,8 +1,10 @@
-import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
+import { useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { ArrowMark } from "./marks";
 import { SectionRule } from "./SectionRule";
+import { useMediaQuery } from "../hooks/useMediaQuery";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
 import { useScrollPinProgress } from "../hooks/useScrollPinProgress";
+import { COMPACT_STAGE_QUERY, UNPINNED_STAGE_QUERY } from "../lib/layout";
 import { clamp01, phaseAmount } from "../lib/math";
 
 function revealStyle(amount: number, rise = 8): CSSProperties {
@@ -190,23 +192,15 @@ function TrayStage({ progress, compact }: { progress: number; compact: boolean }
 
 export function TrayPresence() {
   const reducedMotion = usePrefersReducedMotion();
-  const staticStage = reducedMotion;
+  const unpinned = useMediaQuery(UNPINNED_STAGE_QUERY);
+  const compact = useMediaQuery(COMPACT_STAGE_QUERY);
+  const staticStage = reducedMotion || unpinned;
   const trackRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const progress = useScrollPinProgress(trackRef, stickyRef, {
     active: !staticStage,
     forceProgress: staticStage ? 1 : undefined,
   });
-  const [compact, setCompact] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === "undefined" || !window.matchMedia) return;
-    const mq = window.matchMedia("(max-width: 600px)");
-    const sync = () => setCompact(mq.matches);
-    sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
-  }, []);
 
   const ruleAmount = phaseAmount(progress, 0.0, 0.1);
   const headAmount = phaseAmount(progress, 0.04, 0.16);
