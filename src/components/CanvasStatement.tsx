@@ -2,6 +2,8 @@ import { useRef, type CSSProperties } from "react";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
 import { useScrollPinProgress } from "../hooks/useScrollPinProgress";
 import { clamp01, phaseAmount } from "../lib/math";
+import { DemoKnob } from "./routing/DemoKnob";
+import { DEMO_PARAMS } from "./routing/constants";
 import { SectionRule } from "./SectionRule";
 
 function revealStyle(amount: number, rise = 8): CSSProperties {
@@ -12,92 +14,110 @@ function revealStyle(amount: number, rise = 8): CSSProperties {
   };
 }
 
-const PLACES = [
-  { id: "01", title: "asio input", detail: "live audio enters here" },
-  { id: "02", title: "vst3 instance", detail: "processing stays on the path" },
-  { id: "03", title: "asio output", detail: "processed audio leaves here" },
-] as const;
+/** Same node and numbers as the plugin node in the hero demo — one set, not two. */
+const PARAMS = DEMO_PARAMS.slice(0, 4);
+const PLUGIN_NAME = "spectral comp";
 
-const PARAMS = [
-  { label: "threshold", value: "-18.0 dB", amount: 0.42 },
-  { label: "ratio", value: "4.0 : 1", amount: 0.55 },
-  { label: "attack", value: "12 ms", amount: 0.28 },
-  { label: "mix", value: "100 %", amount: 1 },
-] as const;
-
-function PathLedger({ progress }: { progress: number }) {
-  const placesAmount = phaseAmount(progress, 0.18, 0.52);
-  const linkAmount = phaseAmount(progress, 0.42, 0.68);
-  const modesAmount = phaseAmount(progress, 0.58, 0.88);
-  const live = progress >= 0.88;
+/**
+ * The plugin node as the app draws it: header (led · name · actions), a knob
+ * grid, and the footer with page, cfg, and reported latency. Same parts as
+ * `PluginNode` in the hero demo — this one just sits in a card instead of on
+ * the graph, so it carries no jacks or cables.
+ */
+function ControlNode({ knobsAmount, guiActive }: { knobsAmount: number; guiActive: boolean }) {
+  const live = knobsAmount >= 1;
 
   return (
-    <div className="path-ledger" aria-label="Canvas places, path, and control modes">
-      <ol
-        className="path-ledger__places"
-        style={{ ["--places-line" as string]: String(placesAmount) }}
-      >
-        {PLACES.map((place, index) => {
-          const start = index * 0.22;
-          const amount = phaseAmount(placesAmount, start, start + 0.35);
-          return (
-            <li key={place.id} className="path-ledger__place" style={revealStyle(amount, 10)}>
-              <span className="path-ledger__index">{place.id}</span>
-              <div className="path-ledger__place-copy">
-                <strong>{place.title}</strong>
-                <span>{place.detail}</span>
+    <div className={`control-node ${live ? "is-live" : ""}`}>
+      <div className="signal-node__head">
+        <span>
+          <i className="node-led node-led--plugin" aria-hidden="true" />
+          <span className="control-node__name">{PLUGIN_NAME}</span>
+        </span>
+        <span className="plugin-actions" aria-label="Plugin controls">
+          <span>[ on ]</span>
+          <span className={guiActive ? "is-active" : ""}>[ gui ]</span>
+          <span>[ × ]</span>
+        </span>
+      </div>
+
+      <div className="control-node__body">
+        <div className="plugin-parameter-grid" aria-label="VST3 parameter controls on the node">
+          {PARAMS.map((param, index) => {
+            // Knobs land one after the next; their readings never move, so the
+            // needle and the value always agree.
+            const start = index * 0.18;
+            return (
+              <div key={param.label} style={revealStyle(phaseAmount(knobsAmount, start, start + 0.46), 8)}>
+                <DemoKnob label={param.label} value={param.value} amount={param.amount} />
               </div>
-            </li>
-          );
-        })}
-      </ol>
+            );
+          })}
+        </div>
+      </div>
 
-      <p className={`path-ledger__status ${live ? "is-live" : ""}`} style={revealStyle(linkAmount, 6)}>
-        <i className="state-square" aria-hidden="true" />
-        {live ? "path known before live" : "path becoming visible"}
-      </p>
+      <div className="plugin-node__foot">
+        <span className="plugin-node__page" aria-label="Parameter page 1 of 2">
+          <i aria-hidden="true">◀</i>
+          <strong>1</strong>
+          <em>/2</em>
+          <i aria-hidden="true">▶</i>
+        </span>
+        <span className="plugin-node__cfg">[ cfg ]</span>
+        <span className="plugin-node__latency">0 smp</span>
+      </div>
+    </div>
+  );
+}
 
-      <div className="path-ledger__modes" style={revealStyle(modesAmount, 10)}>
+function ControlModes({ progress }: { progress: number }) {
+  // Both cards share one frame: revealing them separately would leave the grid's
+  // rule background filling the empty cell. The staging happens inside instead.
+  const frameAmount = phaseAmount(progress, 0.18, 0.32);
+  const knobsAmount = phaseAmount(progress, 0.26, 0.5);
+  const windowAmount = phaseAmount(progress, 0.56, 0.74);
+  const captionAmount = phaseAmount(progress, 0.6, 0.72);
+  const live = progress >= 0.82;
+
+  return (
+    <div className="control-modes" aria-label="Plugin control modes">
+      <div className="control-modes__grid" style={revealStyle(frameAmount, 10)}>
         <article className="path-mode">
           <header>
-            <span>on the graph</span>
+            <span>on the node</span>
             <strong>parameter controls</strong>
           </header>
-          <ul>
-            {PARAMS.map((param) => (
-              <li key={param.label}>
-                <span>{param.label}</span>
-                <span
-                  className="path-mode__bar"
-                  style={{ ["--amount" as string]: String(param.amount) }}
-                  aria-hidden="true"
-                />
-                <em>{param.value}</em>
-              </li>
-            ))}
-          </ul>
+          <ControlNode knobsAmount={knobsAmount} guiActive={windowAmount > 0} />
           <p>stay in the route when that is enough</p>
         </article>
 
         <article className="path-mode path-mode--native">
           <header>
-            <span>when needed</span>
+            <span>in its own window</span>
             <strong>native editor</strong>
           </header>
-          <div className="path-mode__window" aria-hidden="true">
+          <div
+            className="path-mode__window"
+            aria-hidden="true"
+            style={{ ["--open" as string]: String(clamp01(windowAmount)) }}
+          >
             <div className="path-mode__window-bar">
               <span>plugin gui</span>
-              <span>[ open ]</span>
+              <span className={windowAmount >= 0.5 ? "is-open" : ""}>[ open ]</span>
             </div>
             <div className="path-mode__window-body" />
           </div>
           <p>full plugin window without leaving the canvas model</p>
         </article>
       </div>
+
+      <p className={`control-modes__caption ${live ? "is-live" : ""}`} style={revealStyle(captionAmount, 6)}>
+        <i className="state-square" aria-hidden="true" />
+        {live ? "two ways into the same plugin" : "control stays on the path"}
+      </p>
     </div>
   );
 }
-
 
 export function CanvasStatement() {
   const reducedMotion = usePrefersReducedMotion();
@@ -124,20 +144,21 @@ export function CanvasStatement() {
             <div className="canvas-statement__grid">
               <div className="canvas-statement__copy">
                 <div style={revealStyle(Math.max(ruleAmount, 0.001), 8)}>
-                  <SectionRule>build the chain</SectionRule>
+                  <SectionRule>control the plugin</SectionRule>
                 </div>
                 <h2 id="canvas-statement-title" style={revealStyle(headAmount, 12)}>
-                  Build the route.
+                  Tune it in place.
                   <br />
-                  See every stage.
+                  Open the editor.
                 </h2>
                 <p style={revealStyle(bodyAmount, 8)}>
-                  Place an ASIO input, your VST3 processors, and an ASIO output on one canvas. Connect them in the
-                  order you want, adjust parameters on the graph, or open a plugin’s native editor.
+                  Each VST3 node exposes its parameters on the canvas when the plugin provides them, so small
+                  changes stay in the route. When you need the full interface, open the plugin’s native editor
+                  window from the node itself.
                 </p>
               </div>
 
-              <PathLedger progress={progress} />
+              <ControlModes progress={progress} />
             </div>
           </div>
         </div>

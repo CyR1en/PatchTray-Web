@@ -5,8 +5,11 @@ import { ProCheckoutActions } from "../components/ProCheckoutActions";
 import { ProPriceNote } from "../components/ProPriceNote";
 import { SectionRule } from "../components/SectionRule";
 import { PageFrame } from "../components/layout/PageFrame";
+import { useLatestRelease } from "../hooks/useLatestRelease";
 
 export function DownloadPage() {
+  const release = useLatestRelease();
+
   return (
     <PageFrame current="download">
       <section className="page-hero content-width page-hero--download">
@@ -32,7 +35,7 @@ export function DownloadPage() {
             <WindowsMark />
           </div>
           <div>
-            <h3>PatchTray {siteConfig.releaseVersion}</h3>
+            <h3>PatchTray {release.version}</h3>
             <p>Windows build · public beta</p>
           </div>
           <DownloadBuildButton />

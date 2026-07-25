@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { hasValue, siteConfig } from "../../config";
+import { useLatestRelease } from "../../hooks/useLatestRelease";
 import { Mark } from "../marks";
 
 function FooterLink({ url, children }: { url: string; children: ReactNode }) {
@@ -18,6 +19,8 @@ function FooterLink({ url, children }: { url: string; children: ReactNode }) {
 }
 
 export function SiteFooter() {
+  const release = useLatestRelease();
+
   return (
     <footer className="site-footer">
       <div className="content-width footer-grid">
@@ -36,7 +39,7 @@ export function SiteFooter() {
         </div>
         <p className="footer-status">
           <span className="state-square state-square--green" aria-hidden="true" />
-          {siteConfig.releaseVersion} / {siteConfig.releaseState}
+          {release.version} / {siteConfig.releaseState}
         </p>
       </div>
     </footer>
