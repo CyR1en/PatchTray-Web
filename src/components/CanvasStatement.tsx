@@ -1,6 +1,8 @@
 import { useRef, type CSSProperties } from "react";
+import { useMediaQuery } from "../hooks/useMediaQuery";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
 import { useScrollPinProgress } from "../hooks/useScrollPinProgress";
+import { UNPINNED_STAGE_QUERY } from "../lib/layout";
 import { clamp01, phaseAmount } from "../lib/math";
 import { DemoKnob } from "./routing/DemoKnob";
 import { DEMO_PARAMS } from "./routing/constants";
@@ -121,7 +123,8 @@ function ControlModes({ progress }: { progress: number }) {
 
 export function CanvasStatement() {
   const reducedMotion = usePrefersReducedMotion();
-  const staticStage = reducedMotion;
+  const unpinned = useMediaQuery(UNPINNED_STAGE_QUERY);
+  const staticStage = reducedMotion || unpinned;
   const trackRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const progress = useScrollPinProgress(trackRef, stickyRef, {

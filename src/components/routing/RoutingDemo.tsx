@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 import { useScrollPinProgress } from "../../hooks/useScrollPinProgress";
+import { UNPINNED_STAGE_QUERY } from "../../lib/layout";
 import { phaseAmount } from "../../lib/math";
 import type { Point } from "../../lib/types";
 import { AsioNode } from "./AsioNode";
@@ -10,7 +12,8 @@ import { PluginNode } from "./PluginNode";
 
 export function RoutingDemo({ compact = false }: { compact?: boolean }) {
   const reducedMotion = usePrefersReducedMotion();
-  const staticStage = reducedMotion;
+  const unpinned = useMediaQuery(UNPINNED_STAGE_QUERY);
+  const staticStage = reducedMotion || unpinned;
   const trackRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
