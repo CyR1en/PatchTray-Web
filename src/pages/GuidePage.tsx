@@ -2,8 +2,11 @@ import { siteConfig } from "../config";
 import { WindowsMark } from "../components/marks";
 import { SectionRule } from "../components/SectionRule";
 import { PageFrame } from "../components/layout/PageFrame";
+import { useLatestRelease } from "../hooks/useLatestRelease";
 
 export function GuidePage() {
+  const release = useLatestRelease();
+
   return (
     <PageFrame current="guide">
       <section className="page-hero content-width page-hero--guide">
@@ -108,7 +111,7 @@ export function GuidePage() {
                 <WindowsMark /> [ download for windows ]
               </a>
               <p>
-                PatchTray {siteConfig.releaseVersion} · {siteConfig.releaseState}
+                PatchTray {release.version} · {siteConfig.releaseState}
               </p>
             </div>
           </section>

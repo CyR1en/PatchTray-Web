@@ -875,7 +875,7 @@ img { display: block; max-width: 100%; }
 
 /*
   Canvas statement — sticky immersive scroll (same pin pattern as routing demo)
-  with a document-style PathLedger on the right (not a second graph card).
+  with the two plugin control modes on the right (not a second graph card).
 */
 .canvas-statement {
   margin-top: 48px;
@@ -930,62 +930,14 @@ img { display: block; max-width: 100%; }
   max-width: 34ch;
 }
 
-/* Path ledger — numbered places + dual control modes */
-.path-ledger {
+/* Control modes — one plugin, two ways to reach it */
+.control-modes {
   min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
-.path-ledger__places {
-  position: relative;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.path-ledger__places::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: var(--line-strong);
-  opacity: var(--places-line, 0);
-  pointer-events: none;
-}
-.path-ledger__place {
-  position: relative;
-  display: grid;
-  grid-template-columns: 42px minmax(0, 1fr);
-  gap: 14px;
-  align-items: start;
-  min-height: 84px;
-  padding: 18px 0 22px;
-  border-bottom: 1px solid var(--line);
-}
-.path-ledger__index {
-  color: var(--orange);
-  font: 500 12px / 1 var(--mono);
-  letter-spacing: 0.08em;
-  padding-top: 2px;
-}
-.path-ledger__place-copy {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  min-width: 0;
-}
-.path-ledger__place-copy strong {
-  color: var(--steel);
-  font: 500 15px / 1.2 var(--mono);
-  letter-spacing: -0.03em;
-}
-.path-ledger__place-copy span {
-  color: var(--graphite);
-  font: 400 13px / 1.4 var(--sans);
-}
-.path-ledger__status {
+.control-modes__caption {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -994,15 +946,16 @@ img { display: block; max-width: 100%; }
   font: 400 11px / 1 var(--mono);
   letter-spacing: 0.05em;
 }
-.path-ledger__status.is-live {
+.control-modes__caption.is-live {
   color: var(--green);
 }
-.path-ledger__status.is-live .state-square {
+.control-modes__caption.is-live .state-square {
   background: var(--green);
 }
-.path-ledger__modes {
+.control-modes__grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* minmax(0) or the node's intrinsic width takes the whole row from the editor card. */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1px;
   border: 1px solid var(--line-strong);
   background: var(--line-strong);
@@ -1011,7 +964,7 @@ img { display: block; max-width: 100%; }
   display: flex;
   flex-direction: column;
   gap: 12px;
-  min-height: 220px;
+  min-height: clamp(260px, 34vh, 340px);
   padding: 14px;
   background: var(--surface);
 }
@@ -1030,39 +983,47 @@ img { display: block; max-width: 100%; }
   font: 500 12px / 1.2 var(--mono);
   letter-spacing: -0.02em;
 }
-.path-mode ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border-top: 1px solid var(--line);
+/*
+  The plugin node as the app draws it. Head, knob grid, and foot reuse the
+  routing-demo node classes; only the card-context wrapper is local, since this
+  node sits in a card instead of on the graph (no jacks, no absolute placement).
+*/
+.control-node {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--node-border);
+  background: var(--carbon);
 }
-.path-mode li {
-  display: grid;
-  grid-template-columns: 72px 1fr auto;
-  gap: 10px;
-  align-items: center;
-  min-height: 28px;
-  padding: 6px 0;
-  border-bottom: 1px solid var(--line);
-  color: var(--graphite);
-  font: 400 10px / 1 var(--mono);
-  letter-spacing: 0.04em;
-}
-.path-mode li em {
-  color: var(--steel);
-  font-style: normal;
+.control-node .signal-node__head { min-height: 34px; }
+/* Long plugin names elide rather than clip, the way the app's node header does. */
+.control-node__name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
-.path-mode__bar {
-  --amount: 0.5;
-  display: block;
-  height: 3px;
-  background: linear-gradient(
-    90deg,
-    var(--orange) 0 calc(var(--amount) * 100%),
-    var(--off) calc(var(--amount) * 100%) 100%
-  );
+.control-node.is-live .node-led { background: var(--green); }
+.control-node .plugin-actions .is-active { color: var(--orange); }
+.control-node__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 14px 12px;
 }
+/* No jacks to clear here, so the foot keeps the card's own padding. */
+.control-node .plugin-node__foot {
+  min-height: 28px;
+  padding-inline: 12px;
+}
+.control-node .plugin-node__page {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.control-node .plugin-node__page i { font-style: normal; }
+/* Page one of two: stepping back is unavailable, as in the app. */
+.control-node .plugin-node__page i:first-child { opacity: 0.3; }
 .path-mode > p {
   margin: auto 0 0;
   color: var(--graphite);
@@ -1072,12 +1033,17 @@ img { display: block; max-width: 100%; }
   background: var(--popover);
 }
 .path-mode__window {
+  /* Default open so the static / reduced-motion stage renders the full window. */
+  --open: 1;
   flex: 1;
-  min-height: 96px;
+  min-height: 120px;
   display: flex;
   flex-direction: column;
   border: 1px solid var(--line);
   background: var(--carbon);
+  transform-origin: top center;
+  transform: scaleY(calc(0.88 + var(--open) * 0.12));
+  opacity: calc(0.4 + var(--open) * 0.6);
 }
 .path-mode__window-bar {
   min-height: 28px;
@@ -1092,6 +1058,9 @@ img { display: block; max-width: 100%; }
 }
 .path-mode__window-bar span:first-child {
   color: var(--steel);
+}
+.path-mode__window-bar span.is-open {
+  color: var(--orange);
 }
 .path-mode__window-body {
   flex: 1;
@@ -1114,14 +1083,11 @@ img { display: block; max-width: 100%; }
   background: transparent;
 }
 .canvas-statement--static .canvas-statement__copy > *,
-.canvas-statement--static .path-ledger__place,
-.canvas-statement--static .path-ledger__status,
-.canvas-statement--static .path-ledger__modes {
+.canvas-statement--static .control-modes__caption,
+.canvas-statement--static .control-modes__grid,
+.canvas-statement--static .control-node .plugin-parameter-grid > * {
   opacity: 1 !important;
   transform: none !important;
-}
-.canvas-statement--static .path-ledger__places {
-  --places-line: 1;
 }
 
 
@@ -2187,8 +2153,8 @@ img { display: block; max-width: 100%; }
   .canvas-statement h2 {
     font-size: clamp(2rem, 5.5vw, 3rem);
   }
-  .path-ledger__modes {
-    grid-template-columns: 1fr 1fr;
+  .control-modes__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .path-mode {
     min-height: 0;
@@ -2500,17 +2466,8 @@ img { display: block; max-width: 100%; }
     line-height: 1.45;
     max-width: none;
   }
-  .path-ledger { gap: 10px; }
-  .path-ledger__place {
-    grid-template-columns: 36px minmax(0, 1fr);
-    gap: 12px;
-    min-height: 0;
-    padding: 8px 0 10px;
-  }
-  .path-ledger__place-copy { gap: 3px; }
-  .path-ledger__place-copy strong { font-size: 14px; }
-  .path-ledger__place-copy span { font-size: 12px; line-height: 1.3; }
-  .path-ledger__modes { grid-template-columns: 1fr 1fr; }
+  .control-modes { gap: 10px; }
+  .control-modes__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .path-mode {
     min-height: 0;
     gap: 8px;
@@ -2518,14 +2475,13 @@ img { display: block; max-width: 100%; }
   }
   .path-mode header { gap: 4px; }
   .path-mode header strong { font-size: 11px; }
-  .path-mode li {
-    grid-template-columns: minmax(0, 1fr) auto;
-    min-height: 22px;
-    gap: 6px;
-    padding: 4px 0;
-    font-size: 8px;
-  }
-  .path-mode__bar { display: none; }
+  .control-node .signal-node__head { min-height: 28px; padding-inline: 8px; font-size: 9px; }
+  .control-node .signal-node__head > span:first-child { gap: 4px; }
+  .control-node .plugin-actions { gap: 6px; font-size: 8px; }
+  /* Too narrow for all three chips: keep the plugin name and the two that tell the story. */
+  .control-node .plugin-actions span:last-child { display: none; }
+  .control-node__body { padding: 10px 8px; }
+  .control-node .plugin-node__foot { min-height: 24px; padding-inline: 8px; font-size: 8px; }
   .path-mode > p { font-size: 10px; line-height: 1.3; }
   .path-mode__window { min-height: 56px; }
   .path-mode__window-body { min-height: 30px; }
@@ -2585,7 +2541,6 @@ img { display: block; max-width: 100%; }
   .canvas-statement__grid { gap: 18px; }
   .canvas-statement h2 { margin-top: 14px; }
   .canvas-statement__copy > p { margin-top: 12px; }
-  .path-ledger__place { padding-block: 8px 10px; }
   .path-mode { padding: 8px; }
   .tray-presence__grid { gap: 18px; }
   .tray-stage__field { min-height: 180px; }
@@ -2648,25 +2603,16 @@ img { display: block; max-width: 100%; }
     font-size: 13px;
     line-height: 1.35;
   }
-  .path-ledger { gap: 4px; }
-  .path-ledger__place {
-    grid-template-columns: 32px minmax(0, 1fr);
-    gap: 8px;
-    padding-block: 3px 4px;
-  }
-  .path-ledger__place-copy { gap: 2px; }
-  .path-ledger__place-copy strong { font-size: 13px; }
-  .path-ledger__place-copy span { font-size: 11px; line-height: 1.2; }
-  .path-ledger__status { font-size: 10px; }
+  .control-modes { gap: 4px; }
+  .control-modes__caption { font-size: 10px; }
   .path-mode { gap: 4px; padding: 5px; }
   .path-mode header { gap: 2px; }
   .path-mode header span { font-size: 8px; }
   .path-mode header strong { font-size: 10px; }
-  .path-mode li {
-    min-height: 18px;
-    gap: 4px;
-    padding-block: 2px;
-  }
+  .control-node .signal-node__head { min-height: 24px; padding-inline: 6px; font-size: 8px; }
+  .control-node .plugin-actions { gap: 4px; }
+  .control-node__body { padding: 6px 4px; }
+  .control-node .plugin-node__foot { min-height: 20px; padding-inline: 6px; }
   .path-mode > p { font-size: 9px; line-height: 1.2; }
   .path-mode__window { min-height: 42px; }
   .path-mode__window-bar { min-height: 20px; padding-inline: 4px; font-size: 8px; }
@@ -2714,15 +2660,11 @@ img { display: block; max-width: 100%; }
   .graph-cable.is-flowing { animation: none !important; }
 
   .canvas-statement__copy > *,
-  .path-ledger__place,
-  .path-ledger__status,
-  .path-ledger__modes {
+  .control-modes__caption,
+  .control-modes__grid,
+  .control-node .plugin-parameter-grid > * {
     opacity: 1 !important;
     transform: none !important;
-  }
-
-  .path-ledger__places {
-    --places-line: 1;
   }
 
   .tray-presence__copy > *,

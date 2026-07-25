@@ -11,9 +11,11 @@ import { TrayPresence } from "../components/TrayPresence";
 import { PageFrame } from "../components/layout/PageFrame";
 import { HeroPlugMark } from "../components/routing/HeroPlugMark";
 import { RoutingDemo } from "../components/routing/RoutingDemo";
+import { useLatestRelease } from "../hooks/useLatestRelease";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
 
 export function HomePage() {
+  const release = useLatestRelease();
   const reducedMotion = usePrefersReducedMotion();
   const [heroPlay, setHeroPlay] = useState(reducedMotion);
 
@@ -83,7 +85,7 @@ export function HomePage() {
               <div className="hero-aside__rows">
                 <div className="hero-aside__row">
                   <span>release</span>
-                  <strong>{siteConfig.releaseVersion}</strong>
+                  <strong>{release.version}</strong>
                 </div>
                 <div className="hero-aside__row">
                   <span>place</span>
@@ -95,7 +97,7 @@ export function HomePage() {
                 </div>
               </div>
               <p className="hero-aside__status" aria-label="Product summary">
-                <strong>{siteConfig.releaseVersion}</strong>
+                <strong>{release.version}</strong>
                 <span aria-hidden="true"> · </span>
                 <span>system tray</span>
                 <span aria-hidden="true"> · </span>

@@ -1,10 +1,13 @@
-import { hasValue, siteConfig } from "../config";
+import { hasValue } from "../config";
+import { useLatestRelease } from "../hooks/useLatestRelease";
 import { WindowsMark } from "./marks";
 
 export function DownloadBuildButton({ className = "" }: { className?: string }) {
-  if (hasValue(siteConfig.downloadUrl)) {
+  const { downloadUrl } = useLatestRelease();
+
+  if (hasValue(downloadUrl)) {
     return (
-      <a className={`button button--primary ${className}`} href={siteConfig.downloadUrl}>
+      <a className={`button button--primary ${className}`} href={downloadUrl}>
         <WindowsMark /> [ download for windows ]
       </a>
     );

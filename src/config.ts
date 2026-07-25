@@ -17,9 +17,18 @@ function env(key: keyof ImportMetaEnv, fallback = ""): string {
 
 export const siteConfig = {
   productName: "PatchTray",
+
+  /**
+   * Version and installer link are read live from the release manifest — see
+   * `src/lib/release.ts` and `useLatestRelease()`. These two values are only the
+   * fallback for when the release page cannot be reached.
+   */
   releaseVersion: env("VITE_RELEASE_VERSION", "0.1.0"),
-  releaseState: env("VITE_RELEASE_STATE", "public beta"),
   downloadUrl: env("VITE_DOWNLOAD_URL"),
+  /** Where the browser reads the manifest from; `/api/release` proxies GitHub (no CORS on release assets). */
+  releaseManifestUrl: env("VITE_RELEASE_MANIFEST_URL", "/api/release"),
+
+  releaseState: env("VITE_RELEASE_STATE", "public beta"),
 
   /** Published Pro pricing. Override via env if needed; do not invent other amounts in UI. */
   proMonthlyPrice: env("VITE_PRO_MONTHLY_PRICE", "$4.99"),
