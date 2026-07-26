@@ -43,9 +43,19 @@ export const siteConfig = {
   proMonthlyPrice: env("VITE_PRO_MONTHLY_PRICE", "$4.99"),
   proLifetimePrice: env("VITE_PRO_LIFETIME_PRICE", "$29.99"),
 
-  /** Checkout destinations — empty until a real storefront is live. */
-  proMonthlyCheckoutUrl: env("VITE_PRO_MONTHLY_CHECKOUT_URL"),
-  proLifetimeCheckoutUrl: env("VITE_PRO_LIFETIME_CHECKOUT_URL"),
+  /**
+   * Published Stripe Payment Links. Environment overrides make it possible to
+   * replace a link without a code release; the public defaults keep local and
+   * self-hosted builds connected to the live storefront.
+   */
+  proMonthlyCheckoutUrl: env(
+    "VITE_PRO_MONTHLY_CHECKOUT_URL",
+    "https://buy.stripe.com/eVq3cu8984Z36Pi9VweQM00",
+  ),
+  proLifetimeCheckoutUrl: env(
+    "VITE_PRO_LIFETIME_CHECKOUT_URL",
+    "https://buy.stripe.com/eVqcN44WWgHLa1u5FgeQM01",
+  ),
 
   /** Published contact for support, privacy requests, and security reports. */
   supportEmail: env("VITE_SUPPORT_EMAIL", "support@patchtray.io"),
