@@ -13,7 +13,7 @@ the licensing API on `https://license.patchtray.io` into website pages.
 | `/download` | Installer, requirements, and Pro checkout actions | Existing |
 | `/guide` | First-use guide | Existing |
 | `/concepts` | Unlinked design-review page | Existing; not a public navigation item |
-| `/privacy` | Privacy policy | Added and linked; copy awaits review |
+| `/privacy` | Privacy policy | Added and linked; retention is finalized, legal review remains |
 | `/terms` | Product, license, and sale terms | Added and linked; two `<Pending>` items still block a final publish |
 | `/refunds` | Refund and dispute policy | Added and linked; copy awaits review |
 | `/support` | Support hub, contact form, and mailto | Added and linked; form needs its server env set |
@@ -81,10 +81,11 @@ At minimum, the final reviewed copy needs to explain:
   can make a privacy request;
 - the public privacy contact address.
 
-The retention period is still an unresolved launch decision in the licensing
-plan. Do not invent one just to publish the page. Decide it, record it in the
-service documentation, and have the final policy reviewed for the jurisdictions
-where PatchTray will be sold.
+The service now enforces the published schedule: active license data remains
+while required to provide the entitlement, inactive license/device and audit
+data is removed or anonymized after twenty-four months, and billing links on
+inactive records are removed after seven years. The final policy still needs
+legal review for the jurisdictions where PatchTray will be sold.
 
 Once this page exists, make `/privacy` the default
 `VITE_PRIVACY_URL`/footer destination instead of leaving the link pending.
@@ -221,13 +222,11 @@ When the routes above are implemented:
 
 ## Recommended implementation order
 
-1. Decide privacy retention and public refund terms.
-2. Write and review `/privacy`, `/terms`, and `/refunds`.
-3. Add `/support` and wire all four footer destinations.
-4. Add `/checkout/success` and deploy it.
-5. Configure both live Stripe Payment Links to use the deployed success URL.
-6. Set the real monthly and lifetime Payment Link URLs in Vercel.
-7. Run the private production purchase test before enabling checkout for the
+1. Review `/privacy`, `/terms`, and `/refunds` and resolve the two legal placeholders in `/terms`.
+2. Finish the `/support` server configuration.
+3. Deploy `/checkout/success` and configure both live Stripe Payment Links to use it.
+4. Set the real monthly and lifetime Payment Link URLs in Vercel.
+5. Run the private production purchase test before enabling checkout for the
    public.
 
 ## Sources of truth
