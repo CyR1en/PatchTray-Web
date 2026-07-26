@@ -256,7 +256,7 @@ const sections: readonly DocSection[] = [
             privacy contact · <a href={`mailto:${siteConfig.supportEmail}`}>{siteConfig.supportEmail}</a>
           </p>
           <p>
-            data controller · <Pending>seller legal name and registered address</Pending>
+            data controller · CyR1en (Ethan Bacurio)
           </p>
         </div>
       </>

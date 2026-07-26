@@ -12,7 +12,7 @@ const sections: readonly DocSection[] = [
     body: (
       <>
         <p>
-          PatchTray is sold by <Pending>seller legal name and registered address</Pending>. Installing PatchTray or
+          PatchTray is sold by CyR1en (Ethan Bacurio). Installing PatchTray or
           purchasing a Pro license means you accept these terms. If you do not accept them, do not install or
           purchase the software.
         </p>
@@ -249,8 +249,11 @@ const sections: readonly DocSection[] = [
     body: (
       <>
         <p>
-          These terms are governed by <Pending>governing law and venue</Pending>, without regard to conflict-of-law
-          rules. Mandatory consumer-protection rights in your country of residence continue to apply.
+          These Terms shall be governed, construed, and enforced in accordance with the laws of the State of Colorado, 
+          without giving effect to any principles of conflicts of law. Any legal suit, action, or proceeding arising out 
+          of or related to these Terms shall be instituted exclusively in the state or federal courts located in the 
+          City and County of Denver, Colorado, and each party irrevocably submits to the personal jurisdiction and 
+          venue of such courts.
         </p>
       </>
     ),
