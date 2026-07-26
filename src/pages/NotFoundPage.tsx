@@ -1,11 +1,6 @@
 import { PageFrame } from "../components/layout/PageFrame";
 import { ArrowMark } from "../components/marks";
-
-const KNOWN_ROUTES = [
-  { path: "/", name: "home — the overview" },
-  { path: "/download", name: "download — get the beta" },
-  { path: "/guide", name: "guide — get oriented" },
-] as const;
+import { publicRoutes } from "../lib/routes";
 
 function UnpatchedStage() {
   return (
@@ -44,7 +39,7 @@ export function NotFoundPage() {
   const requestedPath = typeof window === "undefined" ? "/" : window.location.pathname;
 
   return (
-    <PageFrame current="home">
+    <PageFrame current="notFound">
       <section className="not-found content-width" aria-labelledby="not-found-title">
         <p className="terminal-label">error / 404 — route not found</p>
         <div className="not-found__grid">
@@ -67,10 +62,10 @@ export function NotFoundPage() {
             </div>
             <nav className="not-found__routes" aria-label="Known routes">
               <p>known routes</p>
-              {KNOWN_ROUTES.map((route) => (
+              {publicRoutes.map((route) => (
                 <a key={route.path} href={route.path}>
                   <span className="not-found__route-path">{route.path}</span>
-                  <span className="not-found__route-name">{route.name}</span>
+                  <span className="not-found__route-name">{route.blurb}</span>
                   <ArrowMark />
                 </a>
               ))}

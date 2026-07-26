@@ -1,6 +1,16 @@
 # PatchTray marketing site
 
-Marketing website for the PatchTray Windows VST3 host public beta. It is a React + TypeScript + Vite SPA with production routes for Home, Download, and Guide, plus an unlinked `/concepts` review route.
+Marketing website for the PatchTray Windows VST3 host public beta. It is a React + TypeScript + Vite SPA.
+
+Routes live in one table, [`src/lib/routes.ts`](src/lib/routes.ts) — path, page name, component, and whether the route is publicly listed. The router, the 404 page's route list, and the `/concepts` exclusion all read from it, so a new page is one row plus a `src/lib/pageMeta.ts` entry.
+
+| Route | Listed | Notes |
+| --- | --- | --- |
+| `/` `/download` `/guide` | yes | primary navigation |
+| `/support` | yes | support hub, contact form, mailto fallback |
+| `/privacy` `/terms` `/refunds` | yes | legal pages, linked from the footer |
+| `/checkout/success` | no | Stripe return page; `noindex`, never in navigation |
+| `/concepts` | no | unlinked design review; `noindex` |
 
 ## Run locally
 
@@ -22,7 +32,7 @@ npm run preview
 
 1. Import `PatchTrayWeb` as a Vercel project.
 2. Use the defaults: framework **Vite**, build command `npm run build`, output directory `dist`.
-3. Deploy. `vercel.json` rewrites all request paths to `index.html`, so direct requests to `/download`, `/guide`, and `/concepts` resolve correctly.
+3. Deploy. `vercel.json` rewrites all non-`/api` request paths to `index.html`, so every route resolves on a direct load or refresh. It also sets `X-Robots-Tag: noindex` on `/checkout/success` and `/concepts` — the authoritative half of the noindex signal, since a crawler that does not run JavaScript never sees the meta tag.
 
 ## Release data
 
@@ -45,6 +55,7 @@ Set these on Vercel (or in `.env.local` for local work) before launch:
 
 | Env key | Default / state | Required action |
 | --- | --- | --- |
+| `VITE_SITE_ORIGIN` | `https://patchtray.io` | set only on preview deployments, so they do not emit production canonical URLs |
 | `VITE_RELEASE_VERSION` | `0.1.0` | fallback only — the live version comes from `latest.json` |
 | `VITE_DOWNLOAD_URL` | empty | fallback only — the live installer link comes from `latest.json` |
 | `VITE_RELEASE_MANIFEST_URL` | `/api/release` | change only to read the manifest from somewhere else |
@@ -53,16 +64,30 @@ Set these on Vercel (or in `.env.local` for local work) before launch:
 | `VITE_PRO_LIFETIME_CHECKOUT_URL` | empty | set when lifetime Pro checkout is published |
 | `VITE_PRO_MONTHLY_PRICE` | `$4.99` | override only if the published price changes |
 | `VITE_PRO_LIFETIME_PRICE` | `$29.99` | override only if the published price changes |
-| `VITE_SUPPORT_EMAIL` | empty | set the public support email address |
-| `VITE_REPOSITORY_URL` | empty | set the public repository URL if one is published |
-| `VITE_COMMUNITY_URL` | empty | set the public community destination if one is published |
-| `VITE_PRIVACY_URL` | empty | set the privacy-policy URL |
-| `VITE_TERMS_URL` | empty | set the terms URL |
+| `VITE_SUPPORT_EMAIL` | `support@patchtray.io` | override only if the published contact address changes |
 | `VITE_REQUIREMENTS_TEXT` | public-beta wording | replace only with verified system requirements |
+| `VITE_TURNSTILE_SITE_KEY` | empty | set to show the `/support` form; empty leaves only the mailto path |
+
+## Support form
+
+`/support` posts to `api/support.js`, which verifies a Cloudflare Turnstile token, applies a per-sender rate limit, and relays the message through Resend. These are **server-side** variables — no `VITE_` prefix, so they never enter the browser bundle:
+
+| Env key | Role |
+| --- | --- |
+| `RESEND_API_KEY` | Resend credential. Server-only, always. |
+| `SUPPORT_TO_EMAIL` | Recipient. Read from the environment and never from the request — a request-controlled recipient would make this an open relay. |
+| `SUPPORT_FROM_EMAIL` | Verified Resend sender, e.g. `PatchTray <noreply@patchtray.io>`. The customer's address goes in `reply_to`. |
+| `TURNSTILE_SECRET_KEY` | Turnstile server-side siteverify secret. |
+| `SUPPORT_RATELIMIT_PEPPER` | Optional but recommended: salts the IP hash used as the rate-limit key. Must not be either licensing-service pepper. |
+| `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` | Rate-limit store. Injected by the Vercel + Upstash marketplace integration. |
+
+The limit is 3 messages per hour per sender. If the Upstash variables are absent the endpoint still sends but logs that the limiter is disabled — treat that as a misconfiguration, not a mode. `vite preview` does not run Vercel functions, so the form only works against a deployment or `vercel dev`.
 
 Do not replace a placeholder with `#`, `example.com`, or an unverified claim. The site has intentionally been built to show an honest unavailable state until a real destination exists.
 
-**Monetization:** Free = 2 VST3 nodes + 1 preset. Pro = unlimited VST3 nodes + unlimited presets; monthly `$4.99` or lifetime `$29.99`.
+**Not configurable, on purpose.** The footer's repository link is derived from `RELEASE_REPOSITORY` in `src/lib/release.ts`, so it cannot drift from the release manifest it shares a slug with — PatchTray's source is closed and lives in a separate private repository that must never be linked from the site. The `/support`, `/refunds`, `/privacy`, and `/terms` destinations are routes in `src/lib/routes.ts`; an env override would point the footer elsewhere while leaving the real route live as a second source of truth.
+
+**Monetization:** Free = 4 VST3 nodes + 1 preset. Pro = unlimited VST3 nodes + unlimited presets; monthly `$4.99` or lifetime `$29.99`.
 
 ## Assets
 
@@ -88,7 +113,9 @@ The app never references the Rust project at runtime. Captures are framed respon
 ## Project map
 
 ```text
-src/App.tsx        routes, page content, interactive routing demo
+src/App.tsx        route resolution + per-page document metadata
+src/lib/routes.ts  the route table: path, page, component, public listing
+src/lib/pageMeta.ts titles, descriptions, canonical paths, noindex flags
 src/config.ts      external destinations + release fallbacks
 src/lib/release.ts latest.json manifest URL and parser
 api/release.js     serverless proxy for the release manifest

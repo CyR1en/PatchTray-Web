@@ -103,7 +103,7 @@ export function GuidePage() {
             <h2>presets are for returns, not guesses.</h2>
             <p>
               Once the connection reads correctly, save a preset so you can return to the same chain. Free
-              includes one preset and up to two VST3 nodes. Pro unlocks unlimited presets and unlimited VST3
+              includes one preset and up to four VST3 nodes. Pro unlocks unlimited presets and unlimited VST3
               nodes.
             </p>
             <div className="guide-end">

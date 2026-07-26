@@ -98,14 +98,14 @@ export function DownloadPage() {
           <div>
             <h2>the limits are stated plainly.</h2>
             <p>
-              Free covers a compact live-audio chain: 2 VST3 nodes and 1 preset. Pro removes those limits with
+              Free covers a compact live-audio chain: 4 VST3 nodes and 1 preset. Pro removes those limits with
               unlimited nodes and presets — pay monthly or buy once.
             </p>
           </div>
           <div className="plan-lines">
             <p>
               <strong>free</strong>
-              <span>up to 2 VST3 nodes · 1 preset</span>
+              <span>up to 4 VST3 nodes · 1 preset</span>
               <em className="plan-lines__price">[ included ]</em>
             </p>
             <p className="plan-lines__pro">

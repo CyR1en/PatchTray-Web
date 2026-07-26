@@ -44,7 +44,7 @@ export function LicenseComparisonStrip() {
       <div className="license-strip__head">
         <h2 id="license-strip-title">start with a small chain. expand when you need more.</h2>
         <p>
-          Free includes 2 VST3 nodes and 1 preset. Pro unlocks unlimited nodes and presets with monthly or
+          Free includes 4 VST3 nodes and 1 preset. Pro unlocks unlimited nodes and presets with monthly or
           lifetime options.
         </p>
       </div>
@@ -73,7 +73,7 @@ export function LicenseComparisonStrip() {
             </div>
           </div>
           <div className="license-strip__rows" role="rowgroup">
-            <div role="row"><span role="rowheader">VST3 nodes per graph</span><span role="cell">up to 2</span><span role="cell">unlimited nodes</span></div>
+            <div role="row"><span role="rowheader">VST3 nodes per graph</span><span role="cell">up to 4</span><span role="cell">unlimited nodes</span></div>
             <div role="row"><span role="rowheader">presets</span><span role="cell">1 preset</span><span role="cell">unlimited presets</span></div>
             <div role="row"><span role="rowheader">lifetime device use</span><span role="cell">—</span><span role="cell">{billingPlan === "lifetime" ? "up to 3 devices" : "available with lifetime"}</span></div>
           </div>

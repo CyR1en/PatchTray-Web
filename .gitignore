@@ -56,3 +56,5 @@ AGENTS.md
 # Optional local tooling
 .vercel/
 .vite/
+.vercel
+.env*

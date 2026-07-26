@@ -1,18 +1,24 @@
 import type { ReactNode } from "react";
-import { hasValue, siteConfig } from "../../config";
+import { siteConfig } from "../../config";
 import { useLatestRelease } from "../../hooks/useLatestRelease";
+import { REPOSITORY_URL } from "../../lib/release";
 import { Mark } from "../marks";
 
+/** Own routes stay in place; only real external links get a new tab. */
+function isExternal(url: string) {
+  return !url.startsWith("/") && !url.startsWith("mailto:");
+}
+
 function FooterLink({ url, children }: { url: string; children: ReactNode }) {
-  if (!hasValue(url)) {
+  if (isExternal(url)) {
     return (
-      <span className="footer-link footer-link--pending" aria-disabled="true">
-        {children} <small>[ pending ]</small>
-      </span>
+      <a className="footer-link" href={url} target="_blank" rel="noreferrer">
+        {children}
+      </a>
     );
   }
   return (
-    <a className="footer-link" href={url} target="_blank" rel="noreferrer">
+    <a className="footer-link" href={url}>
       {children}
     </a>
   );
@@ -30,13 +36,13 @@ export function SiteFooter() {
             patchtray <span>— visible audio routing for windows.</span>
           </p>
         </div>
-        <div className="footer-links" aria-label="External links">
-          <FooterLink url={siteConfig.repositoryUrl}>repository</FooterLink>
-          <FooterLink url={siteConfig.communityUrl}>community</FooterLink>
-          <FooterLink url={siteConfig.supportEmail ? `mailto:${siteConfig.supportEmail}` : ""}>support</FooterLink>
-          <FooterLink url={siteConfig.privacyUrl}>privacy</FooterLink>
-          <FooterLink url={siteConfig.termsUrl}>terms</FooterLink>
-        </div>
+        <nav className="footer-links" aria-label="Support and legal">
+          <FooterLink url={REPOSITORY_URL}>repository</FooterLink>
+          <FooterLink url="/support">support</FooterLink>
+          <FooterLink url="/refunds">refunds</FooterLink>
+          <FooterLink url="/privacy">privacy</FooterLink>
+          <FooterLink url="/terms">terms</FooterLink>
+        </nav>
         <p className="footer-status">
           <span className="state-square state-square--green" aria-hidden="true" />
           {release.version} / {siteConfig.releaseState}

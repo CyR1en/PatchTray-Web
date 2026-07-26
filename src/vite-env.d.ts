@@ -4,6 +4,7 @@
 declare const __RELEASE_MANIFEST__: unknown;
 
 interface ImportMetaEnv {
+  readonly VITE_SITE_ORIGIN?: string;
   readonly VITE_RELEASE_VERSION?: string;
   readonly VITE_RELEASE_STATE?: string;
   readonly VITE_DOWNLOAD_URL?: string;
@@ -13,10 +14,7 @@ interface ImportMetaEnv {
   readonly VITE_PRO_MONTHLY_CHECKOUT_URL?: string;
   readonly VITE_PRO_LIFETIME_CHECKOUT_URL?: string;
   readonly VITE_SUPPORT_EMAIL?: string;
-  readonly VITE_REPOSITORY_URL?: string;
-  readonly VITE_COMMUNITY_URL?: string;
-  readonly VITE_PRIVACY_URL?: string;
-  readonly VITE_TERMS_URL?: string;
+  readonly VITE_TURNSTILE_SITE_KEY?: string;
   readonly VITE_REQUIREMENTS_TEXT?: string;
 }
 

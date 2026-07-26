@@ -7,6 +7,10 @@
  * An empty / missing destination means it is not published yet; the UI
  * intentionally renders an honest unavailable state via hasValue().
  *
+ * Only genuinely deployment-owned values belong here. This site's own routes do
+ * not — they are fixed by `src/lib/routes.ts`, and an env override pointing one
+ * elsewhere would leave the real route live as a second source of truth.
+ *
  * Local: copy `.env.example` → `.env.local` and fill what you need.
  * Deploy: set the same keys in the Vercel dashboard (Production / Preview).
  */
@@ -16,7 +20,12 @@ function env(key: keyof ImportMetaEnv, fallback = ""): string {
 }
 
 export const siteConfig = {
-  productName: "PatchTray",
+  /**
+   * Origin for canonical URLs. Override on preview deployments so they do not
+   * claim the production canonical. Trailing slashes are stripped so
+   * `siteOrigin + canonicalPath` is always well formed.
+   */
+  siteOrigin: env("VITE_SITE_ORIGIN", "https://patchtray.io").replace(/\/+$/, ""),
 
   /**
    * Version and installer link are read live from the release manifest — see
@@ -38,11 +47,16 @@ export const siteConfig = {
   proMonthlyCheckoutUrl: env("VITE_PRO_MONTHLY_CHECKOUT_URL"),
   proLifetimeCheckoutUrl: env("VITE_PRO_LIFETIME_CHECKOUT_URL"),
 
-  supportEmail: env("VITE_SUPPORT_EMAIL"),
-  repositoryUrl: env("VITE_REPOSITORY_URL"),
-  communityUrl: env("VITE_COMMUNITY_URL"),
-  privacyUrl: env("VITE_PRIVACY_URL"),
-  termsUrl: env("VITE_TERMS_URL"),
+  /** Published contact for support, privacy requests, and security reports. */
+  supportEmail: env("VITE_SUPPORT_EMAIL", "support@patchtray.io"),
+
+  /**
+   * Cloudflare Turnstile site key for the /support form. Empty hides the form
+   * and leaves the mailto path, since there is no safe way to accept
+   * submissions without the verification the server requires.
+   */
+  turnstileSiteKey: env("VITE_TURNSTILE_SITE_KEY"),
+
   requirementsText: env(
     "VITE_REQUIREMENTS_TEXT",
     "Windows and an ASIO driver are required. PatchTray is commonly used with Voicemeeter ASIO inserts; other ASIO-capable mixers that accept insert patching can work the same way. Detailed system requirements are being finalized for the public beta.",

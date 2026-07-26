@@ -14,9 +14,15 @@
  * `api/release.js` cannot import it (Vercel's TS compile step breaks on
  * TypeScript 7), so it carries its own copy of the URL below.
  */
+/**
+ * The public repository: release artifacts and issue tracking. PatchTray's
+ * source is closed and lives elsewhere — never link that repository from here.
+ */
 export const RELEASE_REPOSITORY = "CyR1en/PatchTray";
 
-export const LATEST_MANIFEST_URL = `https://github.com/${RELEASE_REPOSITORY}/releases/latest/download/latest.json`;
+export const REPOSITORY_URL = `https://github.com/${RELEASE_REPOSITORY}`;
+
+export const LATEST_MANIFEST_URL = `${REPOSITORY_URL}/releases/latest/download/latest.json`;
 
 export type LatestRelease = {
   /** Version without a leading `v`, e.g. `0.3.2`. */
