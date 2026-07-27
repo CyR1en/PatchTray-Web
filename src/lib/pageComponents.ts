@@ -1,4 +1,3 @@
-import type { ComponentType } from "react";
 import { CheckoutSuccessPage } from "../pages/CheckoutSuccessPage";
 import { ConceptPage } from "../pages/ConceptPage";
 import { DownloadPage } from "../pages/DownloadPage";
@@ -13,13 +12,15 @@ import { SupportPage } from "../pages/SupportPage";
 import { TermsPage } from "../pages/TermsPage";
 import { VoicemeeterVst3GuidePage } from "../pages/VoicemeeterVst3GuidePage";
 import { Vst3WithoutDawGuidePage } from "../pages/Vst3WithoutDawGuidePage";
-import type { PageName } from "./types";
+import type { PageComponent, PageName } from "./types";
+import { BlogArticlePage } from "../pages/BlogArticlePage";
+import { BlogPage } from "../pages/BlogPage";
 
 /**
  * Eager component map used only by the server renderer. The browser uses
  * `pageLoaders.ts` so it downloads the current route instead of every page.
  */
-export const pageComponents: Record<PageName, ComponentType> = {
+export const pageComponents: Record<PageName, PageComponent> = {
   home: HomePage,
   download: DownloadPage,
   faq: FaqPage,
@@ -33,5 +34,7 @@ export const pageComponents: Record<PageName, ComponentType> = {
   support: SupportPage,
   checkoutSuccess: CheckoutSuccessPage,
   concepts: ConceptPage,
+  blog: BlogPage,
+  blogArticle: BlogArticlePage,
   notFound: NotFoundPage,
 };

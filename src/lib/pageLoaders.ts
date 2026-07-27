@@ -1,7 +1,6 @@
-import type { ComponentType } from "react";
-import type { PageName } from "./types";
+import type { PageComponent, PageName } from "./types";
 
-type PageLoader = () => Promise<ComponentType>;
+type PageLoader = () => Promise<PageComponent>;
 
 /**
  * One dynamic import per route keeps unrelated page code out of the initial
@@ -25,9 +24,12 @@ const pageLoaders: Record<PageName, PageLoader> = {
   checkoutSuccess: () =>
     import("../pages/CheckoutSuccessPage").then(({ CheckoutSuccessPage }) => CheckoutSuccessPage),
   concepts: () => import("../pages/ConceptPage").then(({ ConceptPage }) => ConceptPage),
+  blog: () => import("../pages/BlogPage").then(({ BlogPage }) => BlogPage),
+  blogArticle: () =>
+    import("../pages/BlogArticlePage").then(({ BlogArticlePage }) => BlogArticlePage),
   notFound: () => import("../pages/NotFoundPage").then(({ NotFoundPage }) => NotFoundPage),
 };
 
-export function loadPageComponent(page: PageName): Promise<ComponentType> {
+export function loadPageComponent(page: PageName): Promise<PageComponent> {
   return pageLoaders[page]();
 }

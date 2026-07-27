@@ -3,6 +3,13 @@ import { PageFrame } from "../components/layout/PageFrame";
 import { ArrowMark } from "../components/marks";
 import { publicRoutes } from "../lib/routes";
 
+const knownRoutes = __BLOG_ENABLED__
+  ? [
+      ...publicRoutes,
+      { path: "/blog", page: "blog" as const, listed: true, blurb: "blog — product and engineering notes" },
+    ]
+  : publicRoutes;
+
 function UnpatchedStage() {
   return (
     <div className="not-found__panel">
@@ -69,7 +76,7 @@ export function NotFoundPage() {
             </div>
             <nav className="not-found__routes" aria-label="Known routes">
               <p>known routes</p>
-              {publicRoutes.map((route) => (
+              {knownRoutes.map((route) => (
                 <a key={route.path} href={route.path}>
                   <span className="not-found__route-path">{route.path}</span>
                   <span className="not-found__route-name">{route.blurb}</span>

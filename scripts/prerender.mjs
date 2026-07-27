@@ -1,15 +1,23 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
+import { copyGeneratedBlogAssets } from "./blog/assets.mjs";
 
 const projectRoot = resolve(import.meta.dirname, "..");
 const outputRoot = resolve(projectRoot, "dist");
 const serverEntry = resolve(projectRoot, "dist-ssr", "entry-server.js");
 const templatePath = resolve(outputRoot, "index.html");
+const generatedBlogAssets = resolve(projectRoot, ".generated", "blog", "assets");
+const outputBlogAssets = resolve(outputRoot, "assets", "blog");
 
-const { getGuideFeed, getNotFoundPage, getSitemapUrls, getStaticPages, render } = await import(
-  `${pathToFileURL(serverEntry).href}?t=${Date.now()}`
-);
+const {
+  getBlogFeed,
+  getGuideFeed,
+  getNotFoundPage,
+  getSitemapEntries,
+  getStaticPages,
+  render,
+} = await import(`${pathToFileURL(serverEntry).href}?t=${Date.now()}`);
 
 const template = await readFile(templatePath, "utf8");
 const pages = getStaticPages();
@@ -33,6 +41,18 @@ function pageMeta(page) {
     `    <meta property="og:title" content="${escapeHtml(openGraph.title)}" />`,
     `    <meta property="og:description" content="${escapeHtml(openGraph.description)}" />`,
     `    <meta property="og:type" content="${escapeHtml(openGraph.type)}" />`,
+    openGraph.article
+      ? `    <meta property="article:published_time" content="${escapeHtml(openGraph.article.publishedTime)}" />`
+      : undefined,
+    openGraph.article
+      ? `    <meta property="article:modified_time" content="${escapeHtml(openGraph.article.modifiedTime)}" />`
+      : undefined,
+    openGraph.article
+      ? `    <meta property="article:author" content="${escapeHtml(openGraph.article.author)}" />`
+      : undefined,
+    ...(openGraph.article?.tags ?? []).map(
+      (tag) => `    <meta property="article:tag" content="${escapeHtml(tag)}" />`,
+    ),
     `    <meta property="og:url" content="${escapeHtml(openGraph.url)}" />`,
     `    <meta property="og:site_name" content="${escapeHtml(openGraph.siteName)}" />`,
     `    <meta property="og:locale" content="${escapeHtml(openGraph.locale)}" />`,
@@ -46,6 +66,10 @@ function pageMeta(page) {
     `    <meta name="twitter:description" content="${escapeHtml(twitter.description)}" />`,
     `    <meta name="twitter:image" content="${escapeHtml(twitter.image)}" />`,
     `    <meta name="twitter:image:alt" content="${escapeHtml(twitter.imageAlt)}" />`,
+    ...page.alternateFeeds.map(
+      (feed) =>
+        `    <link rel="alternate" type="${escapeHtml(feed.type)}" title="${escapeHtml(feed.title)}" href="${escapeHtml(feed.href)}" />`,
+    ),
     ...page.structuredDataJson.map(
       (json) =>
         `    <script type="application/ld+json" data-patchtray-structured-data="true">${json}</script>`,
@@ -81,7 +105,10 @@ await writePage(notFoundPage, resolve(outputRoot, "404.html"));
 const sitemap = [
   '<?xml version="1.0" encoding="UTF-8"?>',
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-  ...getSitemapUrls().map((url) => `  <url><loc>${escapeHtml(url)}</loc></url>`),
+  ...getSitemapEntries().map(
+    (entry) =>
+      `  <url><loc>${escapeHtml(entry.url)}</loc>${entry.lastmod ? `<lastmod>${escapeHtml(entry.lastmod)}</lastmod>` : ""}</url>`,
+  ),
   "</urlset>",
   "",
 ].join("\n");
@@ -90,3 +117,13 @@ console.log("[prerender] sitemap.xml");
 
 await writeFile(resolve(outputRoot, "guides", "feed.xml"), getGuideFeed(), "utf8");
 console.log("[prerender] guides/feed.xml");
+
+const blogFeed = getBlogFeed();
+if (blogFeed) {
+  await mkdir(resolve(outputRoot, "blog"), { recursive: true });
+  await writeFile(resolve(outputRoot, "blog", "feed.xml"), blogFeed, "utf8");
+  console.log("[prerender] blog/feed.xml");
+}
+
+const copiedBlogAssets = await copyGeneratedBlogAssets(generatedBlogAssets, outputBlogAssets);
+console.log(`[prerender] assets/blog (${copiedBlogAssets} generated asset${copiedBlogAssets === 1 ? "" : "s"})`);

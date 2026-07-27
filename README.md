@@ -42,4 +42,17 @@ media assets, and issue tracking:
 - [Getting started](https://www.patchtray.io/guide)
 - [Support](https://www.patchtray.io/support)
 
+## Website development
+
+Install dependencies and start the published-content development server:
+
+```sh
+npm install
+npm run dev
+```
+
+Use `npm run dev:blog` to review draft articles locally. See the
+[blog authoring guide](content/blog/README.md) for the content format,
+preview workflow, validation commands, and publication checklist.
+
 © 2026 CyR1en.

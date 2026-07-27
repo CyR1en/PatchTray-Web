@@ -10,6 +10,7 @@ export function SiteHeader({ current }: { current: PageName }) {
     ["home", "/"],
     ["download", "/download"],
     ["guide", "/guide"],
+    ...(__BLOG_ENABLED__ ? ([["blog", "/blog"]] as const) : []),
     ["faq", "/faq"],
   ] as const;
 

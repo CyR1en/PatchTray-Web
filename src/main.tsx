@@ -3,7 +3,8 @@ import { createRoot, hydrateRoot } from "react-dom/client";
 import { App } from "./App";
 import { installOutcomeTracking } from "./lib/analytics";
 import { loadPageComponent } from "./lib/pageLoaders";
-import { resolveRoute } from "./lib/routes";
+import { isPotentialBlogPath, notFoundPage, resolveFixedPage } from "./lib/routes";
+import type { ResolvedPage } from "./lib/types";
 import "./styles.css";
 
 /**
@@ -19,12 +20,20 @@ function stripQuery(url: string): string {
 
 async function mountApp() {
   const pathname = window.location.pathname;
-  const page = resolveRoute(pathname)?.page ?? "notFound";
-  const PageComponent = await loadPageComponent(page);
+  const fixedPage = resolveFixedPage(pathname);
+  let resolvedPage: ResolvedPage | undefined = fixedPage;
+
+  if (!resolvedPage && __BLOG_ENABLED__ && isPotentialBlogPath(pathname)) {
+    const { resolveClientBlogPage } = await import("./lib/blogClient");
+    resolvedPage = await resolveClientBlogPage(pathname);
+  }
+
+  resolvedPage ??= notFoundPage(pathname);
+  const PageComponent = await loadPageComponent(resolvedPage.page);
   const appRoot = document.getElementById("root")!;
   const app = (
     <StrictMode>
-      <App pathname={pathname} PageComponent={PageComponent} />
+      <App resolvedPage={resolvedPage} PageComponent={PageComponent} />
     </StrictMode>
   );
 

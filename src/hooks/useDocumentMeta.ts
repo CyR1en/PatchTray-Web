@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { resolvePageSeo } from "../lib/seo";
-import type { PageName } from "../lib/types";
+import type { AlternateFeed, ArticleOpenGraph } from "../lib/seo";
+import type { ResolvedPage } from "../lib/types";
 
 /**
  * Applies the current page's title, description, canonical URL, robots
@@ -50,9 +51,48 @@ function setStructuredData(items: string[]) {
   }
 }
 
-export function useDocumentMeta(page: PageName, path: string) {
+function setArticleMeta(article: ArticleOpenGraph | undefined) {
+  const properties = [
+    "article:published_time",
+    "article:modified_time",
+    "article:author",
+    "article:tag",
+  ];
+  for (const property of properties) {
+    document
+      .querySelectorAll(`meta[property="${property}"]`)
+      .forEach((tag) => tag.remove());
+  }
+  if (!article) return;
+
+  upsertMeta("property", "article:published_time", article.publishedTime);
+  upsertMeta("property", "article:modified_time", article.modifiedTime);
+  upsertMeta("property", "article:author", article.author);
+  for (const tagValue of article.tags) {
+    const tag = document.createElement("meta");
+    tag.setAttribute("property", "article:tag");
+    tag.content = tagValue;
+    document.head.append(tag);
+  }
+}
+
+function setAlternateFeeds(feeds: AlternateFeed[]) {
+  document
+    .querySelectorAll('link[rel="alternate"][type="application/atom+xml"]')
+    .forEach((tag) => tag.remove());
+  for (const feed of feeds) {
+    const tag = document.createElement("link");
+    tag.rel = "alternate";
+    tag.type = feed.type;
+    tag.title = feed.title;
+    tag.href = feed.href;
+    document.head.append(tag);
+  }
+}
+
+export function useDocumentMeta(resolvedPage: ResolvedPage) {
   useEffect(() => {
-    const seo = resolvePageSeo(page, path);
+    const seo = resolvePageSeo(resolvedPage);
     const { openGraph, twitter } = seo;
 
     document.title = seo.title;
@@ -76,12 +116,14 @@ export function useDocumentMeta(page: PageName, path: string) {
     upsertMeta("property", "og:image:width", String(openGraph.image.width));
     upsertMeta("property", "og:image:height", String(openGraph.image.height));
     upsertMeta("property", "og:image:type", openGraph.image.type);
+    setArticleMeta(openGraph.article);
 
     upsertMeta("name", "twitter:card", twitter.card);
     upsertMeta("name", "twitter:title", twitter.title);
     upsertMeta("name", "twitter:description", twitter.description);
     upsertMeta("name", "twitter:image", twitter.image);
     upsertMeta("name", "twitter:image:alt", twitter.imageAlt);
+    setAlternateFeeds(seo.alternateFeeds);
     setStructuredData(seo.structuredDataJson);
-  }, [page, path]);
+  }, [resolvedPage]);
 }

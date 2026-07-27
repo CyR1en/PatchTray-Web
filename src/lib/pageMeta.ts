@@ -126,6 +126,18 @@ export const pageMeta: Record<PageName, PageMeta> = {
     description: "Unlinked design-review route comparing the routing composition at two densities.",
     noindex: true,
   }),
+  blog: definePage({
+    title: "PatchTray blog — product, workflow, and engineering notes",
+    description:
+      "Product explanations, live audio workflows, engineering notes, release stories, and company updates from PatchTray.",
+    canonicalPath: "/blog",
+  }),
+  blogArticle: definePage({
+    title: "PatchTray blog article",
+    description:
+      "A PatchTray article about live Windows audio, VST3 processing, product workflows, or engineering.",
+    noindex: true,
+  }),
   notFound: definePage({
     title: "Route not found — PatchTray",
     description: "That address does not resolve to a PatchTray route.",

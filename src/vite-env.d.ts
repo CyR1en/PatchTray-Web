@@ -1,5 +1,7 @@
 /// <reference types="vite/client" />
 
+declare const __BLOG_ENABLED__: boolean;
+
 /** Release manifest captured at build time by `vite.config.ts`; `null` when the fetch failed. */
 declare const __RELEASE_MANIFEST__: unknown;
 

@@ -1,9 +1,9 @@
-import type { PageName } from "./types";
+import type { FixedPageName, ResolvedPage } from "./types";
 
 export type RouteDef = {
   /** Canonical path. No trailing slash, lowercase. */
   path: string;
-  page: PageName;
+  page: FixedPageName;
   /** Public destination: appears in the 404 route list. */
   listed: boolean;
   /** Shown beside the path wherever the route is listed. */
@@ -61,12 +61,37 @@ export const routes: readonly RouteDef[] = [
 /** Routes safe to advertise. Excludes `/concepts` and transactional pages. */
 export const publicRoutes = routes.filter((route) => route.listed);
 
+export function isPotentialBlogPath(pathname: string): boolean {
+  return pathname === "/blog" || pathname.startsWith("/blog/");
+}
+
 /**
- * Matches a browser path to a route. Trailing slashes and casing are normalized
- * so `/Download/` and `/download` resolve to the same page; anything unmatched
- * is a 404 rather than a silent fallback to home.
+ * Resolves an exact canonical browser path into a typed page model. Production
+ * case compatibility is handled by explicit redirects in vercel.json; unknown,
+ * mixed-case, trailing-slash, and nested paths must remain 404s in application
+ * rendering instead of hydrating canonical content into a 404 response.
  */
-export function resolveRoute(pathname: string): RouteDef | undefined {
-  const cleanPath = pathname.replace(/\/+$/, "").toLowerCase() || "/";
-  return routes.find((route) => route.path === cleanPath);
+export function resolveFixedPage(pathname: string): ResolvedPage | undefined {
+  const route = routes.find((candidate) => candidate.path === pathname);
+  if (route) {
+    return {
+      kind: "fixed",
+      page: route.page,
+      path: route.path,
+    };
+  }
+  return undefined;
+}
+
+export function notFoundPage(pathname: string): ResolvedPage {
+  return {
+    kind: "notFound",
+    page: "notFound",
+    path: "/404",
+    requestedPath: pathname,
+  };
+}
+
+export function resolvePage(pathname: string): ResolvedPage {
+  return resolveFixedPage(pathname) ?? notFoundPage(pathname);
 }

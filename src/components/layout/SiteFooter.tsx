@@ -39,6 +39,7 @@ export function SiteFooter() {
         <nav className="footer-links" aria-label="Support and legal">
           <FooterLink url={REPOSITORY_URL}>repository</FooterLink>
           <FooterLink url="/guides">guides</FooterLink>
+          {__BLOG_ENABLED__ ? <FooterLink url="/blog">blog</FooterLink> : null}
           <FooterLink url="/faq">faq</FooterLink>
           <FooterLink url="/support">support</FooterLink>
           <FooterLink url="/refunds">refunds</FooterLink>

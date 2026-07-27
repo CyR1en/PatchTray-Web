@@ -7,10 +7,16 @@
     "node": ">=20"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && npm run build:client && npm run build:server && node scripts/prerender.mjs && npm run verify:faq",
+    "dev": "npm run blog:generate && vite",
+    "dev:blog": "node scripts/generate-blog.mjs --include-drafts && vite --mode blog-preview",
+    "build": "npm run blog:test && npm run blog:generate && tsc -b && npm run build:client && npm run build:server && npm run verify:routes && node scripts/prerender.mjs && npm run blog:verify && npm run verify:faq",
     "build:client": "vite build",
     "build:server": "vite build --ssr src/entry-server.tsx --outDir dist-ssr",
+    "blog:generate": "node scripts/generate-blog.mjs",
+    "blog:test": "node --test scripts/blog/*.test.mjs",
+    "blog:verify": "node scripts/verify-blog.mjs",
+    "blog:verify:production": "node scripts/verify-blog.mjs --origin https://www.patchtray.io",
+    "verify:routes": "node scripts/verify-routes.mjs",
     "verify:faq": "node scripts/verify-faq.mjs",
     "verify:faq:production": "node scripts/verify-faq.mjs --origin https://www.patchtray.io"
   },
@@ -27,6 +33,20 @@
   },
   "devDependencies": {
     "@types/react": "^19.2.17",
-    "@types/react-dom": "^19.2.3"
+    "@types/react-dom": "^19.2.3",
+    "fast-xml-parser": "^5.10.1",
+    "github-slugger": "^2.0.0",
+    "mdast-util-to-string": "^4.0.0",
+    "rehype-highlight": "^7.0.2",
+    "rehype-sanitize": "^6.0.0",
+    "rehype-stringify": "^10.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.2",
+    "sharp": "^0.35.3",
+    "unified": "^11.0.5",
+    "unist-util-visit": "^5.1.0",
+    "yaml": "^2.9.0",
+    "zod": "^4.4.3"
   }
 }
