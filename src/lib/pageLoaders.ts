@@ -11,6 +11,7 @@ type PageLoader = () => Promise<ComponentType>;
 const pageLoaders: Record<PageName, PageLoader> = {
   home: () => import("../pages/HomePage").then(({ HomePage }) => HomePage),
   download: () => import("../pages/DownloadPage").then(({ DownloadPage }) => DownloadPage),
+  faq: () => import("../pages/FaqPage").then(({ FaqPage }) => FaqPage),
   guide: () => import("../pages/GuidePage").then(({ GuidePage }) => GuidePage),
   guides: () => import("../pages/GuidesPage").then(({ GuidesPage }) => GuidesPage),
   voicemeeterVst3Guide: () =>

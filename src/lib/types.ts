@@ -7,6 +7,7 @@ export type PageName =
   | "download"
   | "guide"
   | "guides"
+  | "faq"
   | "voicemeeterVst3Guide"
   | "vst3WithoutDawGuide"
   | "privacy"

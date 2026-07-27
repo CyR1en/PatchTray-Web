@@ -2,6 +2,7 @@ import type { ComponentType } from "react";
 import { CheckoutSuccessPage } from "../pages/CheckoutSuccessPage";
 import { ConceptPage } from "../pages/ConceptPage";
 import { DownloadPage } from "../pages/DownloadPage";
+import { FaqPage } from "../pages/FaqPage";
 import { GuidePage } from "../pages/GuidePage";
 import { GuidesPage } from "../pages/GuidesPage";
 import { HomePage } from "../pages/HomePage";
@@ -21,6 +22,7 @@ import type { PageName } from "./types";
 export const pageComponents: Record<PageName, ComponentType> = {
   home: HomePage,
   download: DownloadPage,
+  faq: FaqPage,
   guide: GuidePage,
   guides: GuidesPage,
   voicemeeterVst3Guide: VoicemeeterVst3GuidePage,

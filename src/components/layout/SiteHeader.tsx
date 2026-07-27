@@ -10,6 +10,7 @@ export function SiteHeader({ current }: { current: PageName }) {
     ["home", "/"],
     ["download", "/download"],
     ["guide", "/guide"],
+    ["faq", "/faq"],
   ] as const;
 
   return (

@@ -1,0 +1,106 @@
+export type FaqEntry = {
+  id: string;
+  category: "product" | "routing" | "plugins" | "licensing";
+  question: string;
+  answer: string;
+  links?: readonly { label: string; href: string }[];
+};
+
+/**
+ * One source of truth for the visible FAQ and its FAQPage structured data.
+ * Answers are intentionally direct and self-contained so they work as search
+ * snippets without requiring the surrounding page.
+ */
+export const faqEntries: readonly FaqEntry[] = [
+  {
+    id: "what-is-patchtray",
+    category: "product",
+    question: "What is PatchTray?",
+    answer:
+      "PatchTray is a Windows VST3 host for live audio. It connects an ASIO input, one or more VST3 effects, and an ASIO output on a visual canvas, then keeps that processing chain running from the system tray.",
+    links: [{ label: "see how the signal path works", href: "/" }],
+  },
+  {
+    id: "who-is-it-for",
+    category: "product",
+    question: "Who is PatchTray for?",
+    answer:
+      "PatchTray is for Windows users who need VST3 processing outside a recording session, including streamers, broadcasters, voice-chat users, and musicians with a live microphone or instrument chain.",
+  },
+  {
+    id: "requirements",
+    category: "routing",
+    question: "What do I need to run PatchTray?",
+    answer:
+      "You need Windows, a working ASIO driver, and at least one compatible VST3 effect. Your input and output must be available through the ASIO driver you select.",
+    links: [{ label: "review the download requirements", href: "/download" }],
+  },
+  {
+    id: "without-daw",
+    category: "routing",
+    question: "Can I run VST3 effects without a DAW?",
+    answer:
+      "Yes. PatchTray hosts VST3 effects directly, so you can process a live ASIO signal without opening a DAW or creating a recording project.",
+    links: [{ label: "follow the no-DAW guide", href: "/guides/run-vst3-without-daw" }],
+  },
+  {
+    id: "voicemeeter",
+    category: "routing",
+    question: "Does PatchTray work with Voicemeeter?",
+    answer:
+      "Yes. PatchTray can process Voicemeeter insert channels when you select the matching Voicemeeter ASIO driver and connect the corresponding input and output channels in PatchTray.",
+    links: [{ label: "set up a Voicemeeter insert", href: "/guides/voicemeeter-vst3-plugins" }],
+  },
+  {
+    id: "audio-route",
+    category: "routing",
+    question: "How does audio move through PatchTray?",
+    answer:
+      "Audio enters through an ASIO input node, passes through the connected VST3 plugin nodes in order, and leaves through an ASIO output node. The cables on the canvas show the active signal path.",
+    links: [{ label: "build your first route", href: "/guide" }],
+  },
+  {
+    id: "vst3-only",
+    category: "plugins",
+    question: "Does PatchTray support VST2 plugins?",
+    answer:
+      "No. PatchTray is designed for VST3 effects and does not host VST2 plugins. Use the 64-bit VST3 version of a plugin when its developer provides one.",
+  },
+  {
+    id: "instruments",
+    category: "plugins",
+    question: "Can PatchTray load VST instruments?",
+    answer:
+      "PatchTray is built for live audio effects, not software instruments. Use effect plugins such as equalizers, compressors, gates, de-essers, noise reduction, and reverbs in the signal chain.",
+  },
+  {
+    id: "latency",
+    category: "plugins",
+    question: "How can I reduce audio latency?",
+    answer:
+      "Start with a stable ASIO buffer size, use low-latency plugins, and keep the route as short as practical. Smaller buffers can reduce delay but demand more from the CPU, so lower the buffer gradually and test for clicks or dropouts.",
+  },
+  {
+    id: "free-vs-pro",
+    category: "licensing",
+    question: "What is the difference between PatchTray Free and Pro?",
+    answer:
+      "PatchTray Free provides the core live-routing workflow with a limited number of VST3 nodes. PatchTray Pro removes the node limit and adds presets for saving and recalling complete routing setups.",
+    links: [{ label: "compare Free and Pro", href: "/download#compare" }],
+  },
+  {
+    id: "offline",
+    category: "licensing",
+    question: "Does PatchTray need a constant internet connection?",
+    answer:
+      "No. PatchTray Pro uses a time-limited offline lease after activation, so normal audio processing does not require a constant internet connection. It reconnects periodically to refresh the license.",
+  },
+  {
+    id: "support",
+    category: "product",
+    question: "Where can I get help with PatchTray?",
+    answer:
+      "Use the PatchTray support page for installation, audio routing, activation, device, billing, privacy, or security questions. Include your Windows version, ASIO driver, PatchTray version, and exact error text for audio issues.",
+    links: [{ label: "open PatchTray support", href: "/support" }],
+  },
+];

@@ -74,6 +74,13 @@ export const pageMeta: Record<PageName, PageMeta> = {
       "Practical PatchTray guides for Voicemeeter inserts, standalone VST3 effects, ASIO routing, and live Windows audio.",
     canonicalPath: "/guides",
   }),
+  faq: definePage({
+    title: "PatchTray FAQ — VST3, ASIO, Voicemeeter, and licensing",
+    description:
+      "Direct answers about PatchTray for Windows, live VST3 processing, ASIO routing, Voicemeeter inserts, latency, and Free versus Pro.",
+    canonicalPath: "/faq",
+    openGraphTitle: "PatchTray FAQ — answers for live Windows audio",
+  }),
   voicemeeterVst3Guide: definePage({
     title: "How to use VST3 plugins with Voicemeeter | PatchTray",
     description:

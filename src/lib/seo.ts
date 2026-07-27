@@ -1,5 +1,6 @@
 import { siteConfig } from "../config";
 import { guideArticles } from "./guides";
+import { faqEntries } from "./faqs";
 import { REPOSITORY_URL } from "./release";
 import { pageMeta } from "./pageMeta";
 import type { PageName } from "./types";
@@ -163,6 +164,36 @@ function structuredData(page: PageName, pageUrl: string): unknown[] {
           name: article.title,
           url: absoluteUrl(article.path),
         })),
+      },
+    ];
+  }
+
+  if (page === "faq") {
+    return [
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "@id": `${pageUrl}#faq`,
+        url: pageUrl,
+        name: pageMeta.faq.title,
+        description: pageMeta.faq.description,
+        inLanguage: "en-US",
+        mainEntity: faqEntries.map((entry) => ({
+          "@type": "Question",
+          name: entry.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: entry.answer,
+          },
+        })),
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "PatchTray", item: absoluteUrl("/") },
+          { "@type": "ListItem", position: 2, name: "FAQ", item: pageUrl },
+        ],
       },
     ];
   }
