@@ -15,7 +15,7 @@ tags:
   - "audio latency"
 image:
   src: "./hero.png"
-  alt: "Audio buffer blocks passing through three VST3 processing stages just before an orange real-time deadline."
+  alt: "A PatchTray-style route connecting input, VST3 processing, and output nodes, completing before an orange audio-buffer deadline."
 status: "published"
 featured: true
 ---
