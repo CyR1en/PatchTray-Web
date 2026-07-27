@@ -2266,6 +2266,11 @@ img { display: block; max-width: 100%; }
 .blog-article__lead picture,
 .blog-article__lead img { width: 100%; }
 .blog-article__lead img {
+  /* The generated img carries width/height attributes. Their presentational
+     hint beats width:100%, so without height:auto the intrinsic height wins,
+     max-height clamps it to 720px, and object-fit crops the lead to a centre
+     slice on every viewport under the full content column. */
+  height: auto;
   max-height: 720px;
   object-fit: cover;
   filter: saturate(.84) contrast(1.03);
