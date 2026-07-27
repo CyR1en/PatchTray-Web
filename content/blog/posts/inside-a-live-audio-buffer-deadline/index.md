@@ -2,6 +2,7 @@
 schemaVersion: 1
 title: "Inside a 2.67 ms deadline: how a Windows VST3 host keeps audio from crackling"
 summary: "A 128-sample buffer at 48 kHz gives a live host 2.67 milliseconds per processing block. Here is what must happen before that clock runs out."
+publishedAt: "2026-07-27T22:15:55Z"
 author:
   name: "PatchTray"
   type: "Organization"
@@ -12,7 +13,10 @@ tags:
   - "ASIO"
   - "VST3 hosting"
   - "audio latency"
-status: "draft"
+image:
+  src: "./hero.png"
+  alt: "Audio buffer blocks passing through three VST3 processing stages just before an orange real-time deadline."
+status: "published"
 featured: true
 ---
 
