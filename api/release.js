@@ -17,7 +17,7 @@
  * configured fallback either way. Keep this URL in step with
  * `LATEST_MANIFEST_URL` there.
  */
-const LATEST_MANIFEST_URL = "https://github.com/CyR1en/PatchTray/releases/latest/download/latest.json";
+const LATEST_MANIFEST_URL = "https://github.com/PatchTray/PatchTray/releases/latest/download/latest.json";
 
 export default async function handler(_request, response) {
   response.setHeader("Content-Type", "application/json; charset=utf-8");

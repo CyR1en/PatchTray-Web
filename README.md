@@ -36,7 +36,7 @@ npm run preview
 
 ## Release data
 
-The version number and the Windows download link are **not** maintained by hand. They come from the `latest.json` updater manifest attached to the newest release of [CyR1en/PatchTray](https://github.com/CyR1en/PatchTray/releases/latest), so publishing a release updates the site without a redeploy.
+The version number and the Windows download link are **not** maintained by hand. They come from the `latest.json` updater manifest attached to the newest release of [PatchTray/PatchTray](https://github.com/PatchTray/PatchTray/releases/latest), so publishing a release updates the site without a redeploy.
 
 | Piece | Role |
 | --- | --- |

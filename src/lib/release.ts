@@ -18,7 +18,7 @@
  * The public repository: release artifacts and issue tracking. PatchTray's
  * source is closed and lives elsewhere — never link that repository from here.
  */
-export const RELEASE_REPOSITORY = "CyR1en/PatchTray";
+export const RELEASE_REPOSITORY = "PatchTray/PatchTray";
 
 export const REPOSITORY_URL = `https://github.com/${RELEASE_REPOSITORY}`;
 
