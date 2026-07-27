@@ -35,6 +35,13 @@ function start() {
   if (started) return;
   started = true;
 
+  // Vite dev serves the proxy locally, and the production domains have the
+  // Vercel function. Static preview hosts intentionally use the build-time
+  // snapshot instead of producing a known `/api/release` 404.
+  const isProductionHost =
+    window.location.hostname === "www.patchtray.io" || window.location.hostname === "patchtray.io";
+  if (!import.meta.env.DEV && !isProductionHost) return;
+
   void fetch(siteConfig.releaseManifestUrl, { headers: { accept: "application/json" } })
     .then((response) => (response.ok ? (response.json() as Promise<unknown>) : null))
     .then((manifest) => {
@@ -55,5 +62,5 @@ function subscribe(listener: () => void) {
 }
 
 export function useLatestRelease(): LatestRelease {
-  return useSyncExternalStore(subscribe, () => snapshot);
+  return useSyncExternalStore(subscribe, () => snapshot, () => snapshot);
 }

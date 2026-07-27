@@ -1,6 +1,16 @@
 {
-  "rewrites": [
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/Download", "destination": "/download", "permanent": true },
+    { "source": "/Guide", "destination": "/guide", "permanent": true },
+    { "source": "/Privacy", "destination": "/privacy", "permanent": true },
+    { "source": "/Terms", "destination": "/terms", "permanent": true },
+    { "source": "/Refunds", "destination": "/refunds", "permanent": true },
+    { "source": "/Support", "destination": "/support", "permanent": true },
+    { "source": "/Concepts", "destination": "/concepts", "permanent": true },
+    { "source": "/Checkout/Success", "destination": "/checkout/success", "permanent": true }
   ],
   "headers": [
     {

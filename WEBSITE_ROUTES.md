@@ -2,7 +2,7 @@
 
 Status: planned from the licensing-service implementation and rollout notes as of 2026-07-25.
 
-This document covers browser pages on `https://patchtray.io`. It does not turn
+This document covers browser pages on `https://www.patchtray.io`. It does not turn
 the licensing API on `https://license.patchtray.io` into website pages.
 
 ## Current routes
@@ -12,6 +12,9 @@ the licensing API on `https://license.patchtray.io` into website pages.
 | `/` | Product overview and Pro comparison | Existing |
 | `/download` | Installer, requirements, and Pro checkout actions | Existing |
 | `/guide` | First-use guide | Existing |
+| `/guides` | Evergreen VST3 and ASIO workflow guide collection | Added locally; production publishing follows the Search Console indexing gate |
+| `/guides/voicemeeter-vst3-plugins` | Voicemeeter insert and VST3 routing guide | Added locally; production publishing follows the Search Console indexing gate |
+| `/guides/run-vst3-without-daw` | Standalone live VST3 host guide | Added locally; production publishing follows the Search Console indexing gate |
 | `/concepts` | Unlinked design-review page | Existing; not a public navigation item |
 | `/privacy` | Privacy policy | Added and linked; retention is finalized, legal review remains |
 | `/terms` | Product, license, and sale terms | Added and linked; two `<Pending>` items still block a final publish |
@@ -29,7 +32,7 @@ content review and deployment configuration, not website code:
    PatchTray will be sold.
 3. Set the `/support` form's server environment (see the README) so the endpoint
    can verify Turnstile, rate-limit, and send through Resend.
-4. Point both live Stripe Payment Links at `https://patchtray.io/checkout/success`.
+4. Point both live Stripe Payment Links at `https://www.patchtray.io/checkout/success`.
 5. Set the real Payment Link URLs in Vercel, then run the private production
    purchase test before enabling checkout for the public.
 
@@ -60,7 +63,7 @@ After this route is deployed, configure the monthly and lifetime Stripe
 Payment Links to redirect to:
 
 ```text
-https://patchtray.io/checkout/success
+https://www.patchtray.io/checkout/success
 ```
 
 ### `/privacy`
@@ -213,12 +216,13 @@ When the routes above are implemented:
 4. Keep `/concepts` unlinked and exclude it from the public route list.
 5. Give `/privacy`, `/terms`, `/refunds`, and `/support` canonical metadata;
    give `/checkout/success` `noindex` metadata.
-6. Preserve the current Vercel SPA rewrite so direct loads and browser refreshes
-   work for every route.
+6. Pre-render every route so direct loads and browser refreshes receive complete
+   route-specific HTML. Do not add a catch-all rewrite that turns unknown URLs
+   into HTTP 200 responses.
 7. Test every route with and without a trailing slash, at mobile and desktop
    widths, with keyboard navigation, and from a direct URL load.
-8. Verify that unknown routes still render the 404 page rather than silently
-   becoming the home page.
+8. Verify that unknown routes render the branded 404 page with HTTP 404 rather
+   than silently becoming the home page.
 
 ## Recommended implementation order
 

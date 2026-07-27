@@ -1,6 +1,8 @@
 User-agent: *
 Allow: /
 
+Sitemap: https://www.patchtray.io/sitemap.xml
+
 # /checkout/success and /concepts are kept out of search results with an
 # X-Robots-Tag header and a noindex meta tag, not with Disallow. A disallowed URL
 # cannot be fetched, so a crawler would never read the noindex it is meant to obey.

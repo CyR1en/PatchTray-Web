@@ -1,5 +1,6 @@
 import { siteConfig } from "../config";
 import { ArrowMark, WindowsMark } from "../components/marks";
+import { CaptureImage } from "../components/CaptureImage";
 import { DownloadBuildButton } from "../components/DownloadBuildButton";
 import { ProCheckoutActions } from "../components/ProCheckoutActions";
 import { ProPriceNote } from "../components/ProPriceNote";
@@ -81,8 +82,12 @@ export function DownloadPage() {
           </a>
         </div>
         <figure className="app-capture app-capture--settings">
-          <img
-            src="/assets/patchtray-settings.png"
+          <CaptureImage
+            baseName="patchtray-settings"
+            sourceWidths={[640, 1280]}
+            width={1280}
+            height={720}
+            sizes="(max-width: 980px) calc(100vw - 32px), 42vw"
             alt="PatchTray audio device settings screen with ASIO device, sample rate, and buffer size fields."
           />
           <figcaption>

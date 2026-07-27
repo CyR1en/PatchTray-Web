@@ -1,0 +1,35 @@
+import type { ComponentType } from "react";
+import { CheckoutSuccessPage } from "../pages/CheckoutSuccessPage";
+import { ConceptPage } from "../pages/ConceptPage";
+import { DownloadPage } from "../pages/DownloadPage";
+import { GuidePage } from "../pages/GuidePage";
+import { GuidesPage } from "../pages/GuidesPage";
+import { HomePage } from "../pages/HomePage";
+import { NotFoundPage } from "../pages/NotFoundPage";
+import { PrivacyPage } from "../pages/PrivacyPage";
+import { RefundsPage } from "../pages/RefundsPage";
+import { SupportPage } from "../pages/SupportPage";
+import { TermsPage } from "../pages/TermsPage";
+import { VoicemeeterVst3GuidePage } from "../pages/VoicemeeterVst3GuidePage";
+import { Vst3WithoutDawGuidePage } from "../pages/Vst3WithoutDawGuidePage";
+import type { PageName } from "./types";
+
+/**
+ * Eager component map used only by the server renderer. The browser uses
+ * `pageLoaders.ts` so it downloads the current route instead of every page.
+ */
+export const pageComponents: Record<PageName, ComponentType> = {
+  home: HomePage,
+  download: DownloadPage,
+  guide: GuidePage,
+  guides: GuidesPage,
+  voicemeeterVst3Guide: VoicemeeterVst3GuidePage,
+  vst3WithoutDawGuide: Vst3WithoutDawGuidePage,
+  privacy: PrivacyPage,
+  terms: TermsPage,
+  refunds: RefundsPage,
+  support: SupportPage,
+  checkoutSuccess: CheckoutSuccessPage,
+  concepts: ConceptPage,
+  notFound: NotFoundPage,
+};

@@ -1,8 +1,10 @@
 import { siteConfig } from "../config";
 import { WindowsMark } from "../components/marks";
+import { CaptureImage } from "../components/CaptureImage";
 import { SectionRule } from "../components/SectionRule";
 import { PageFrame } from "../components/layout/PageFrame";
 import { useLatestRelease } from "../hooks/useLatestRelease";
+import { analyticsEvents } from "../lib/analytics";
 
 export function GuidePage() {
   const release = useLatestRelease();
@@ -60,8 +62,12 @@ export function GuidePage() {
               </p>
             </div>
             <figure className="app-capture app-capture--ports">
-              <img
-                src="/assets/patchtray-ports.png"
+              <CaptureImage
+                baseName="patchtray-ports"
+                sourceWidths={[640, 1280]}
+                width={1280}
+                height={720}
+                sizes="(max-width: 980px) calc(100vw - 32px), 40vw"
                 alt="PatchTray dialog for configuring stereo ASIO input ports and selecting channel assignments."
               />
               <figcaption>
@@ -107,9 +113,19 @@ export function GuidePage() {
               nodes.
             </p>
             <div className="guide-end">
-              <a href="/download" className="button button--primary">
-                <WindowsMark /> [ download for windows ]
-              </a>
+              <div className="guide-end__actions">
+                <a
+                  href="/download"
+                  className="button button--primary"
+                  data-analytics-event={analyticsEvents.guideConversion}
+                  data-analytics-detail="quickstart_download"
+                >
+                  <WindowsMark /> [ download for windows ]
+                </a>
+                <a href="/guides" className="button button--text">
+                  [ browse workflow guides ]
+                </a>
+              </div>
               <p>
                 PatchTray {release.version} · {siteConfig.releaseState}
               </p>

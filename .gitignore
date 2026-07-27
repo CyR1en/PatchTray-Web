@@ -48,7 +48,8 @@ coverage/
 .opencode/
 .claude/
 /assets/
-/docs/
+/docs/*
+!/docs/SEO_PLAN.md
 local_doc/
 local_docs/
 AGENTS.md

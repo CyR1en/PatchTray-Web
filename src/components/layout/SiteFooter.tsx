@@ -38,6 +38,7 @@ export function SiteFooter() {
         </div>
         <nav className="footer-links" aria-label="Support and legal">
           <FooterLink url={REPOSITORY_URL}>repository</FooterLink>
+          <FooterLink url="/guides">guides</FooterLink>
           <FooterLink url="/support">support</FooterLink>
           <FooterLink url="/refunds">refunds</FooterLink>
           <FooterLink url="/privacy">privacy</FooterLink>

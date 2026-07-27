@@ -1,8 +1,9 @@
 import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/react";
+import { createRoot, hydrateRoot } from "react-dom/client";
 import { App } from "./App";
+import { installOutcomeTracking } from "./lib/analytics";
+import { loadPageComponent } from "./lib/pageLoaders";
+import { resolveRoute } from "./lib/routes";
 import "./styles.css";
 
 /**
@@ -16,10 +17,39 @@ function stripQuery(url: string): string {
   return cut === -1 ? url : url.slice(0, cut);
 }
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <App />
-    <Analytics beforeSend={(event) => ({ ...event, url: stripQuery(event.url) })} />
-    <SpeedInsights beforeSend={(event) => ({ ...event, url: stripQuery(event.url) })} />
-  </StrictMode>,
-);
+async function mountApp() {
+  const pathname = window.location.pathname;
+  const page = resolveRoute(pathname)?.page ?? "notFound";
+  const PageComponent = await loadPageComponent(page);
+  const appRoot = document.getElementById("root")!;
+  const app = (
+    <StrictMode>
+      <App pathname={pathname} PageComponent={PageComponent} />
+    </StrictMode>
+  );
+
+  if (appRoot.childElementCount > 0) {
+    hydrateRoot(appRoot, app);
+  } else {
+    createRoot(appRoot).render(app);
+  }
+}
+
+async function mountTelemetry() {
+  if (window.location.hostname !== "www.patchtray.io" && window.location.hostname !== "patchtray.io") return;
+
+  const [{ Analytics, track }, { SpeedInsights }] = await Promise.all([
+    import("@vercel/analytics/react"),
+    import("@vercel/speed-insights/react"),
+  ]);
+  installOutcomeTracking(track);
+  createRoot(document.getElementById("telemetry-root")!).render(
+    <StrictMode>
+      <Analytics beforeSend={(event) => ({ ...event, url: stripQuery(event.url) })} />
+      <SpeedInsights beforeSend={(event) => ({ ...event, url: stripQuery(event.url) })} />
+    </StrictMode>,
+  );
+}
+
+void mountApp();
+void mountTelemetry();

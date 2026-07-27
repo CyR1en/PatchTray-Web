@@ -1,5 +1,13 @@
 import type { PageName } from "./types";
 
+export type OpenGraphImage = {
+  path: string;
+  alt: string;
+  width: number;
+  height: number;
+  type: "image/png" | "image/jpeg" | "image/webp";
+};
+
 export type PageMeta = {
   title: string;
   description: string;
@@ -10,62 +18,110 @@ export type PageMeta = {
   canonicalPath?: string;
   /** Transactional, unlinked, or error routes. Pairs with an `X-Robots-Tag` header. */
   noindex?: true;
+  openGraphTitle: string;
+  openGraphDescription: string;
+  openGraphImage: OpenGraphImage;
+  openGraphType: "website";
 };
 
+type PageMetaInput = Omit<
+  PageMeta,
+  "openGraphTitle" | "openGraphDescription" | "openGraphImage" | "openGraphType"
+> &
+  Partial<Pick<PageMeta, "openGraphTitle" | "openGraphDescription">>;
+
+const PATCHTRAY_SOCIAL_IMAGE: OpenGraphImage = {
+  path: "/assets/patchtray-canvas.png",
+  alt: "PatchTray routing an ASIO input through a VST3 plugin to an ASIO output on its visual canvas.",
+  width: 1745,
+  height: 1073,
+  type: "image/png",
+};
+
+function definePage(meta: PageMetaInput): PageMeta {
+  return {
+    ...meta,
+    openGraphTitle: meta.openGraphTitle ?? meta.title,
+    openGraphDescription: meta.openGraphDescription ?? meta.description,
+    openGraphImage: PATCHTRAY_SOCIAL_IMAGE,
+    openGraphType: "website",
+  };
+}
+
 export const pageMeta: Record<PageName, PageMeta> = {
-  home: {
+  home: definePage({
     title: "PatchTray — process live audio with VST3 plugins",
     description:
       "A Windows VST3 host for building visible ASIO signal chains and keeping them running from the system tray.",
     canonicalPath: "/",
-  },
-  download: {
+    openGraphTitle: "PatchTray — a visible VST3 host for live Windows audio",
+  }),
+  download: definePage({
     title: "Download PatchTray for Windows",
-    description: "PatchTray public beta download, requirements, and Free / Pro details.",
+    description:
+      "Download PatchTray for Windows, review ASIO requirements, and compare the Free and Pro VST3 host plans.",
     canonicalPath: "/download",
-  },
-  guide: {
+  }),
+  guide: definePage({
     title: "PatchTray guide — build your first live plugin chain",
     description:
-      "A practical starting guide for PatchTray, Windows, ASIO, VST3 processors, and mixer routing.",
+      "Learn how to choose ASIO ports, add VST3 processors, connect a live audio route, and save it in PatchTray.",
     canonicalPath: "/guide",
-  },
-  privacy: {
+  }),
+  guides: definePage({
+    title: "VST3 and ASIO guides for Windows — PatchTray",
+    description:
+      "Practical PatchTray guides for Voicemeeter inserts, standalone VST3 effects, ASIO routing, and live Windows audio.",
+    canonicalPath: "/guides",
+  }),
+  voicemeeterVst3Guide: definePage({
+    title: "How to use VST3 plugins with Voicemeeter | PatchTray",
+    description:
+      "Configure a Voicemeeter ASIO insert, match its channels in PatchTray, build a VST3 microphone chain, and test the route safely.",
+    canonicalPath: "/guides/voicemeeter-vst3-plugins",
+  }),
+  vst3WithoutDawGuide: definePage({
+    title: "How to run VST3 effects without a DAW on Windows",
+    description:
+      "Connect an ASIO input, live VST3 effect chain, and ASIO output in PatchTray without opening a recording session.",
+    canonicalPath: "/guides/run-vst3-without-daw",
+  }),
+  privacy: definePage({
     title: "Privacy policy — PatchTray",
     description:
       "What PatchTray stores for purchases, licenses, and device activation, who processes it, and how long it is kept.",
     canonicalPath: "/privacy",
-  },
-  terms: {
+  }),
+  terms: definePage({
     title: "Terms — PatchTray",
     description:
       "The terms covering PatchTray Free and Pro entitlements, billing, device limits, offline leases, and acceptable use.",
     canonicalPath: "/terms",
-  },
-  refunds: {
+  }),
+  refunds: definePage({
     title: "Refunds and disputes — PatchTray",
     description: "The refund and payment-dispute policy for PatchTray Pro monthly and lifetime licenses.",
     canonicalPath: "/refunds",
-  },
-  support: {
-    title: "Support — PatchTray",
+  }),
+  support: definePage({
+    title: "PatchTray support — licenses, activation, downloads, and billing",
     description:
       "Get help with PatchTray licenses, activation, device limits, downloads, billing, and privacy or security reports.",
     canonicalPath: "/support",
-  },
-  checkoutSuccess: {
+  }),
+  checkoutSuccess: definePage({
     title: "Payment submitted — PatchTray Pro",
     description: "Your PatchTray Pro payment was submitted. Your license key arrives by email.",
     noindex: true,
-  },
-  concepts: {
+  }),
+  concepts: definePage({
     title: "PatchTray concepts — design review",
     description: "Unlinked design-review route comparing the routing composition at two densities.",
     noindex: true,
-  },
-  notFound: {
+  }),
+  notFound: definePage({
     title: "Route not found — PatchTray",
-    description: "That address does not resolve to a route on patchtray.io.",
+    description: "That address does not resolve to a PatchTray route.",
     noindex: true,
-  },
+  }),
 };

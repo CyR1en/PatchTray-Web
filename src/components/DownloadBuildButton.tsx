@@ -1,5 +1,6 @@
 import { hasValue } from "../config";
 import { useLatestRelease } from "../hooks/useLatestRelease";
+import { analyticsEvents } from "../lib/analytics";
 import { WindowsMark } from "./marks";
 
 export function DownloadBuildButton({ className = "" }: { className?: string }) {
@@ -7,7 +8,12 @@ export function DownloadBuildButton({ className = "" }: { className?: string }) 
 
   if (hasValue(downloadUrl)) {
     return (
-      <a className={`button button--primary ${className}`} href={downloadUrl}>
+      <a
+        className={`button button--primary ${className}`}
+        href={downloadUrl}
+        data-analytics-event={analyticsEvents.installerDownload}
+        data-analytics-detail="download_page"
+      >
         <WindowsMark /> [ download for windows ]
       </a>
     );

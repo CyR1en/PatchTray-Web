@@ -1,14 +1,11 @@
+import type { ComponentType } from "react";
 import { useDocumentMeta } from "./hooks/useDocumentMeta";
 import { resolveRoute } from "./lib/routes";
-import { NotFoundPage } from "./pages/NotFoundPage";
 
-export function App() {
-  const route = resolveRoute(window.location.pathname);
+export function App({ pathname, PageComponent }: { pathname: string; PageComponent: ComponentType }) {
+  const route = resolveRoute(pathname);
 
-  useDocumentMeta(route?.page ?? "notFound");
+  useDocumentMeta(route?.page ?? "notFound", route?.path ?? "/404");
 
-  if (!route) return <NotFoundPage />;
-
-  const Page = route.component;
-  return <Page />;
+  return <PageComponent />;
 }

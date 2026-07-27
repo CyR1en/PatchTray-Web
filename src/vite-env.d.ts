@@ -11,6 +11,7 @@ interface ImportMetaEnv {
   readonly VITE_RELEASE_MANIFEST_URL?: string;
   readonly VITE_PRO_MONTHLY_PRICE?: string;
   readonly VITE_PRO_LIFETIME_PRICE?: string;
+  readonly VITE_PRO_PRICE_CURRENCY?: string;
   readonly VITE_PRO_MONTHLY_CHECKOUT_URL?: string;
   readonly VITE_PRO_LIFETIME_CHECKOUT_URL?: string;
   readonly VITE_SUPPORT_EMAIL?: string;

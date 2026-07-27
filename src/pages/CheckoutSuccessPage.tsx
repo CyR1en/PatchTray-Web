@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { PageFrame } from "../components/layout/PageFrame";
 import { SectionRule } from "../components/SectionRule";
 import { WindowsMark } from "../components/marks";
+import { analyticsEvents } from "../lib/analytics";
 
 /**
  * The return destination for both Stripe Payment Links.
@@ -62,7 +63,12 @@ export function CheckoutSuccessPage() {
         </ol>
 
         <div className="checkout-actions">
-          <a className="button button--primary" href="/download">
+          <a
+            className="button button--primary"
+            href="/download"
+            data-analytics-event={analyticsEvents.downloadPage}
+            data-analytics-detail="checkout_success"
+          >
             <WindowsMark /> [ download patchtray ]
           </a>
           <a className="button button--line" href="/guide">

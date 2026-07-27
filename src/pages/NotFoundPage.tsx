@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { PageFrame } from "../components/layout/PageFrame";
 import { ArrowMark } from "../components/marks";
 import { publicRoutes } from "../lib/routes";
@@ -36,7 +37,13 @@ function UnpatchedStage() {
 }
 
 export function NotFoundPage() {
-  const requestedPath = typeof window === "undefined" ? "/" : window.location.pathname;
+  // A static 404 document cannot know the requested URL at build time. Keep the
+  // server and hydration output stable, then fill the actual path in afterward.
+  const [requestedPath, setRequestedPath] = useState("/");
+
+  useEffect(() => {
+    setRequestedPath(window.location.pathname);
+  }, []);
 
   return (
     <PageFrame current="notFound">

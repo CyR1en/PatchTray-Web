@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { CaptureImage } from "./CaptureImage";
 import { SectionRule } from "./SectionRule";
 
 /**
@@ -47,10 +48,13 @@ export function ProductProof() {
           </p>
         </div>
         <figure className="app-capture app-capture--canvas">
-          <img
-            src="/assets/patchtray-canvas.png"
+          <CaptureImage
+            baseName="patchtray-canvas"
+            sourceWidths={[960, 1745]}
+            width={1745}
+            height={1073}
+            sizes="(max-width: 980px) calc(100vw - 32px), 58vw"
             alt="PatchTray main window: master input and output meters, a scanned VST3 plugin list, and the canvas routing an ASIO input through a VST3 plugin node into an ASIO output over Voicemeeter insert ASIO."
-            loading="lazy"
           />
           <figcaption>
             <span>patchtray / main window</span>

@@ -34,9 +34,13 @@ const TURNSTILE_SCRIPT = "https://challenges.cloudflare.com/turnstile/v0/api.js?
 
 /** Loads the Turnstile script once, on the only page that needs it. */
 function useTurnstileScript(enabled: boolean) {
-  const [ready, setReady] = useState(() => Boolean(window.turnstile));
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
+    if (window.turnstile) {
+      setReady(true);
+      return;
+    }
     if (!enabled || ready) return;
 
     const existing = document.querySelector<HTMLScriptElement>(`script[src="${TURNSTILE_SCRIPT}"]`);
@@ -121,8 +125,8 @@ export function SupportContactForm() {
       });
 
       // An explicit `ok` from our own JSON is the only success signal. A bare
-      // 200 is not enough: if this route were ever misrouted, the SPA rewrite
-      // would answer with the HTML page and a "sent" that never sent.
+      // 200 is not enough: an unexpected HTML response must never produce a
+      // "sent" state for a message that did not send.
       const payload = await result.json().catch(() => null);
       if (!result.ok || payload?.ok !== true) {
         throw new Error(typeof payload?.error === "string" ? payload.error : "failed");

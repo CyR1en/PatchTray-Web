@@ -1,6 +1,7 @@
 import { siteConfig } from "../config";
 import { ArrowMark, WindowsMark } from "./marks";
 import { SectionRule } from "./SectionRule";
+import { analyticsEvents } from "../lib/analytics";
 
 export function ClosingCta() {
   return (
@@ -12,7 +13,12 @@ export function ClosingCta() {
         route.
       </p>
       <div className="closing-cta__actions">
-        <a className="button button--primary" href="/download">
+        <a
+          className="button button--primary"
+          href="/download"
+          data-analytics-event={analyticsEvents.downloadPage}
+          data-analytics-detail="home_closing"
+        >
           <WindowsMark /> [ download for windows ]
         </a>
         <a className="button button--text" href="/guide">

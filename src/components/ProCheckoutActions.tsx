@@ -1,4 +1,5 @@
 import { hasValue, siteConfig } from "../config";
+import { analyticsEvents } from "../lib/analytics";
 
 /**
  * Honest Pro checkout actions. Each option stays disabled until its URL is set.
@@ -23,7 +24,12 @@ export function ProCheckoutActions({ plan }: { plan?: ProPlan }) {
               <span>{monthly ? `${siteConfig.proMonthlyPrice} / month` : `${siteConfig.proLifetimePrice} one-time`}</span>
             </div>
             {live ? (
-              <a className="pro-checkout__action" href={url}>
+              <a
+                className="pro-checkout__action"
+                href={url}
+                data-analytics-event={analyticsEvents.checkoutStart}
+                data-analytics-detail={option}
+              >
                 {monthly ? "[ subscribe ]" : "[ buy lifetime ]"}
               </a>
             ) : (

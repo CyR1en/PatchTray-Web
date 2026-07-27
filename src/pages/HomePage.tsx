@@ -13,6 +13,7 @@ import { HeroPlugMark } from "../components/routing/HeroPlugMark";
 import { RoutingDemo } from "../components/routing/RoutingDemo";
 import { useLatestRelease } from "../hooks/useLatestRelease";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
+import { analyticsEvents } from "../lib/analytics";
 
 export function HomePage() {
   const release = useLatestRelease();
@@ -67,7 +68,12 @@ export function HomePage() {
               Build the chain on the canvas, then keep it running from the system tray.
             </p>
             <div className="hero-actions">
-              <a className="button button--primary" href="/download">
+              <a
+                className="button button--primary"
+                href="/download"
+                data-analytics-event={analyticsEvents.downloadPage}
+                data-analytics-detail="home_hero"
+              >
                 <WindowsMark /> [ download for windows ]
               </a>
               <a className="button button--text" href="/guide">

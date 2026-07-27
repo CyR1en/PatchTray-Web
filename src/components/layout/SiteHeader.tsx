@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { siteConfig } from "../../config";
 import type { PageName } from "../../lib/types";
+import { analyticsEvents } from "../../lib/analytics";
 import { Mark, MenuMark, WindowsMark } from "../marks";
 
 export function SiteHeader({ current }: { current: PageName }) {
@@ -37,7 +38,12 @@ export function SiteHeader({ current }: { current: PageName }) {
             <span className="state-square state-square--orange" aria-hidden="true" />
             {siteConfig.releaseState}
           </span>
-          <a className="header-download" href="/download">
+          <a
+            className="header-download"
+            href="/download"
+            data-analytics-event={analyticsEvents.downloadPage}
+            data-analytics-detail="site_header"
+          >
             <WindowsMark /> <span>[ download ]</span>
           </a>
           <button

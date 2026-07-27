@@ -19,13 +19,18 @@ function env(key: keyof ImportMetaEnv, fallback = ""): string {
   return typeof value === "string" ? value.trim() : fallback;
 }
 
+function currency(key: keyof ImportMetaEnv, fallback: string): string {
+  const value = env(key, fallback).toUpperCase();
+  return /^[A-Z]{3}$/.test(value) ? value : fallback;
+}
+
 export const siteConfig = {
   /**
    * Origin for canonical URLs. Override on preview deployments so they do not
    * claim the production canonical. Trailing slashes are stripped so
    * `siteOrigin + canonicalPath` is always well formed.
    */
-  siteOrigin: env("VITE_SITE_ORIGIN", "https://patchtray.io").replace(/\/+$/, ""),
+  siteOrigin: env("VITE_SITE_ORIGIN", "https://www.patchtray.io").replace(/\/+$/, ""),
 
   /**
    * Version and installer link are read live from the release manifest — see
@@ -42,6 +47,8 @@ export const siteConfig = {
   /** Published Pro pricing. Override via env if needed; do not invent other amounts in UI. */
   proMonthlyPrice: env("VITE_PRO_MONTHLY_PRICE", "$4.99"),
   proLifetimePrice: env("VITE_PRO_LIFETIME_PRICE", "$29.99"),
+  /** ISO 4217 currency shared by the two published Pro offers. */
+  proPriceCurrency: currency("VITE_PRO_PRICE_CURRENCY", "USD"),
 
   /**
    * Published Stripe Payment Links. Environment overrides make it possible to

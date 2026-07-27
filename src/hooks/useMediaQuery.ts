@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
 export function useMediaQuery(query: string): boolean {
-  const [matches, setMatches] = useState(() =>
-    typeof window !== "undefined" && window.matchMedia ? window.matchMedia(query).matches : false,
-  );
+  // The server and first browser render must agree for hydration. Read the real
+  // media state in the effect immediately after the static markup is attached.
+  const [matches, setMatches] = useState(false);
 
   useEffect(() => {
     if (!window.matchMedia) return;

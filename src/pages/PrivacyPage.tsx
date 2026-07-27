@@ -2,7 +2,7 @@ import { DocPage, Pending, type DocSection } from "../components/layout/DocPage"
 import { siteConfig } from "../config";
 
 /** Update whenever the substance of this policy changes. */
-const EFFECTIVE = "2026-07-25";
+const EFFECTIVE = "2026-07-27";
 
 const sections: readonly DocSection[] = [
   {
@@ -122,13 +122,14 @@ const sections: readonly DocSection[] = [
             <strong>Vercel</strong>
             <span>
               Hosts this website and provides its privacy-focused analytics and performance measurement, which
-              record page views and timing rather than identifying individual visitors.
+              record aggregated page views, timing, and fixed labels for download, guide, and checkout clicks
+              rather than identifying individual visitors. Query strings and form values are not included.
             </span>
           </li>
         </ul>
         <p>
-          This site also loads its typefaces from Google Fonts, which means your browser contacts a Google server
-          and Google receives the request&rsquo;s IP address.
+          The website&rsquo;s fonts and product images are served from the PatchTray site rather than loaded from
+          an external font or image provider.
         </p>
       </>
     ),
