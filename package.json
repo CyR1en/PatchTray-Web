@@ -8,9 +8,11 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && npm run build:client && npm run build:server && node scripts/prerender.mjs",
+    "build": "tsc -b && npm run build:client && npm run build:server && node scripts/prerender.mjs && npm run verify:faq",
     "build:client": "vite build",
-    "build:server": "vite build --ssr src/entry-server.tsx --outDir dist-ssr"
+    "build:server": "vite build --ssr src/entry-server.tsx --outDir dist-ssr",
+    "verify:faq": "node scripts/verify-faq.mjs",
+    "verify:faq:production": "node scripts/verify-faq.mjs --origin https://www.patchtray.io"
   },
   "dependencies": {
     "@upstash/ratelimit": "^2.0.8",

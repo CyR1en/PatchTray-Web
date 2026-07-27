@@ -1,7 +1,7 @@
 import { PageFrame } from "../components/layout/PageFrame";
 import { ArrowMark } from "../components/marks";
 import { SectionRule } from "../components/SectionRule";
-import { faqEntries } from "../lib/faqs";
+import { faqEntries, faqReview } from "../lib/faqs";
 
 const categories = [
   ["product", "product"],
@@ -24,6 +24,7 @@ export function FaqPage() {
           <div className="faq-hero__meta" aria-label="FAQ coverage">
             <span className="faq-flag faq-flag--primary">faq / {faqEntries.length} answers</span>
             <span className="faq-flag"><i className="state-square state-square--green" aria-hidden="true" /> maintained</span>
+            <span className="faq-flag">reviewed / PatchTray {faqReview.productVersion}</span>
             <span className="faq-flag">windows</span>
             <span className="faq-flag">asio</span>
             <span className="faq-flag">vst3</span>
@@ -41,7 +42,8 @@ export function FaqPage() {
           <p>question register</p>
           <span>{String(faqEntries.length).padStart(2, "0")} entries</span>
           <span>plain-language</span>
-          <span>last reviewed / 2026</span>
+          <span>reviewed by / PatchTray</span>
+          <time dateTime={faqReview.date}>last reviewed / {formatReviewDate(faqReview.date)}</time>
         </aside>
 
         <div className="faq-groups">
@@ -84,4 +86,13 @@ export function FaqPage() {
       </section>
     </PageFrame>
   );
+}
+
+function formatReviewDate(isoDate: string): string {
+  return new Date(`${isoDate}T00:00:00Z`).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC",
+  });
 }

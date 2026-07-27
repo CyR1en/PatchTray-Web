@@ -97,11 +97,11 @@ export function DownloadPage() {
         </figure>
       </section>
 
-      <section className="plan-module content-width">
+      <section id="compare" className="plan-module content-width" aria-labelledby="plan-comparison-title">
         <SectionRule>license options</SectionRule>
         <div className="plan-module__grid">
           <div>
-            <h2>the limits are stated plainly.</h2>
+            <h2 id="plan-comparison-title">the limits are stated plainly.</h2>
             <p>
               Free covers a compact live-audio chain: 4 VST3 nodes and 1 preset. Pro removes those limits with
               unlimited nodes and presets — pay monthly or buy once.

@@ -1,6 +1,6 @@
 import { siteConfig } from "../config";
 import { guideArticles } from "./guides";
-import { faqEntries } from "./faqs";
+import { faqEntries, faqReview } from "./faqs";
 import { REPOSITORY_URL } from "./release";
 import { pageMeta } from "./pageMeta";
 import type { PageName } from "./types";
@@ -178,8 +178,13 @@ function structuredData(page: PageName, pageUrl: string): unknown[] {
         name: pageMeta.faq.title,
         description: pageMeta.faq.description,
         inLanguage: "en-US",
+        lastReviewed: faqReview.date,
+        reviewedBy: organizationReference(),
+        publisher: organizationReference(),
         mainEntity: faqEntries.map((entry) => ({
           "@type": "Question",
+          "@id": `${pageUrl}#${entry.id}`,
+          url: `${pageUrl}#${entry.id}`,
           name: entry.question,
           acceptedAnswer: {
             "@type": "Answer",

@@ -7,6 +7,16 @@ export type FaqEntry = {
 };
 
 /**
+ * Deliberate editorial checkpoint, shared by the visible page, JSON-LD, and
+ * verification. Update both fields only after checking every answer against
+ * the named public release and the website's current terms.
+ */
+export const faqReview = {
+  date: "2026-07-27",
+  productVersion: "0.4.3",
+} as const;
+
+/**
  * One source of truth for the visible FAQ and its FAQPage structured data.
  * Answers are intentionally direct and self-contained so they work as search
  * snippets without requiring the surrounding page.
@@ -64,14 +74,14 @@ export const faqEntries: readonly FaqEntry[] = [
     category: "plugins",
     question: "Does PatchTray support VST2 plugins?",
     answer:
-      "No. PatchTray is designed for VST3 effects and does not host VST2 plugins. Use the 64-bit VST3 version of a plugin when its developer provides one.",
+      "No. PatchTray scans and hosts VST3 plugins only; it does not scan or host VST2 plugins. Use the 64-bit VST3 version of a plugin when its developer provides one.",
   },
   {
     id: "instruments",
     category: "plugins",
     question: "Can PatchTray load VST instruments?",
     answer:
-      "PatchTray is built for live audio effects, not software instruments. Use effect plugins such as equalizers, compressors, gates, de-essers, noise reduction, and reverbs in the signal chain.",
+      "No, not as a supported workflow. PatchTray is an audio-effect host rather than a MIDI instrument host. It is intended for effects such as equalizers, compressors, gates, de-essers, noise reduction, and reverbs.",
   },
   {
     id: "latency",
@@ -85,7 +95,7 @@ export const faqEntries: readonly FaqEntry[] = [
     category: "licensing",
     question: "What is the difference between PatchTray Free and Pro?",
     answer:
-      "PatchTray Free provides the core live-routing workflow with a limited number of VST3 nodes. PatchTray Pro removes the node limit and adds presets for saving and recalling complete routing setups.",
+      "PatchTray Free includes up to 4 VST3 nodes in a graph and 1 preset. PatchTray Pro includes unlimited VST3 nodes and unlimited presets; monthly and lifetime purchases differ in billing and device allowance, not the audio-routing workflow.",
     links: [{ label: "compare Free and Pro", href: "/download#compare" }],
   },
   {
@@ -93,7 +103,8 @@ export const faqEntries: readonly FaqEntry[] = [
     category: "licensing",
     question: "Does PatchTray need a constant internet connection?",
     answer:
-      "No. PatchTray Pro uses a time-limited offline lease after activation, so normal audio processing does not require a constant internet connection. It reconnects periodically to refresh the license.",
+      "No. After activation, monthly Pro licenses can run offline for up to 7 days and lifetime Pro licenses for up to 30 days. PatchTray refreshes the lease after a successful validation; if the lease expires, Pro features stop until validation succeeds.",
+    links: [{ label: "read the offline-use terms", href: "/terms#offline" }],
   },
   {
     id: "support",

@@ -2107,12 +2107,14 @@ img { display: block; max-width: 100%; }
   padding-top: 96px;
 }
 .faq-console__rail { position: sticky; top: 96px; align-self: start; border-top: 1px solid var(--line-strong); padding-top: 18px; }
-.faq-console__rail span {
+.faq-console__rail span,
+.faq-console__rail time {
   display: block;
   padding-block: 10px;
   border-bottom: 1px solid var(--line);
   color: var(--graphite);
   font: 400 9px/1.3 var(--mono);
+  text-decoration: none;
 }
 .faq-group { scroll-margin-top: 92px; }
 .faq-group + .faq-group { margin-top: 104px; }
@@ -2159,7 +2161,8 @@ img { display: block; max-width: 100%; }
   .faq-console { grid-template-columns: 1fr; padding-top: 72px; }
   .faq-console__rail { position: static; display: grid; grid-template-columns: repeat(3, 1fr); }
   .faq-console__rail p { grid-column: 1 / -1; }
-  .faq-console__rail span { padding-right: 10px; }
+  .faq-console__rail span,
+  .faq-console__rail time { padding-right: 10px; }
 }
 
 @media (max-width: 600px) {
