@@ -6,7 +6,7 @@ dist/
 dist-ssr/
 *.local
 
-# Env (keep .env.example committed)
+# Environment files
 .env
 .env.local
 .env.*.local
@@ -44,12 +44,11 @@ ehthumbs.db
 coverage/
 .nyc_output/
 
-# Agent / local-only project notes (not shipped)
+# Private project documentation and local-only notes
+/docs/
 .opencode/
 .claude/
 /assets/
-/docs/*
-!/docs/SEO_PLAN.md
 local_doc/
 local_docs/
 AGENTS.md

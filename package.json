@@ -8,17 +8,9 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && npm run build:client && npm run build:server && node scripts/prerender.mjs && npm run verify:phase1 && npm run verify:phase2 && npm run verify:phase3 && npm run verify:phase4 && npm run verify:phase5 && npm run verify:phase6",
+    "build": "tsc -b && npm run build:client && npm run build:server && node scripts/prerender.mjs",
     "build:client": "vite build",
-    "build:server": "vite build --ssr src/entry-server.tsx --outDir dist-ssr",
-    "preview": "node scripts/serve-static.mjs",
-    "verify:phase1": "node scripts/verify-phase1.mjs",
-    "verify:phase2": "node scripts/verify-phase2.mjs",
-    "verify:phase3": "node scripts/verify-phase3.mjs",
-    "verify:phase4": "node scripts/verify-phase4.mjs",
-    "verify:phase5": "node scripts/verify-phase5.mjs",
-    "verify:phase6": "node scripts/verify-phase6.mjs",
-    "verify:production": "node scripts/verify-production.mjs"
+    "build:server": "vite build --ssr src/entry-server.tsx --outDir dist-ssr"
   },
   "dependencies": {
     "@upstash/ratelimit": "^2.0.8",

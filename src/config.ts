@@ -1,8 +1,7 @@
 /**
  * Deployment-owned destinations and release metadata.
  *
- * Values come from Vite env (`import.meta.env.VITE_*`), which Vercel injects at
- * build time from Project → Settings → Environment Variables.
+ * Values may be overridden through Vite's build-time environment.
  *
  * An empty / missing destination means it is not published yet; the UI
  * intentionally renders an honest unavailable state via hasValue().
@@ -10,9 +9,6 @@
  * Only genuinely deployment-owned values belong here. This site's own routes do
  * not — they are fixed by `src/lib/routes.ts`, and an env override pointing one
  * elsewhere would leave the real route live as a second source of truth.
- *
- * Local: copy `.env.example` → `.env.local` and fill what you need.
- * Deploy: set the same keys in the Vercel dashboard (Production / Preview).
  */
 function env(key: keyof ImportMetaEnv, fallback = ""): string {
   const value = import.meta.env[key];
