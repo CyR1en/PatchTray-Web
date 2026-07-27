@@ -15,7 +15,7 @@ tags:
   - "audio latency"
 image:
   src: "./hero.png"
-  alt: "A PatchTray-style route connecting input, VST3 processing, and output nodes, completing before an orange audio-buffer deadline."
+  alt: "Two PatchTray processing callbacks across one 128-sample block: the first finishes with headroom before the orange 2.67 ms deadline, the second stalls on a lock and returns 0.33 ms late."
 status: "published"
 featured: true
 ---
