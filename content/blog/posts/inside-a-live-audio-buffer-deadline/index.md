@@ -17,7 +17,7 @@ image:
   src: "./hero.png"
   alt: "Two PatchTray processing callbacks across one 128-sample block: the first finishes with headroom before the orange 2.67 ms deadline, the second stalls on a lock and returns 0.33 ms late."
 status: "published"
-featured: true
+featured: false
 ---
 
 Audio software has a fairly brutal definition of “fast enough.”

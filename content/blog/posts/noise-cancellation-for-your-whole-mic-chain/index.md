@@ -18,7 +18,7 @@ image:
   src: "./hero.png"
   alt: "One spectrogram of the same voice, before and after. Left of the orange line the mic signal is buried in fan noise and keyboard strikes; right of it, suppression on the mic leaves only speech."
 status: "published"
-featured: false
+featured: true
 ---
 
 Your microphone is honest in a way you would prefer it not to be. It hears the
