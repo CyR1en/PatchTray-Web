@@ -62,16 +62,16 @@ export const pageMeta: Record<PageName, PageMeta> = {
       "Download PatchTray for Windows, review ASIO requirements, and compare the Free and Pro VST3 host plans.",
     canonicalPath: "/download",
   }),
-  guide: definePage({
-    title: "PatchTray guide — build your first live plugin chain",
+  firstVst3ChainGuide: definePage({
+    title: "How to build your first VST3 plugin chain on Windows",
     description:
-      "Learn how to choose ASIO ports, add VST3 processors, connect a live audio route, and save it in PatchTray.",
-    canonicalPath: "/guide",
+      "Choose an ASIO input and output, add VST3 processors, connect the route on the canvas, and save it as a preset.",
+    canonicalPath: "/guides/build-your-first-vst3-chain",
   }),
   guides: definePage({
     title: "VST3 and ASIO guides for Windows — PatchTray",
     description:
-      "Practical PatchTray guides for Voicemeeter inserts, standalone VST3 effects, ASIO routing, and live Windows audio.",
+      "Practical PatchTray guides for building your first VST3 chain, Voicemeeter inserts, standalone effects, ASIO routing, and live Windows audio.",
     canonicalPath: "/guides",
   }),
   faq: definePage({

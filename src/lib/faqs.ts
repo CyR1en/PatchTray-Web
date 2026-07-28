@@ -67,7 +67,7 @@ export const faqEntries: readonly FaqEntry[] = [
     question: "How does audio move through PatchTray?",
     answer:
       "Audio enters through an ASIO input node, passes through the connected VST3 plugin nodes in order, and leaves through an ASIO output node. The cables on the canvas show the active signal path.",
-    links: [{ label: "build your first route", href: "/guide" }],
+    links: [{ label: "build your first route", href: "/guides/build-your-first-vst3-chain" }],
   },
   {
     id: "vst3-only",

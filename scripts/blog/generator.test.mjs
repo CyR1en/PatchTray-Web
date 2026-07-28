@@ -118,7 +118,7 @@ The route begins at an ASIO input and continues through a processor.
 ## Processing result
 
 The browser receives complete HTML from the website build. Read the
-[PatchTray guide](/guide) for the maintained setup workflow.
+[PatchTray guide](/guides/build-your-first-vst3-chain) for the maintained setup workflow.
 
 ## Build boundary
 
@@ -162,7 +162,7 @@ const runtimeContentRequest = false;
   assert.match(manifest.contentDigest, /^[0-9a-f]{64}$/);
   assert.match(post.html, /<h2 id="section-signal-path">Signal path<\/h2>/);
   assert.match(post.html, /<picture>/);
-  assert.match(post.html, /href="\/guide"/);
+  assert.match(post.html, /href="\/guides\/build-your-first-vst3-chain"/);
   assert.match(post.html, /class="hljs language-js"/);
   assert.equal(post.tableOfContents.length, 3);
   assert.equal(post.media.length, 1);

@@ -116,9 +116,7 @@ const blogFeed: AlternateFeed = {
 };
 
 function fixedAlternateFeeds(page: PageName): AlternateFeed[] {
-  return page === "guides" ||
-    page === "voicemeeterVst3Guide" ||
-    page === "vst3WithoutDawGuide"
+  return page === "guides" || guideArticles.some((article) => article.page === page)
     ? [guideFeed]
     : [];
 }

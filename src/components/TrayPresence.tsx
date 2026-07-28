@@ -232,7 +232,7 @@ export function TrayPresence() {
                   want to adjust the route, load a preset, or check real-time telemetry.
                 </p>
                 <div style={revealStyle(ctaAmount, 6)}>
-                  <a href="/guide" className="button button--text">
+                  <a href="/guides/build-your-first-vst3-chain#start" className="button button--text">
                     [ get oriented ] <ArrowMark />
                   </a>
                 </div>

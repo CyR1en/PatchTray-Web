@@ -7,15 +7,15 @@ import { analyticsEvents } from "../lib/analytics";
 
 export function GuidesPage() {
   return (
-    <PageFrame current="guide">
+    <PageFrame current="guides">
       <section className="guides-hero content-width">
         <div>
           <p className="terminal-label">patchtray / field notes</p>
           <h1>guides for live VST3 audio on Windows.</h1>
           <p className="page-lead">
-            Practical routes for Voicemeeter inserts, standalone effects, and ASIO signal chains. Each guide
-            shows the actual PatchTray interface, names the assumptions, and leaves configuration-specific
-            choices with your system.
+            Practical routes for building your first VST3 chain, Voicemeeter inserts, standalone effects,
+            and ASIO signal chains. Each guide shows the actual PatchTray interface, names the assumptions,
+            and leaves configuration-specific choices with your system.
           </p>
         </div>
         <aside className="guides-hero__index" aria-label="Guide collection summary">
@@ -63,11 +63,11 @@ export function GuidesPage() {
           </p>
           <a
             className="button button--text"
-            href="/guide"
+            href="/download"
             data-analytics-event={analyticsEvents.guideConversion}
-            data-analytics-detail="hub_quickstart"
+            data-analytics-detail="hub_download"
           >
-            [ start with the product quick-start ] <ArrowMark />
+            [ download patchtray for windows ] <ArrowMark />
           </a>
         </div>
         <figure className="app-capture">

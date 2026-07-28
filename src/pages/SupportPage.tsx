@@ -107,7 +107,7 @@ const sections: readonly DocSection[] = [
       <>
         <p>
           Start from the <a href="/download">download page</a> for the current build and requirements, and the{" "}
-          <a href="/guide">guide</a> for first-run setup. PatchTray needs Windows and a working ASIO driver.
+          <a href="/guides/build-your-first-vst3-chain">quick-start guide</a> for first-run setup. PatchTray needs Windows and a working ASIO driver.
         </p>
         <p>For anything audio-related, these four details resolve most reports:</p>
         <ul>

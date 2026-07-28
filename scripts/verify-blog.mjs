@@ -382,15 +382,7 @@ async function verifySlugHistory(currentPublishedSlugs) {
     ? vercelConfig.redirects
     : [];
   const currentTargets = new Set([
-    "/",
-    "/download",
-    "/guide",
-    "/guides",
-    "/faq",
-    "/privacy",
-    "/terms",
-    "/refunds",
-    "/support",
+    ...server.getSitemapEntries().map((entry) => new URL(entry.url).pathname),
     ...currentPublishedSlugs.map((slug) => `/blog/${slug}`),
   ]);
   for (const slug of removed) {

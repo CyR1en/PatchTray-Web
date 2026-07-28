@@ -173,7 +173,7 @@ const sections: readonly GuideArticleSection[] = [
           </p>
         </div>
         <p>
-          For installation and port basics, use the <a href="/guide">PatchTray quick-start</a>. If the driver
+          For installation and port basics, use the <a href="/guides/build-your-first-vst3-chain#ports">PatchTray quick-start</a>. If the driver
           opens but the graph does not behave as described, collect the device name, sample rate, buffer, port
           pair, and failing node before contacting <a href="/support">support</a>.
         </p>
@@ -200,7 +200,7 @@ export function Vst3WithoutDawGuidePage() {
           note: "Official reference for standard plug-in installation locations.",
         },
       ]}
-      next={{ href: "/guides/voicemeeter-vst3-plugins", label: "build a Voicemeeter insert route" }}
+      next={{ href: "/guides/build-your-first-vst3-chain", label: "start with the PatchTray quick-start" }}
     />
   );
 }

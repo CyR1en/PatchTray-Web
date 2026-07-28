@@ -77,7 +77,7 @@ export function DownloadPage() {
               </span>
             </p>
           </div>
-          <a className="button button--text" href="/guide">
+          <a className="button button--text" href="/guides/build-your-first-vst3-chain">
             [ read the setup guide ] <ArrowMark />
           </a>
         </div>

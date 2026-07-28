@@ -3,12 +3,14 @@ import { PageFrame } from "../components/layout/PageFrame";
 import { ArrowMark } from "../components/marks";
 import { publicRoutes } from "../lib/routes";
 
-const knownRoutes = __BLOG_ENABLED__
+const base = __BLOG_ENABLED__
   ? [
       ...publicRoutes,
       { path: "/blog", page: "blog" as const, listed: true, blurb: "blog — product and engineering notes" },
     ]
   : publicRoutes;
+
+const knownRoutes = base.filter((route) => !route.path.startsWith("/guides/"));
 
 function UnpatchedStage() {
   return (

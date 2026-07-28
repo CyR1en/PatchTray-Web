@@ -39,7 +39,7 @@ media assets, and issue tracking:
 
 - [PatchTray releases](https://github.com/PatchTray/PatchTray/releases/latest)
 - [PatchTray public repository](https://github.com/PatchTray/PatchTray)
-- [Getting started](https://www.patchtray.io/guide)
+- [Getting started](https://www.patchtray.io/guides/build-your-first-vst3-chain)
 - [Support](https://www.patchtray.io/support)
 
 ## Website development

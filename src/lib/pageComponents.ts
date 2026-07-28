@@ -2,7 +2,7 @@ import { CheckoutSuccessPage } from "../pages/CheckoutSuccessPage";
 import { ConceptPage } from "../pages/ConceptPage";
 import { DownloadPage } from "../pages/DownloadPage";
 import { FaqPage } from "../pages/FaqPage";
-import { GuidePage } from "../pages/GuidePage";
+import { FirstVst3ChainGuidePage } from "../pages/FirstVst3ChainGuidePage";
 import { GuidesPage } from "../pages/GuidesPage";
 import { HomePage } from "../pages/HomePage";
 import { NotFoundPage } from "../pages/NotFoundPage";
@@ -24,7 +24,7 @@ export const pageComponents: Record<PageName, PageComponent> = {
   home: HomePage,
   download: DownloadPage,
   faq: FaqPage,
-  guide: GuidePage,
+  firstVst3ChainGuide: FirstVst3ChainGuidePage,
   guides: GuidesPage,
   voicemeeterVst3Guide: VoicemeeterVst3GuidePage,
   vst3WithoutDawGuide: Vst3WithoutDawGuidePage,
