@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 import { siteConfig } from "../../config";
 import type { PageName } from "../../lib/types";
 import { analyticsEvents } from "../../lib/analytics";
-import { Mark, MenuMark, WindowsMark } from "../marks";
+import { ArrowMark, Mark, MenuMark, WindowsMark } from "../marks";
 
 export function SiteHeader({ current }: { current: PageName }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
   const nav = [
     ["home", "/"],
     ["download", "/download"],
@@ -13,6 +15,17 @@ export function SiteHeader({ current }: { current: PageName }) {
     ...(__BLOG_ENABLED__ ? ([["blog", "/blog"]] as const) : []),
     ["faq", "/faq"],
   ] as const;
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setMenuOpen(false);
+      toggleRef.current?.focus();
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [menuOpen]);
 
   return (
     <header className="site-header">
@@ -49,8 +62,9 @@ export function SiteHeader({ current }: { current: PageName }) {
             <WindowsMark /> <span>[ download ]</span>
           </a>
           <button
+            ref={toggleRef}
             className="nav-toggle"
-            aria-label="Toggle navigation"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
             onClick={() => setMenuOpen((open) => !open)}
@@ -59,12 +73,34 @@ export function SiteHeader({ current }: { current: PageName }) {
           </button>
         </div>
       </div>
-      <nav id="mobile-menu" className={`mobile-nav ${menuOpen ? "is-open" : ""}`} aria-label="Mobile navigation">
-        {nav.map(([label, href]) => (
-          <a key={label} href={href} aria-current={current === label ? "page" : undefined}>
-            {label}
-          </a>
-        ))}
+      <nav
+        id="mobile-menu"
+        className={`mobile-nav ${menuOpen ? "is-open" : ""}`}
+        aria-label="Mobile navigation"
+        inert={!menuOpen}
+      >
+        <div className="mobile-nav__inner">
+          <div className="mobile-nav__meta" style={{ "--i": "0" } as CSSProperties}>
+            <span className="mobile-nav__title">menu</span>
+            <span className="beta-flag">
+              <span className="state-square state-square--orange" aria-hidden="true" />
+              {siteConfig.releaseState}
+            </span>
+          </div>
+          {nav.map(([label, href], index) => (
+            <a
+              key={label}
+              href={href}
+              aria-current={current === label ? "page" : undefined}
+              className="mobile-nav__link"
+              style={{ "--i": String(index + 1) } as CSSProperties}
+            >
+              <span className="mobile-nav__index">{String(index + 1).padStart(2, "0")}</span>
+              <span className="mobile-nav__label">{label}</span>
+              <ArrowMark />
+            </a>
+          ))}
+        </div>
       </nav>
     </header>
   );

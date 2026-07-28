@@ -12,8 +12,17 @@ export function WindowsMark() {
 
 export function MenuMark({ open }: { open: boolean }) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" className="menu-mark" fill="none" stroke="currentColor" strokeWidth="1.5">
-      {open ? <path d="m6 6 12 12M18 6 6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className={`menu-mark ${open ? "is-open" : ""}`}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+    >
+      <line className="menu-mark__line menu-mark__line--top" x1="4" y1="7" x2="20" y2="7" />
+      <line className="menu-mark__line menu-mark__line--mid" x1="4" y1="12" x2="20" y2="12" />
+      <line className="menu-mark__line menu-mark__line--bot" x1="4" y1="17" x2="20" y2="17" />
     </svg>
   );
 }
