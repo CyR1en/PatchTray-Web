@@ -105,12 +105,13 @@ function escapeHtml(value) {
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
+    .replaceAll("'", "&#x27;");
 }
 
 function decodeHtml(value) {
   return value
     .replaceAll("&quot;", '"')
+    .replaceAll("&#x27;", "'")
     .replaceAll("&#39;", "'")
     .replaceAll("&lt;", "<")
     .replaceAll("&gt;", ">")
