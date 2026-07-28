@@ -76,8 +76,8 @@ export function HomePage() {
               >
                 <WindowsMark /> [ download for windows ]
               </a>
-              <a className="button button--text" href="/guide">
-                [ read the guide ] <ArrowMark />
+              <a className="button button--text" href="/guides/build-your-first-vst3-chain">
+                [ build your first chain ] <ArrowMark />
               </a>
             </div>
           </div>

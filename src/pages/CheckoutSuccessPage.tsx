@@ -71,8 +71,8 @@ export function CheckoutSuccessPage() {
           >
             <WindowsMark /> [ download patchtray ]
           </a>
-          <a className="button button--line" href="/guide">
-            [ read the guide ]
+          <a className="button button--line" href="/guides/build-your-first-vst3-chain">
+            [ read the quick-start ]
           </a>
         </div>
       </section>

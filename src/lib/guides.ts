@@ -1,5 +1,5 @@
 export type GuideArticleDefinition = {
-  page: "voicemeeterVst3Guide" | "vst3WithoutDawGuide";
+  page: "firstVst3ChainGuide" | "voicemeeterVst3Guide" | "vst3WithoutDawGuide";
   path: string;
   title: string;
   cardTitle: string;
@@ -9,6 +9,20 @@ export type GuideArticleDefinition = {
   published: string;
   reviewed: string;
   topics: readonly string[];
+};
+
+export const FIRST_VST3_CHAIN_GUIDE: GuideArticleDefinition = {
+  page: "firstVst3ChainGuide",
+  path: "/guides/build-your-first-vst3-chain",
+  title: "How to build your first VST3 plugin chain on Windows",
+  cardTitle: "Build your first VST3 chain",
+  description:
+    "Choose an ASIO input and output, add VST3 processors, connect the route on the canvas, and save it as a preset.",
+  category: "setup guide",
+  readingTime: "3 minute read",
+  published: "2026-07-27",
+  reviewed: "2026-07-27",
+  topics: ["ASIO ports", "VST3 chains", "PatchTray setup", "presets"],
 };
 
 export const VOICEMEETER_VST3_GUIDE: GuideArticleDefinition = {
@@ -39,4 +53,4 @@ export const VST3_WITHOUT_DAW_GUIDE: GuideArticleDefinition = {
   topics: ["VST3 host", "Windows audio", "ASIO routing", "live effects"],
 };
 
-export const guideArticles = [VOICEMEETER_VST3_GUIDE, VST3_WITHOUT_DAW_GUIDE] as const;
+export const guideArticles = [FIRST_VST3_CHAIN_GUIDE, VOICEMEETER_VST3_GUIDE, VST3_WITHOUT_DAW_GUIDE] as const;

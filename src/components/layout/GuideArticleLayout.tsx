@@ -35,7 +35,7 @@ export function GuideArticleLayout({
   useHashScroll();
 
   return (
-    <PageFrame current="guide">
+    <PageFrame current="guides">
       <article className="guide-article">
         <header className="article-hero content-width">
           <nav className="article-breadcrumbs" aria-label="Breadcrumb">

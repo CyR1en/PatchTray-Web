@@ -27,6 +27,7 @@ const blogPaths = paths.filter((path) => path === "/blog" || path.startsWith("/b
 const strictNotFoundPaths = [
   "/Download",
   "/download/",
+  "/guide",
   "/guides/run-vst3-without-daw/nested",
   "/Blog",
   "/blog/",
