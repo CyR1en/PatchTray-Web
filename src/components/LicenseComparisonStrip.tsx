@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { ProCheckoutActions } from "./ProCheckoutActions";
 import { ProPriceNote } from "./ProPriceNote";
 import { SectionRule } from "./SectionRule";
+import { analyticsEvents } from "../lib/analytics";
+import { siteConfig } from "../config";
 
 type BillingPlan = "monthly" | "lifetime";
 
@@ -49,39 +51,55 @@ export function LicenseComparisonStrip() {
         </p>
       </div>
 
-      <div className="license-strip__scroll" tabIndex={0} aria-label="PatchTray Free and Pro comparison">
-        <div className={`license-strip__table${hasArrived ? " is-arrived is-booting" : ""}`} role="table" aria-label="PatchTray Free and Pro features">
-          <div className="license-strip__plans" role="row">
-            <div className="license-strip__corner" role="columnheader">
-              <span>license / comparison</span>
-              <strong>choose<br />your path</strong>
-            </div>
-            <div className="license-strip__plan license-strip__plan--free" role="columnheader">
-              <span className="license-strip__kicker">free</span>
-              <strong className="license-strip__price">free</strong>
-              <span className="license-strip__term">no billing required</span>
-            </div>
-            <div className="license-strip__plan license-strip__plan--pro" role="columnheader">
-              <div className={`license-strip__pro-readout${hasArrived ? " is-animated" : ""}`} key={motionRun}>
-                <span className="license-strip__kicker"><i className="state-square state-square--green" />pro</span>
-                <span className="license-strip__status"><ProPriceNote plan={billingPlan} /></span>
-              </div>
-              <div className="license-strip__billing" aria-label="Choose Pro billing">
-                <button type="button" aria-pressed={billingPlan === "monthly"} onClick={() => selectBillingPlan("monthly")}>monthly</button>
-                <button type="button" aria-pressed={billingPlan === "lifetime"} onClick={() => selectBillingPlan("lifetime")}>lifetime</button>
-              </div>
-            </div>
+      <div className={`license-strip__table${hasArrived ? " is-arrived is-booting" : ""}`} role="table" aria-label="PatchTray Free and Pro features">
+        <div className="license-strip__plans" role="row">
+          <div className="license-strip__label" role="columnheader">
+            <span>compare</span>
           </div>
-          <div className="license-strip__rows" role="rowgroup">
-            <div role="row"><span role="rowheader">VST3 nodes per graph</span><span role="cell">up to 4</span><span role="cell">unlimited nodes</span></div>
-            <div role="row"><span role="rowheader">presets</span><span role="cell">1 preset</span><span role="cell">unlimited presets</span></div>
-            <div role="row"><span role="rowheader">lifetime device use</span><span role="cell">—</span><span role="cell">{billingPlan === "lifetime" ? "up to 3 devices" : "available with lifetime"}</span></div>
+          <div className="license-strip__plan license-strip__plan--free" role="columnheader">
+            <span className="license-strip__kicker">free</span>
+            <strong className="license-strip__price">free</strong>
+            <span className="license-strip__term">no billing required</span>
           </div>
-          <div className="license-strip__foot" role="row">
-            <div role="cell"><span>windows VST3 host</span></div>
-            <div role="cell"><span>[ free included ]</span></div>
-            <div role="cell"><ProCheckoutActions plan={billingPlan} /></div>
+          <div className="license-strip__plan license-strip__plan--pro" role="columnheader">
+            <span className="license-strip__kicker">
+              <i className="state-square state-square--green" />pro
+              <span className="license-strip__tag">[ recommended ]</span>
+            </span>
+            <div className={`license-strip__pro-readout${hasArrived ? " is-animated" : ""}`} key={motionRun}>
+              <span className="license-strip__status"><ProPriceNote plan={billingPlan} /></span>
+            </div>
+            <div className="license-strip__billing" role="group" aria-label="pro billing period">
+              <span className="license-strip__billing-label" aria-hidden="true">billing</span>
+              <button type="button" aria-pressed={billingPlan === "monthly"} onClick={() => selectBillingPlan("monthly")}>monthly</button>
+              <button type="button" aria-pressed={billingPlan === "lifetime"} onClick={() => selectBillingPlan("lifetime")}>lifetime</button>
+            </div>
+            <span className="visually-hidden" role="status">
+              {billingPlan === "lifetime"
+                ? `lifetime selected: ${siteConfig.proLifetimePrice} one-time, up to 3 devices`
+                : `monthly selected: ${siteConfig.proMonthlyPrice} per month, up to 2 devices`}
+            </span>
           </div>
+        </div>
+        <div className="license-strip__rows" role="rowgroup">
+          <div role="row"><span role="rowheader">vst3 nodes</span><span role="cell">up to 4</span><span role="cell">unlimited nodes</span></div>
+          <div role="row"><span role="rowheader">saved presets</span><span role="cell">1 preset</span><span role="cell">unlimited presets</span></div>
+          <div role="row"><span role="rowheader">active devices</span><span role="cell">—</span><span role="cell">{billingPlan === "lifetime" ? "up to 3 devices" : "up to 2 devices"}</span></div>
+          <div role="row"><span role="rowheader">license key</span><span role="cell">not required</span><span role="cell">emailed at checkout</span></div>
+        </div>
+        <div className="license-strip__foot" role="row">
+          <div role="cell"><span>get started</span></div>
+          <div role="cell">
+            <a
+              className="license-strip__free-cta"
+              href="/download"
+              data-analytics-event={analyticsEvents.downloadPage}
+              data-analytics-detail="home_license"
+            >
+              [ download free ]
+            </a>
+          </div>
+          <div role="cell"><ProCheckoutActions plan={billingPlan} /></div>
         </div>
       </div>
     </section>

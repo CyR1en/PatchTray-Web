@@ -114,7 +114,9 @@ export function DownloadPage() {
               <em className="plan-lines__price">[ included ]</em>
             </p>
             <p className="plan-lines__pro">
-              <strong>pro</strong>
+              <strong>
+                <i className="state-square state-square--green" aria-hidden="true" />pro
+              </strong>
               <span>unlimited VST3 nodes · unlimited presets</span>
               <ProPriceNote />
             </p>
