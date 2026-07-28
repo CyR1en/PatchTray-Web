@@ -82,7 +82,7 @@ const sections: readonly GuideArticleSection[] = [
         </li>
         <li>
           <strong>Adjust in context.</strong> Use in-node parameter controls when available, or open the
-          plugin's native editor window.
+          plugin’s native editor window.
         </li>
         <li>
           <strong>Read the status.</strong> Use real-time telemetry and the state labels to understand what

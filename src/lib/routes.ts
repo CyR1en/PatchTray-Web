@@ -24,6 +24,7 @@ export const routes: readonly RouteDef[] = [
     listed: true,
     blurb: "download — get the beta",
   },
+  { path: "/faq", page: "faq", listed: true, blurb: "faq — direct product answers" },
   { path: "/guides", page: "guides", listed: true, blurb: "guides — live audio workflows" },
   {
     path: "/guides/build-your-first-vst3-chain",
@@ -31,7 +32,6 @@ export const routes: readonly RouteDef[] = [
     listed: true,
     blurb: "guide — build your first chain",
   },
-  { path: "/faq", page: "faq", listed: true, blurb: "faq — direct product answers" },
   {
     path: "/guides/voicemeeter-vst3-plugins",
     page: "voicemeeterVst3Guide",
