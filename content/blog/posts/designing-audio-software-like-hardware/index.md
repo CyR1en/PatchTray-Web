@@ -16,7 +16,7 @@ tags:
 image:
   src: "./hero.png"
   alt: "PatchTray's node chain drawn as an engineering wireframe: ASIO input, a selected plugin node with labeled knobs and square jacks, ASIO output — dimensioned like a hardware part, state spelled out in words."
-status: "draft"
+status: "published"
 featured: false
 ---
 
