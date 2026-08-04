@@ -1,8 +1,9 @@
 import { DocPage, type DocSection } from "../components/layout/DocPage";
 import { siteConfig } from "../config";
+import { legalEffective } from "../lib/contentDates";
 
 /** Update whenever the substance of this policy changes. */
-const EFFECTIVE = "2026-07-25";
+const EFFECTIVE = legalEffective.refunds;
 
 const sections: readonly DocSection[] = [
   {

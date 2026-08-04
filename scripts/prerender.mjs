@@ -2,6 +2,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { copyGeneratedBlogAssets } from "./blog/assets.mjs";
+import { INDEXNOW_KEY } from "./indexnow.mjs";
 
 const projectRoot = resolve(import.meta.dirname, "..");
 const outputRoot = resolve(projectRoot, "dist");
@@ -114,6 +115,11 @@ const sitemap = [
 ].join("\n");
 await writeFile(resolve(outputRoot, "sitemap.xml"), sitemap, "utf8");
 console.log("[prerender] sitemap.xml");
+
+// IndexNow authenticates a submission by fetching this file, so it has to ship
+// with the site rather than live beside the script that sends the key.
+await writeFile(resolve(outputRoot, `${INDEXNOW_KEY}.txt`), `${INDEXNOW_KEY}\n`, "utf8");
+console.log(`[prerender] ${INDEXNOW_KEY}.txt`);
 
 await writeFile(resolve(outputRoot, "guides", "feed.xml"), getGuideFeed(), "utf8");
 console.log("[prerender] guides/feed.xml");

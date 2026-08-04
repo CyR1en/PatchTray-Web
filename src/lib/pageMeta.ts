@@ -28,13 +28,46 @@ type PageMetaInput = Omit<
   PageMeta,
   "openGraphTitle" | "openGraphDescription" | "openGraphImage" | "openGraphType"
 > &
-  Partial<Pick<PageMeta, "openGraphTitle" | "openGraphDescription">>;
+  Partial<
+    Pick<PageMeta, "openGraphTitle" | "openGraphDescription" | "openGraphImage">
+  >;
 
-const PATCHTRAY_SOCIAL_IMAGE: OpenGraphImage = {
+/**
+ * Social cards. A page that is actually shared — the home page, a guide, the FAQ
+ * — earns the screenshot that matches what the reader is about to get, because
+ * an identical card on every URL suppresses the click-through that earns links.
+ * Legal and transactional routes keep the brand default; nobody shares those,
+ * and a product screenshot beside a refund policy reads as a mistake.
+ */
+const CANVAS_IMAGE: OpenGraphImage = {
   path: "/assets/patchtray-canvas.png",
   alt: "PatchTray routing an ASIO input through a VST3 plugin to an ASIO output on its visual canvas.",
   width: 1745,
   height: 1073,
+  type: "image/png",
+};
+
+const PORTS_IMAGE: OpenGraphImage = {
+  path: "/assets/patchtray-ports.png",
+  alt: "PatchTray's ASIO input port dialog mapping a stereo Voicemeeter insert onto the left and right channels of a chain.",
+  width: 1280,
+  height: 720,
+  type: "image/png",
+};
+
+const SETTINGS_IMAGE: OpenGraphImage = {
+  path: "/assets/patchtray-settings.png",
+  alt: "PatchTray's audio device settings showing the ASIO driver, sample rate, and buffer size read from the driver.",
+  width: 1280,
+  height: 720,
+  type: "image/png",
+};
+
+const TELEMETRY_IMAGE: OpenGraphImage = {
+  path: "/assets/patchtray-telemetry.png",
+  alt: "PatchTray running a live ASIO input and output on its canvas with signal meters and telemetry active.",
+  width: 1280,
+  height: 720,
   type: "image/png",
 };
 
@@ -43,7 +76,7 @@ function definePage(meta: PageMetaInput): PageMeta {
     ...meta,
     openGraphTitle: meta.openGraphTitle ?? meta.title,
     openGraphDescription: meta.openGraphDescription ?? meta.description,
-    openGraphImage: PATCHTRAY_SOCIAL_IMAGE,
+    openGraphImage: meta.openGraphImage ?? CANVAS_IMAGE,
     openGraphType: "website",
   };
 }
@@ -61,6 +94,7 @@ export const pageMeta: Record<PageName, PageMeta> = {
     description:
       "Download PatchTray for Windows, review ASIO requirements, and compare the Free and Pro VST3 host plans.",
     canonicalPath: "/download",
+    openGraphImage: SETTINGS_IMAGE,
   }),
   firstVst3ChainGuide: definePage({
     title: "How to build your first VST3 plugin chain on Windows",
@@ -80,18 +114,21 @@ export const pageMeta: Record<PageName, PageMeta> = {
       "Direct answers about PatchTray for Windows, live VST3 processing, ASIO routing, Voicemeeter inserts, latency, and Free versus Pro.",
     canonicalPath: "/faq",
     openGraphTitle: "PatchTray FAQ — answers for live Windows audio",
+    openGraphImage: TELEMETRY_IMAGE,
   }),
   voicemeeterVst3Guide: definePage({
     title: "How to use VST3 plugins with Voicemeeter | PatchTray",
     description:
       "Configure a Voicemeeter ASIO insert, match its channels in PatchTray, build a VST3 microphone chain, and test the route safely.",
     canonicalPath: "/guides/voicemeeter-vst3-plugins",
+    openGraphImage: PORTS_IMAGE,
   }),
   vst3WithoutDawGuide: definePage({
     title: "How to run VST3 effects without a DAW on Windows",
     description:
       "Connect an ASIO input, live VST3 effect chain, and ASIO output in PatchTray without opening a recording session.",
     canonicalPath: "/guides/run-vst3-without-daw",
+    openGraphImage: TELEMETRY_IMAGE,
   }),
   privacy: definePage({
     title: "Privacy policy — PatchTray",

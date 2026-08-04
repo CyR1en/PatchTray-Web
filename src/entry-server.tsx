@@ -4,6 +4,7 @@ import { App } from "./App";
 import { siteConfig } from "./config";
 import { createBlogFeed } from "./lib/blogFeed";
 import { resolveServerBlogPage } from "./lib/blogServer";
+import { contentDate } from "./lib/contentDates";
 import { guideArticles } from "./lib/guides";
 import { pageComponents } from "./lib/pageComponents";
 import { publicRoutes, routes } from "./lib/routes";
@@ -51,6 +52,7 @@ export function getStaticPages(): ResolvedPageSeo[] {
 export function getSitemapEntries(): SitemapEntry[] {
   const fixedEntries = publicRoutes.map((route) => ({
     url: `${siteConfig.siteOrigin}${route.path}`,
+    lastmod: contentDate(route.page),
   }));
   const blogPages = getBlogPages();
   const hub = blogPages[0];

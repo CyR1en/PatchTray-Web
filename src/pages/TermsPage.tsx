@@ -1,8 +1,9 @@
 import { DocPage, Pending, type DocSection } from "../components/layout/DocPage";
 import { siteConfig } from "../config";
+import { legalEffective } from "../lib/contentDates";
 
 /** Update whenever the substance of these terms changes. */
-const EFFECTIVE = "2026-07-25";
+const EFFECTIVE = legalEffective.terms;
 
 const sections: readonly DocSection[] = [
   {

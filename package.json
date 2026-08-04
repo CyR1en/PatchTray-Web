@@ -13,6 +13,7 @@
     "build:client": "vite build",
     "build:server": "vite build --ssr src/entry-server.tsx --outDir dist-ssr",
     "blog:generate": "node scripts/generate-blog.mjs",
+    "indexnow": "node scripts/indexnow.mjs",
     "blog:test": "node --test scripts/blog/*.test.mjs",
     "blog:verify": "node scripts/verify-blog.mjs",
     "blog:verify:production": "node scripts/verify-blog.mjs --origin https://www.patchtray.io",
