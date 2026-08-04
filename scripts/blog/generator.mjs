@@ -104,6 +104,7 @@ async function loadArticleDirectories(postsDirectory, now) {
   const articles = [];
 
   for (const entry of [...entries].sort((left, right) => lexicalCompare(left.name, right.name))) {
+    if (entry.name.startsWith(".")) continue;
     assertBlog(!entry.isSymbolicLink(), "unexpected symlink in posts directory", entry.name);
     assertBlog(entry.isDirectory(), "posts directory may contain only article directories", entry.name);
     validateSlug(entry.name);
@@ -116,6 +117,7 @@ async function loadArticleDirectories(postsDirectory, now) {
     const mediaFiles = [];
 
     for (const articleEntry of articleEntries) {
+      if (articleEntry.name.startsWith(".")) continue;
       assertBlog(!articleEntry.isSymbolicLink(), "article directories may not contain symlinks", `${slug}/${articleEntry.name}`);
       assertBlog(articleEntry.isFile(), "article directories may not contain nested directories", `${slug}/${articleEntry.name}`);
       assertBlog(!names.has(articleEntry.name), `duplicate article file "${articleEntry.name}"`, slug);
