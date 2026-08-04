@@ -42,7 +42,7 @@ export const siteConfig = {
 
   /** Published Pro pricing. Override via env if needed; do not invent other amounts in UI. */
   proMonthlyPrice: env("VITE_PRO_MONTHLY_PRICE", "$4.99"),
-  proLifetimePrice: env("VITE_PRO_LIFETIME_PRICE", "$29.99"),
+  proLifetimePrice: env("VITE_PRO_LIFETIME_PRICE", "$39.99"),
   /** ISO 4217 currency shared by the two published Pro offers. */
   proPriceCurrency: currency("VITE_PRO_PRICE_CURRENCY", "USD"),
 
