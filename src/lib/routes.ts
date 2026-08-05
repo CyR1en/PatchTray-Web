@@ -24,6 +24,12 @@ export const routes: readonly RouteDef[] = [
     listed: true,
     blurb: "download — get the beta",
   },
+  {
+    path: "/pricing",
+    page: "pricing",
+    listed: true,
+    blurb: "pricing — plans and licenses",
+  },
   { path: "/faq", page: "faq", listed: true, blurb: "faq — direct product answers" },
   { path: "/guides", page: "guides", listed: true, blurb: "guides — live audio workflows" },
   {

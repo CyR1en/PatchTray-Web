@@ -26,6 +26,7 @@ export const legalEffective = {
 const editorialReviewed = {
   home: "2026-07-27",
   download: "2026-07-27",
+  pricing: "2026-08-04",
   support: "2026-07-27",
 } as const;
 

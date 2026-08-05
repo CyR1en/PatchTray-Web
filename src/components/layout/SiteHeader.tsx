@@ -11,6 +11,7 @@ export function SiteHeader({ current }: { current: PageName }) {
   const nav = [
     ["home", "/"],
     ["download", "/download"],
+    ["pricing", "/pricing"],
     ["guides", "/guides"],
     ...(__BLOG_ENABLED__ ? ([["blog", "/blog"]] as const) : []),
     ["faq", "/faq"],

@@ -106,6 +106,9 @@ export function DownloadPage() {
               Free covers a compact live-audio chain: 4 VST3 nodes and 1 preset. Pro removes those limits with
               unlimited nodes and presets — pay monthly or buy once.
             </p>
+            <a className="button button--text" href="/pricing">
+              [ see full pricing ] <ArrowMark />
+            </a>
           </div>
           <div className="plan-lines">
             <p>

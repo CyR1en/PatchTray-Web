@@ -8,6 +8,7 @@
     { "source": "/guide/", "destination": "/guides/build-your-first-vst3-chain", "permanent": true },
     { "source": "/Guide", "destination": "/guides/build-your-first-vst3-chain", "permanent": true },
     { "source": "/Guides", "destination": "/guides", "permanent": true },
+    { "source": "/Pricing", "destination": "/pricing", "permanent": true },
     { "source": "/Privacy", "destination": "/privacy", "permanent": true },
     { "source": "/Terms", "destination": "/terms", "permanent": true },
     { "source": "/Refunds", "destination": "/refunds", "permanent": true },

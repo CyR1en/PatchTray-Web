@@ -41,6 +41,7 @@ export function SiteFooter() {
           <FooterLink url="/guides">guides</FooterLink>
           {__BLOG_ENABLED__ ? <FooterLink url="/blog">blog</FooterLink> : null}
           <FooterLink url="/faq">faq</FooterLink>
+          <FooterLink url="/pricing">pricing</FooterLink>
           <FooterLink url="/support">support</FooterLink>
           <FooterLink url="/refunds">refunds</FooterLink>
           <FooterLink url="/privacy">privacy</FooterLink>

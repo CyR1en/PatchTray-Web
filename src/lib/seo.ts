@@ -229,6 +229,40 @@ function fixedStructuredData(page: PageName, pageUrl: string): unknown[] {
     ];
   }
 
+  if (page === "pricing") {
+    return [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": `${pageUrl}#webpage`,
+        url: pageUrl,
+        name: pageMeta.pricing.title,
+        description: pageMeta.pricing.description,
+        inLanguage: "en-US",
+        publisher: organizationReference(),
+        // The same software entity described on /download, referenced by its
+        // `@id` so the offers consolidate onto one product rather than
+        // declaring a second, competing PatchTray.
+        mainEntity: {
+          "@type": "SoftwareApplication",
+          "@id": `${siteConfig.siteOrigin}/#software`,
+          name: "PatchTray",
+          applicationCategory: "MultimediaApplication",
+          operatingSystem: "Windows",
+          offers: softwareOffers(),
+        },
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "PatchTray", item: absoluteUrl("/") },
+          { "@type": "ListItem", position: 2, name: "Pricing", item: pageUrl },
+        ],
+      },
+    ];
+  }
+
   if (page === "guides") {
     return [
       {

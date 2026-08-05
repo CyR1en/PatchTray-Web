@@ -12,6 +12,7 @@ import type {
 export type PageName =
   | "home"
   | "download"
+  | "pricing"
   | "firstVst3ChainGuide"
   | "guides"
   | "faq"

@@ -6,6 +6,7 @@ import { FirstVst3ChainGuidePage } from "../pages/FirstVst3ChainGuidePage";
 import { GuidesPage } from "../pages/GuidesPage";
 import { HomePage } from "../pages/HomePage";
 import { NotFoundPage } from "../pages/NotFoundPage";
+import { PricingPage } from "../pages/PricingPage";
 import { PrivacyPage } from "../pages/PrivacyPage";
 import { RefundsPage } from "../pages/RefundsPage";
 import { SupportPage } from "../pages/SupportPage";
@@ -23,6 +24,7 @@ import { BlogPage } from "../pages/BlogPage";
 export const pageComponents: Record<PageName, PageComponent> = {
   home: HomePage,
   download: DownloadPage,
+  pricing: PricingPage,
   faq: FaqPage,
   firstVst3ChainGuide: FirstVst3ChainGuidePage,
   guides: GuidesPage,

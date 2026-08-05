@@ -10,6 +10,7 @@ type PageLoader = () => Promise<PageComponent>;
 const pageLoaders: Record<PageName, PageLoader> = {
   home: () => import("../pages/HomePage").then(({ HomePage }) => HomePage),
   download: () => import("../pages/DownloadPage").then(({ DownloadPage }) => DownloadPage),
+  pricing: () => import("../pages/PricingPage").then(({ PricingPage }) => PricingPage),
   faq: () => import("../pages/FaqPage").then(({ FaqPage }) => FaqPage),
   firstVst3ChainGuide: () =>
     import("../pages/FirstVst3ChainGuidePage").then(({ FirstVst3ChainGuidePage }) => FirstVst3ChainGuidePage),

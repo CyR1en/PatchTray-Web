@@ -96,6 +96,14 @@ export const pageMeta: Record<PageName, PageMeta> = {
     canonicalPath: "/download",
     openGraphImage: SETTINGS_IMAGE,
   }),
+  pricing: definePage({
+    title: "PatchTray pricing — Free, Pro monthly, and Pro lifetime",
+    description:
+      "PatchTray Pro pricing: unlimited VST3 nodes and presets for a monthly subscription or a one-time lifetime purchase, with a 14-day refund window.",
+    canonicalPath: "/pricing",
+    openGraphTitle: "PatchTray pricing — buy a Pro license",
+    openGraphImage: TELEMETRY_IMAGE,
+  }),
   firstVst3ChainGuide: definePage({
     title: "How to build your first VST3 plugin chain on Windows",
     description:
