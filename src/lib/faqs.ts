@@ -96,7 +96,7 @@ export const faqEntries: readonly FaqEntry[] = [
     question: "What is the difference between PatchTray Free and Pro?",
     answer:
       "PatchTray Free includes up to 4 VST3 nodes in a graph and 1 preset. PatchTray Pro includes unlimited VST3 nodes and unlimited presets; monthly and lifetime purchases differ in billing and device allowance, not the audio-routing workflow.",
-    links: [{ label: "compare Free and Pro", href: "/download#compare" }],
+    links: [{ label: "compare Free and Pro", href: "/pricing#compare" }],
   },
   {
     id: "offline",

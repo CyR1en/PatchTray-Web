@@ -6,7 +6,6 @@ import { ClosingCta } from "../components/ClosingCta";
 import { HostStatement } from "../components/HostStatement";
 import { ProductProof } from "../components/ProductProof";
 import { UseCaseStrip } from "../components/UseCaseStrip";
-import { LicenseComparisonStrip } from "../components/LicenseComparisonStrip";
 import { TrayPresence } from "../components/TrayPresence";
 import { PageFrame } from "../components/layout/PageFrame";
 import { HeroPlugMark } from "../components/routing/HeroPlugMark";
@@ -141,8 +140,6 @@ export function HomePage() {
       <UseCaseStrip />
 
       <TrayPresence />
-
-      <LicenseComparisonStrip />
 
       <ClosingCta />
     </PageFrame>

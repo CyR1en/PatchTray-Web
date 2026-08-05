@@ -2,8 +2,6 @@ import { siteConfig } from "../config";
 import { ArrowMark, WindowsMark } from "../components/marks";
 import { CaptureImage } from "../components/CaptureImage";
 import { DownloadBuildButton } from "../components/DownloadBuildButton";
-import { ProCheckoutActions } from "../components/ProCheckoutActions";
-import { ProPriceNote } from "../components/ProPriceNote";
 import { SectionRule } from "../components/SectionRule";
 import { PageFrame } from "../components/layout/PageFrame";
 import { useLatestRelease } from "../hooks/useLatestRelease";
@@ -77,9 +75,14 @@ export function DownloadPage() {
               </span>
             </p>
           </div>
-          <a className="button button--text" href="/guides/build-your-first-vst3-chain">
-            [ read the setup guide ] <ArrowMark />
-          </a>
+          <div className="download-details__actions">
+            <a className="button button--text" href="/guides/build-your-first-vst3-chain">
+              [ read the setup guide ] <ArrowMark />
+            </a>
+            <a className="button button--text" href="/pricing">
+              [ see pricing ] <ArrowMark />
+            </a>
+          </div>
         </div>
         <figure className="app-capture app-capture--settings">
           <CaptureImage
@@ -95,39 +98,6 @@ export function DownloadPage() {
             <strong>[ audio device ]</strong>
           </figcaption>
         </figure>
-      </section>
-
-      <section id="compare" className="plan-module content-width" aria-labelledby="plan-comparison-title">
-        <SectionRule>license options</SectionRule>
-        <div className="plan-module__grid">
-          <div>
-            <h2 id="plan-comparison-title">the limits are stated plainly.</h2>
-            <p>
-              Free covers a compact live-audio chain: 4 VST3 nodes and 1 preset. Pro removes those limits with
-              unlimited nodes and presets — pay monthly or buy once.
-            </p>
-            <a className="button button--text" href="/pricing">
-              [ see full pricing ] <ArrowMark />
-            </a>
-          </div>
-          <div className="plan-lines">
-            <p>
-              <strong>free</strong>
-              <span>up to 4 VST3 nodes · 1 preset</span>
-              <em className="plan-lines__price">[ included ]</em>
-            </p>
-            <p className="plan-lines__pro">
-              <strong>
-                <i className="state-square state-square--green" aria-hidden="true" />pro
-              </strong>
-              <span>unlimited VST3 nodes · unlimited presets</span>
-              <ProPriceNote />
-            </p>
-            <div className="plan-lines__action">
-              <ProCheckoutActions />
-            </div>
-          </div>
-        </div>
       </section>
     </PageFrame>
   );
