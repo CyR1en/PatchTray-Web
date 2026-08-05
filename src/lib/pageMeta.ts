@@ -41,7 +41,7 @@ type PageMetaInput = Omit<
  */
 const CANVAS_IMAGE: OpenGraphImage = {
   path: "/assets/patchtray-canvas.png",
-  alt: "PatchTray routing an ASIO input through a VST3 plugin to an ASIO output on its visual canvas.",
+  alt: "PatchTray routing a VoiceMeeter Insert ASIO input through a VST3 plugin to an output as one supported setup example.",
   width: 1745,
   height: 1073,
   type: "image/png",
@@ -57,7 +57,7 @@ const PORTS_IMAGE: OpenGraphImage = {
 
 const SETTINGS_IMAGE: OpenGraphImage = {
   path: "/assets/patchtray-settings.png",
-  alt: "PatchTray's audio device settings showing the ASIO driver, sample rate, and buffer size read from the driver.",
+  alt: "PatchTray audio settings showing an ASIO device as one supported duplex-device configuration example.",
   width: 1280,
   height: 720,
   type: "image/png",
@@ -65,7 +65,7 @@ const SETTINGS_IMAGE: OpenGraphImage = {
 
 const TELEMETRY_IMAGE: OpenGraphImage = {
   path: "/assets/patchtray-telemetry.png",
-  alt: "PatchTray running a live ASIO input and output on its canvas with signal meters and telemetry active.",
+  alt: "PatchTray running an ASIO input and output as one supported setup example, with signal meters and telemetry active.",
   width: 1280,
   height: 720,
   type: "image/png",
@@ -83,16 +83,16 @@ function definePage(meta: PageMetaInput): PageMeta {
 
 export const pageMeta: Record<PageName, PageMeta> = {
   home: definePage({
-    title: "PatchTray — process live audio with VST3 plugins",
+    title: "PatchTray — a visual VST3 host for live audio",
     description:
-      "A Windows VST3 host for building visible ASIO signal chains and keeping them running from the system tray.",
+      "PatchTray is a visual VST3 host for live audio on Windows, with support for compatible duplex ASIO, Windows Audio, and DirectSound devices.",
     canonicalPath: "/",
-    openGraphTitle: "PatchTray — a visible VST3 host for live Windows audio",
+    openGraphTitle: "PatchTray — a visual VST3 host for live audio",
   }),
   download: definePage({
     title: "Download PatchTray for Windows",
     description:
-      "Download PatchTray for Windows, review ASIO requirements, and compare the Free and Pro VST3 host plans.",
+      "Download PatchTray for Windows, review supported duplex audio-device backends, and compare the Free and Pro VST3 host plans.",
     canonicalPath: "/download",
     openGraphImage: SETTINGS_IMAGE,
   }),
@@ -107,19 +107,19 @@ export const pageMeta: Record<PageName, PageMeta> = {
   firstVst3ChainGuide: definePage({
     title: "How to build your first VST3 plugin chain on Windows",
     description:
-      "Choose an ASIO input and output, add VST3 processors, connect the route on the canvas, and save it as a preset.",
+      "Choose a compatible duplex audio device, add VST3 processors, connect its input and output on the canvas, and save the route as a preset.",
     canonicalPath: "/guides/build-your-first-vst3-chain",
   }),
   guides: definePage({
-    title: "VST3 and ASIO guides for Windows — PatchTray",
+    title: "Live VST3 audio guides for Windows — PatchTray",
     description:
-      "Practical PatchTray guides for building your first VST3 chain, Voicemeeter inserts, standalone effects, ASIO routing, and live Windows audio.",
+      "Practical PatchTray guides for VST3 chains, supported audio devices, VoiceMeeter Patch Inserts, standalone effects, and live Windows audio.",
     canonicalPath: "/guides",
   }),
   faq: definePage({
-    title: "PatchTray FAQ — VST3, ASIO, Voicemeeter, and licensing",
+    title: "PatchTray FAQ — VST3, audio devices, and licensing",
     description:
-      "Direct answers about PatchTray for Windows, live VST3 processing, ASIO routing, Voicemeeter inserts, latency, and Free versus Pro.",
+      "Direct answers about PatchTray for Windows, live VST3 processing, supported audio backends, VoiceMeeter Patch Inserts, latency, and Free versus Pro.",
     canonicalPath: "/faq",
     openGraphTitle: "PatchTray FAQ — answers for live Windows audio",
     openGraphImage: TELEMETRY_IMAGE,
@@ -134,7 +134,7 @@ export const pageMeta: Record<PageName, PageMeta> = {
   vst3WithoutDawGuide: definePage({
     title: "How to run VST3 effects without a DAW on Windows",
     description:
-      "Connect an ASIO input, live VST3 effect chain, and ASIO output in PatchTray without opening a recording session.",
+      "Connect a supported duplex audio device through a live VST3 effect chain in PatchTray without opening a recording session.",
     canonicalPath: "/guides/run-vst3-without-daw",
     openGraphImage: TELEMETRY_IMAGE,
   }),
@@ -156,9 +156,9 @@ export const pageMeta: Record<PageName, PageMeta> = {
     canonicalPath: "/refunds",
   }),
   support: definePage({
-    title: "PatchTray support — licenses, activation, downloads, and billing",
+    title: "PatchTray support — audio routing, licenses, downloads, and billing",
     description:
-      "Get help with PatchTray licenses, activation, device limits, downloads, billing, and privacy or security reports.",
+      "Get help with PatchTray audio-device routing, licenses, activation, downloads, billing, and privacy or security reports.",
     canonicalPath: "/support",
   }),
   checkoutSuccess: definePage({

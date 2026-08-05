@@ -103,7 +103,7 @@ export function getGuideFeed(): string {
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<feed xmlns="http://www.w3.org/2005/Atom">',
     "  <title>PatchTray guides</title>",
-    `  <subtitle>${escapeXml("Practical guides for live VST3 audio, ASIO routing, and PatchTray workflows on Windows.")}</subtitle>`,
+    `  <subtitle>${escapeXml("Practical guides for live VST3 audio, supported audio devices, and PatchTray workflows on Windows.")}</subtitle>`,
     `  <link href="${escapeXml(guidesUrl)}" />`,
     `  <link href="${escapeXml(feedUrl)}" rel="self" type="application/atom+xml" />`,
     `  <id>${escapeXml(guidesUrl)}</id>`,

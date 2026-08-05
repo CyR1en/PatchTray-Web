@@ -52,19 +52,20 @@ export function HomePage() {
         <div className="hero content-width">
           <div className="hero-copy">
             <p className="terminal-label hero-label">
-              windows / asio / vst3 host / {siteConfig.releaseState}
+              windows / audio routing / vst3 / {siteConfig.releaseState}
             </p>
             <h1>
               <span className="hero-line">
-                <span className="hero-line__inner">process live audio</span>
+                <span className="hero-line__inner">a visual VST3 host</span>
               </span>
               <span className="hero-line">
-                <span className="hero-line__inner hero__word">with your VST3 plugins.</span>
+                <span className="hero-line__inner hero__word">for live audio.</span>
               </span>
             </h1>
             <p className="hero-lead">
-              PatchTray connects an ASIO input, your VST3 processing, and an ASIO output in one visible route.
-              Build the chain on the canvas, then keep it running from the system tray.
+              Build a visible VST3 route around one logical duplex audio device at a time. Use compatible ASIO,
+              DirectSound, or Windows Audio in Shared, Exclusive, or Low Latency mode, then keep the chain running
+              from the system tray.
             </p>
             <div className="hero-actions">
               <a

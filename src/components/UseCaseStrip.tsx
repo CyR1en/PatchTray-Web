@@ -3,8 +3,8 @@ import { SectionRule } from "./SectionRule";
 const USE_CASES = [
   {
     id: "01",
-    title: "voicemeeter rigs",
-    detail: "process your microphone through VST3 plugins on the insert path before voicemeeter mixes it.",
+    title: "desktop audio rigs",
+    detail: "build a visible VST3 chain around a compatible duplex ASIO, Windows Audio, or DirectSound device.",
   },
   {
     id: "02",
@@ -18,8 +18,8 @@ const USE_CASES = [
   },
   {
     id: "04",
-    title: "podcast & voice work",
-    detail: "eq, compression, and cleanup on the live mic, monitored as you speak.",
+    title: "expanded multichannel",
+    detail: "use VoiceMeeter Patch Inserts when your setup needs an optional expanded multichannel workflow.",
   },
 ] as const;
 

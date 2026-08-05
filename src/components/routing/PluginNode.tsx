@@ -40,7 +40,7 @@ export function PluginNode({
       <div className="plugin-node__foot">
         <span className="plugin-node__page" aria-hidden="true" />
         <span className="plugin-node__cfg">[ cfg ]</span>
-        <span className="plugin-node__latency">0 smp</span>
+        <span className="plugin-node__meta">audio fx</span>
       </div>
       <span className="port-label port-label--in">in</span>
       <span className="port-label port-label--out">out</span>

@@ -223,7 +223,8 @@ function fixedStructuredData(page: PageName, pageUrl: string): unknown[] {
         publisher: organizationReference(),
         applicationCategory: "MultimediaApplication",
         operatingSystem: "Windows",
-        softwareRequirements: "Windows and an ASIO driver",
+        softwareRequirements:
+          "Windows and one compatible logical duplex device using ASIO, DirectSound, or Windows Audio in Shared, Exclusive, or Low Latency mode",
         offers: softwareOffers(),
       },
     ];

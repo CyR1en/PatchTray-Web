@@ -15,7 +15,7 @@ tags:
   - "Windows audio"
 image:
   src: "./hero.png"
-  alt: "PatchTray's node chain drawn as an engineering wireframe: ASIO input, a selected plugin node with labeled knobs and square jacks, ASIO output — dimensioned like a hardware part, state spelled out in words."
+  alt: "PatchTray's node chain drawn as an engineering wireframe using ASIO input and output as one supported setup example, with a selected plugin node, labeled knobs, and square jacks."
 status: "published"
 featured: false
 ---
@@ -38,7 +38,7 @@ In live audio, extra chrome is liability. If a plugin mutes itself mid-stream, y
 
 That's why we built PatchTray around one idea: the canvas *is* the interface.
 
-Rather than hiding routes inside dropdowns, PatchTray draws your processing pipeline directly as a flat node graph. Audio enters from your ASIO driver or interface, passes through visible cables into nodes—gates, EQs, compressors, VST3 plugins—and routes straight out to your stream mix or headphones. 
+Rather than hiding routes inside dropdowns, PatchTray draws your processing pipeline directly as a flat node graph. Audio enters through the selected logical duplex device, passes through visible cables into VST3 nodes—gates, EQs, compressors, and other processors—and continues to that device's selected output. PatchTray supports compatible duplex ASIO and DirectSound devices, plus Windows Audio in Shared, Exclusive, and Low Latency modes.
 
 If a cable is connected, it's visible. If a plugin is bypassed, it says `[ byp ]` in orange monospace text right on the node header. There are no invisible routing matrices or secret background buses.
 
@@ -66,13 +66,13 @@ PatchTray runs its C++ audio engine in the background with lock-free real-time p
 
 Teenage Engineering picked up Rams' thread decades later with instruments like the OP-1 and TX-6. Their interfaces are flat, grid-aligned, and starkly labeled. The controls feel deliberate because every millimeter has a function.
 
-PatchTray adopts that same functional clarity for VST3 hosting. Nodes are dark, flat cards with monospace headers, explicit state badges, and square jacks. Cables are literal connections between labeled ports. It doesn't pretend to be a physical rack, but its layout precision makes it feel as reliable as hardware.
+PatchTray adopts that same functional clarity for VST3 hosting. Nodes are dark, flat cards with monospace headers, explicit state badges, and square jacks. Cables are literal connections between labeled ports. It doesn't pretend to be a physical rack, but its layout precision gives the controls a deliberate hardware-like structure.
 
 ## A tool for routing
 
 Software design today is buried in SaaS trends: soft gradients, glassmorphism, floating cards, and decorative empty states. Audio tools don't need marketing fluff inside their control surfaces.
 
-We built PatchTray around clear signal routing, tactile precision, and functional honesty for anyone who wants a Windows audio chain that just works.
+We built PatchTray around clear signal routing, tactile precision, and functional honesty for Windows live-audio chains.
 
 If you're setting up VST3 hosting without a DAW for the first time, check out our [VST3 without a DAW guide](/guides/run-vst3-without-daw) to see how the graph fits into your setup.
 

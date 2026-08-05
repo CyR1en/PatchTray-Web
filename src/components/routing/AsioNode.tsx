@@ -24,13 +24,13 @@ export function AsioNode({
       <div className="signal-node__head">
         <span>
           <i className="node-led" aria-hidden="true" />
-          asio {type}
+          audio {type}
         </span>
       </div>
       <div className="signal-node__body">
         <div className="asio-field">
           <p>{endpoint}</p>
-          <strong title="ASIO Device">ASIO Device</strong>
+          <strong title="Selected duplex audio device">Audio Device</strong>
         </div>
         <div className="asio-field">
           <p>status</p>
@@ -40,7 +40,7 @@ export function AsioNode({
           <p>{port}</p>
           <div className="asio-port-row">
             <strong className="asio-port">
-              stereo <em>· ch 3+4</em>
+              stereo <em>· ch 1+2</em>
             </strong>
           </div>
         </div>

@@ -17,12 +17,12 @@ export const FIRST_VST3_CHAIN_GUIDE: GuideArticleDefinition = {
   title: "How to build your first VST3 plugin chain on Windows",
   cardTitle: "Build your first VST3 chain",
   description:
-    "Choose an ASIO input and output, add VST3 processors, connect the route on the canvas, and save it as a preset.",
+    "Choose a compatible duplex audio device, add VST3 processors, connect its input and output on the canvas, and save the route as a preset.",
   category: "setup guide",
   readingTime: "3 minute read",
   published: "2026-07-27",
-  reviewed: "2026-07-27",
-  topics: ["ASIO ports", "VST3 chains", "PatchTray setup", "presets"],
+  reviewed: "2026-08-05",
+  topics: ["audio devices", "VST3 chains", "PatchTray setup", "presets"],
 };
 
 export const VOICEMEETER_VST3_GUIDE: GuideArticleDefinition = {
@@ -45,12 +45,12 @@ export const VST3_WITHOUT_DAW_GUIDE: GuideArticleDefinition = {
   title: "How to run VST3 effects without opening a DAW on Windows",
   cardTitle: "Run VST3 effects without a DAW",
   description:
-    "Use a standalone Windows VST3 host to connect an ASIO input, a live effect chain, and an ASIO output without a recording session.",
+    "Use a standalone Windows VST3 host to connect a supported duplex audio device through a live effect chain without a recording session.",
   category: "workflow guide",
   readingTime: "7 minute read",
   published: "2026-07-27",
-  reviewed: "2026-07-27",
-  topics: ["VST3 host", "Windows audio", "ASIO routing", "live effects"],
+  reviewed: "2026-08-05",
+  topics: ["VST3 host", "Windows audio", "audio-device routing", "live effects"],
 };
 
 export const guideArticles = [FIRST_VST3_CHAIN_GUIDE, VOICEMEETER_VST3_GUIDE, VST3_WITHOUT_DAW_GUIDE] as const;

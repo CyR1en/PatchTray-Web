@@ -24,9 +24,9 @@ const DAW_CHORES = [
 ] as const;
 
 const HOST_STEPS = [
-  { id: "01", title: "pick your asio input", detail: "the live sound you already have" },
+  { id: "01", title: "select your audio input", detail: "ports from the active duplex device" },
   { id: "02", title: "drop in your vst3 plugins", detail: "the processors you already own" },
-  { id: "03", title: "route to your asio output", detail: "processed audio, immediately" },
+  { id: "03", title: "connect your audio output", detail: "complete the visible signal path" },
 ] as const;
 
 function HostStage({ progress, compact }: { progress: number; compact: boolean }) {
@@ -84,7 +84,7 @@ function HostStage({ progress, compact }: { progress: number; compact: boolean }
       <section className="host-stage__steps">
         <header>
           <span>the patchtray way</span>
-          <em className={live ? "is-live" : ""}>[ plug and play ]</em>
+          <em className={live ? "is-live" : ""}>[ visible path ]</em>
         </header>
         <ol className="host-steps">
           {HOST_STEPS.map((step, index) => {
@@ -148,8 +148,8 @@ export function HostStatement() {
                 </h2>
                 <p style={revealStyle(bodyAmount, 8)}>
                   A DAW is built for sessions: projects, mixers, timelines, bounces. PatchTray skips the session.
-                  Open it, place your plugins on the path, and your live input is already processed — nothing to
-                  arm, record, or render.
+                  Open it, select a compatible audio device, and place your plugins on the path — nothing to arm,
+                  record, or render.
                 </p>
               </div>
             </div>

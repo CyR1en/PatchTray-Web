@@ -31,8 +31,8 @@ const sections: readonly GuideArticleSection[] = [
           </div>
         </div>
         <p>
-          PatchTray is intentionally the first kind of tool. It is a Windows VST3 host for a live ASIO path,
-          not a replacement for a DAW session.
+          PatchTray is intentionally the first kind of tool. It is a visual VST3 host for live audio around
+          one compatible logical duplex device, not a replacement for a DAW session.
         </p>
       </>
     ),
@@ -44,13 +44,14 @@ const sections: readonly GuideArticleSection[] = [
     body: (
       <>
         <SignalFlow
-          label="Live ASIO source through PatchTray effects to an ASIO destination"
-          nodes={["ASIO input", "PatchTray graph", "VST3 effects", "ASIO output"]}
+          label="Live audio source through PatchTray effects to an output"
+          nodes={["audio input", "PatchTray graph", "VST3 effects", "audio output"]}
         />
         <p>
-          Decide where the signal enters and where it must leave. That may be a hardware interface, an ASIO
-          insert path exposed by a mixer, or another verified ASIO-capable route. The input and output channel
-          choices belong to your driver and mixer configuration.
+          Decide where the signal enters and where it must leave on the selected logical duplex device. PatchTray
+          supports compatible duplex ASIO and DirectSound devices, plus Windows Audio in Shared, Exclusive, and
+          Low Latency modes. The available input and output ports belong to the selected backend and device
+          configuration.
         </p>
         <figure className="app-capture article-capture">
           <CaptureImage
@@ -59,11 +60,11 @@ const sections: readonly GuideArticleSection[] = [
             width={1280}
             height={720}
             sizes="(max-width: 980px) calc(100vw - 32px), 720px"
-            alt="PatchTray audio settings with ASIO device, sample rate, and buffer size controls."
+            alt="PatchTray audio settings showing an ASIO device as one supported duplex-device configuration example."
           />
           <figcaption>
             <span>PatchTray audio device</span>
-            <strong>[ select the verified ASIO path ]</strong>
+            <strong>[ ASIO example / one supported backend ]</strong>
           </figcaption>
         </figure>
       </>
@@ -76,16 +77,16 @@ const sections: readonly GuideArticleSection[] = [
     body: (
       <>
         <ol>
-          <li>Choose the ASIO device in PatchTray’s audio settings.</li>
-          <li>Configure the input and output ports for the intended channel pair.</li>
-          <li>Place one ASIO input node and one ASIO output node on the canvas.</li>
+          <li>Choose one compatible logical duplex device in PatchTray’s audio settings.</li>
+          <li>Configure its input and output ports for the intended route.</li>
+          <li>Place one input node and one output node on the canvas.</li>
           <li>Connect input directly to output and confirm stable signal.</li>
           <li>Only then place a VST3 effect between the two nodes.</li>
         </ol>
         <p>
           This order separates routing problems from plug-in problems. If the direct cable is silent, changing
-          EQ settings cannot fix the route. If the direct cable works and one effect stops it, the driver and
-          ports have already been cleared.
+          EQ settings cannot fix the route. If the direct cable works and one effect stops it, the backend,
+          device, and ports have already been cleared.
         </p>
       </>
     ),
@@ -108,11 +109,11 @@ const sections: readonly GuideArticleSection[] = [
             width={1745}
             height={1073}
             sizes="(max-width: 980px) calc(100vw - 32px), 720px"
-            alt="PatchTray canvas connecting an ASIO input through a VST3 effect to an ASIO output."
+            alt="PatchTray canvas showing a VoiceMeeter Insert ASIO route through a VST3 effect as one supported setup example."
           />
           <figcaption>
             <span>visible live route</span>
-            <strong>[ ASIO → VST3 → ASIO ]</strong>
+            <strong>[ ASIO example / input → VST3 → output ]</strong>
           </figcaption>
         </figure>
         <p>
@@ -157,8 +158,8 @@ const sections: readonly GuideArticleSection[] = [
       <>
         <ul>
           <li>
-            Lower buffer sizes can reduce delay but may become unstable. There is no universal best value for
-            every interface, driver, CPU, and plug-in chain.
+            Buffer controls and behavior vary by backend and device. There is no universal best value for every
+            device, CPU, and plug-in chain.
           </li>
           <li>Sample-rate or channel mismatches can create silence even when the graph is connected.</li>
           <li>Some plug-ins add their own processing delay or behave differently on live input.</li>
@@ -168,14 +169,14 @@ const sections: readonly GuideArticleSection[] = [
         <div className="article-warning">
           <strong>Do not optimize while going live.</strong>
           <p>
-            Prove the route at low monitoring level, increase the buffer if it crackles, and keep a bypass path
-            available until the complete chain is stable.
+            Prove the route at low monitoring level, adjust the buffer only when the selected backend and device
+            expose that control, and keep a bypass path available until the complete chain is stable.
           </p>
         </div>
         <p>
-          For installation and port basics, use the <a href="/guides/build-your-first-vst3-chain#ports">PatchTray quick-start</a>. If the driver
-          opens but the graph does not behave as described, collect the device name, sample rate, buffer, port
-          pair, and failing node before contacting <a href="/support">support</a>.
+          For installation and port basics, use the <a href="/guides/build-your-first-vst3-chain#ports">PatchTray quick-start</a>. If the backend
+          and device open but the graph does not behave as described, collect their names, the relevant audio
+          settings, ports, and failing node before contacting <a href="/support">support</a>.
         </p>
       </>
     ),

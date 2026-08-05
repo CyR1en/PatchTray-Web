@@ -12,8 +12,8 @@ export type FaqEntry = {
  * the named public release and the website's current terms.
  */
 export const faqReview = {
-  date: "2026-07-27",
-  productVersion: "0.4.3",
+  date: "2026-08-05",
+  productVersion: "0.5.3",
 } as const;
 
 /**
@@ -27,7 +27,7 @@ export const faqEntries: readonly FaqEntry[] = [
     category: "product",
     question: "What is PatchTray?",
     answer:
-      "PatchTray is a Windows VST3 host for live audio. It connects an ASIO input, one or more VST3 effects, and an ASIO output on a visual canvas, then keeps that processing chain running from the system tray.",
+      "PatchTray is a visual VST3 host for live audio on Windows. It connects input and output ports from one logical duplex audio device through VST3 effects on a visual canvas, then keeps that processing chain running from the system tray.",
     links: [{ label: "see how the signal path works", href: "/" }],
   },
   {
@@ -42,7 +42,7 @@ export const faqEntries: readonly FaqEntry[] = [
     category: "routing",
     question: "What do I need to run PatchTray?",
     answer:
-      "You need Windows, a working ASIO driver, and at least one compatible VST3 effect. Your input and output must be available through the ASIO driver you select.",
+      "You need Windows, a compatible duplex audio device, and compatible VST3 effects. PatchTray supports compatible duplex ASIO and DirectSound devices, plus Windows Audio in Shared, Exclusive, and Low Latency modes, with one logical duplex device active at a time.",
     links: [{ label: "review the download requirements", href: "/download" }],
   },
   {
@@ -50,7 +50,7 @@ export const faqEntries: readonly FaqEntry[] = [
     category: "routing",
     question: "Can I run VST3 effects without a DAW?",
     answer:
-      "Yes. PatchTray hosts VST3 effects directly, so you can process a live ASIO signal without opening a DAW or creating a recording project.",
+      "Yes. PatchTray hosts VST3 effects directly on a live route from a supported duplex audio device, without opening a DAW or creating a recording project.",
     links: [{ label: "follow the no-DAW guide", href: "/guides/run-vst3-without-daw" }],
   },
   {
@@ -58,7 +58,7 @@ export const faqEntries: readonly FaqEntry[] = [
     category: "routing",
     question: "Does PatchTray work with Voicemeeter?",
     answer:
-      "Yes. PatchTray can process Voicemeeter insert channels when you select the matching Voicemeeter ASIO driver and connect the corresponding input and output channels in PatchTray.",
+      "Yes. VoiceMeeter Patch Inserts are an optional expanded multichannel workflow. Select the matching VoiceMeeter Insert Virtual ASIO driver and connect the corresponding input and output channels in PatchTray.",
     links: [{ label: "set up a Voicemeeter insert", href: "/guides/voicemeeter-vst3-plugins" }],
   },
   {
@@ -66,7 +66,7 @@ export const faqEntries: readonly FaqEntry[] = [
     category: "routing",
     question: "How does audio move through PatchTray?",
     answer:
-      "Audio enters through an ASIO input node, passes through the connected VST3 plugin nodes in order, and leaves through an ASIO output node. The cables on the canvas show the active signal path.",
+      "Audio enters through an input node for the selected duplex device, passes through connected VST3 plugin nodes in order, and leaves through an output node for that same logical device. The cables on the canvas show the active signal path.",
     links: [{ label: "build your first route", href: "/guides/build-your-first-vst3-chain" }],
   },
   {
@@ -88,7 +88,7 @@ export const faqEntries: readonly FaqEntry[] = [
     category: "plugins",
     question: "How can I reduce audio latency?",
     answer:
-      "Start with a stable ASIO buffer size, use low-latency plugins, and keep the route as short as practical. Smaller buffers can reduce delay but demand more from the CPU, so lower the buffer gradually and test for clicks or dropouts.",
+      "Buffer controls and behavior vary by backend and device. Start with a stable device-recommended setting, account for latency added by individual plugins, and change one setting at a time while checking for clicks or dropouts.",
   },
   {
     id: "free-vs-pro",
@@ -111,7 +111,7 @@ export const faqEntries: readonly FaqEntry[] = [
     category: "product",
     question: "Where can I get help with PatchTray?",
     answer:
-      "Use the PatchTray support page for installation, audio routing, activation, device, billing, privacy, or security questions. Include your Windows version, ASIO driver, PatchTray version, and exact error text for audio issues.",
+      "Use the PatchTray support page for installation, audio routing, activation, device, billing, privacy, or security questions. Include your Windows version, selected audio backend and device, PatchTray version, and exact error text for audio issues.",
     links: [{ label: "open PatchTray support", href: "/support" }],
   },
 ];

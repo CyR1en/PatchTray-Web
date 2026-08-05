@@ -16,13 +16,12 @@ const sections: readonly GuideArticleSection[] = [
     body: (
       <>
         <SignalFlow
-          label="Live ASIO source through a PatchTray VST3 chain to an ASIO destination"
-          nodes={["ASIO input", "VST3 nodes", "ASIO output"]}
+          label="Live audio source through a PatchTray VST3 chain to an output"
+          nodes={["audio input", "VST3 nodes", "audio output"]}
         />
         <p>
-          PatchTray is built around a visual node graph. An ASIO input node is where the live audio enters.
-          VST3 nodes are the processing chain. An ASIO output node is where the finished signal leaves for
-          the rest of your setup.
+          PatchTray is built around a visual node graph. An input node is where live audio enters. VST3 nodes
+          are the processing chain. An output node is where the signal leaves for the rest of your setup.
         </p>
         <p>
           The product stays available in the system tray, so the canvas can be there when you need to change
@@ -38,15 +37,15 @@ const sections: readonly GuideArticleSection[] = [
     body: (
       <>
         <p>
-          Open the audio device settings and choose the ASIO device. Then configure the input and output
-          ports that match the channels you intend to route through your mixer.
+          Open the audio device settings and choose one compatible logical duplex device. PatchTray supports
+          compatible duplex ASIO and DirectSound devices, plus Windows Audio in Shared, Exclusive, and Low
+          Latency modes. Then configure the input and output ports exposed by that device.
         </p>
         <div className="article-note">
-          <strong>Your device decides the pair.</strong>
+          <strong>One logical duplex device at a time.</strong>
           <p>
-            The exact device and channel choice depend on your local ASIO and mixer configuration.{" "}
-            <a href="/guides/voicemeeter-vst3-plugins">Voicemeeter ASIO inserts</a> are a common setup;
-            other ASIO-capable mixers that accept insert patching can work the same way.
+            The exact ports depend on your selected backend and device. For expanded multichannel routing,{" "}
+            <a href="/guides/voicemeeter-vst3-plugins">VoiceMeeter Patch Inserts</a> are an optional workflow.
           </p>
         </div>
         <figure className="app-capture article-capture">
@@ -56,7 +55,7 @@ const sections: readonly GuideArticleSection[] = [
             width={1280}
             height={720}
             sizes="(max-width: 980px) calc(100vw - 32px), 720px"
-            alt="PatchTray dialog for configuring stereo ASIO input ports and selecting channel assignments."
+            alt="PatchTray port dialog showing a stereo VoiceMeeter Insert ASIO configuration as one supported setup example."
           />
           <figcaption>
             <span>current app view</span>
@@ -129,7 +128,7 @@ export function FirstVst3ChainGuidePage() {
   return (
     <GuideArticleLayout
       article={FIRST_VST3_CHAIN_GUIDE}
-      lead="Choose your ASIO input and output, add the VST3 processors you want, connect the route, and save it as a preset."
+      lead="Choose a compatible duplex audio device, add the VST3 processors you want, connect its input and output ports, and save the route as a preset."
       sections={sections}
       sources={[
         {

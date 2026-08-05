@@ -18,7 +18,7 @@ export function FaqPage() {
           <p className="terminal-label">patchtray / answers</p>
           <h1>the signal path, explained.</h1>
           <p className="page-lead">
-            Direct answers about PatchTray, ASIO routing, VST3 effects, Voicemeeter, latency, and licensing.
+            Direct answers about PatchTray, audio-device routing, VST3 effects, VoiceMeeter, latency, and licensing.
             Start with the question closest to your setup.
           </p>
           <div className="faq-hero__meta" aria-label="FAQ coverage">
@@ -26,7 +26,7 @@ export function FaqPage() {
             <span className="faq-flag"><i className="state-square state-square--green" aria-hidden="true" /> maintained</span>
             <span className="faq-flag">reviewed / PatchTray {faqReview.productVersion}</span>
             <span className="faq-flag">windows</span>
-            <span className="faq-flag">asio</span>
+            <span className="faq-flag">audio backends</span>
             <span className="faq-flag">vst3</span>
           </div>
         </div>
@@ -81,7 +81,7 @@ export function FaqPage() {
       <section className="faq-close content-width" aria-labelledby="faq-close-title">
         <SectionRule>unresolved signal</SectionRule>
         <h2 id="faq-close-title">Still hearing something wrong?</h2>
-        <p>Send the exact status text, your ASIO driver, Windows version, and PatchTray version.</p>
+        <p>Send the exact status text, your selected audio backend and device, Windows version, and PatchTray version.</p>
         <a className="button button--primary" href="/support">[ open support ] <ArrowMark /></a>
       </section>
     </PageFrame>

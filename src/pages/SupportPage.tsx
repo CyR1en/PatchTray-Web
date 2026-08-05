@@ -107,12 +107,13 @@ const sections: readonly DocSection[] = [
       <>
         <p>
           Start from the <a href="/download">download page</a> for the current build and requirements, and the{" "}
-          <a href="/guides/build-your-first-vst3-chain">quick-start guide</a> for first-run setup. PatchTray needs Windows and a working ASIO driver.
+          <a href="/guides/build-your-first-vst3-chain">quick-start guide</a> for first-run setup. PatchTray needs
+          Windows and a compatible duplex audio device exposed through a supported backend.
         </p>
         <p>For anything audio-related, these four details resolve most reports:</p>
         <ul>
           <li>your Windows version;</li>
-          <li>the ASIO driver and device you are using;</li>
+          <li>the audio backend and device you are using;</li>
           <li>the PatchTray version shown in the app;</li>
           <li>exactly what PatchTray reported — the status text or error, word for word.</li>
         </ul>

@@ -72,7 +72,7 @@ export const siteConfig = {
 
   requirementsText: env(
     "VITE_REQUIREMENTS_TEXT",
-    "Windows and an ASIO driver are required. PatchTray is commonly used with Voicemeeter ASIO inserts; other ASIO-capable mixers that accept insert patching can work the same way. Detailed system requirements are being finalized for the public beta.",
+    "PatchTray requires Windows, a compatible duplex audio device, and compatible VST3 effects. It supports compatible duplex ASIO and DirectSound devices, plus Windows Audio in Shared, Exclusive, and Low Latency modes. One logical duplex device can be active at a time.",
   ),
 };
 

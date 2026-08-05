@@ -33,7 +33,7 @@ export function SiteFooter() {
         <div className="footer-brand">
           <Mark className="footer-mark" />
           <p>
-            patchtray <span>— visible audio routing for windows.</span>
+            patchtray <span>— a visual VST3 host for live audio.</span>
           </p>
         </div>
         <nav className="footer-links" aria-label="Support and legal">

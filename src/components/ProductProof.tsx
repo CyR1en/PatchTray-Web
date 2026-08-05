@@ -54,11 +54,11 @@ export function ProductProof() {
             width={1745}
             height={1073}
             sizes="(max-width: 980px) calc(100vw - 32px), 58vw"
-            alt="PatchTray main window: master input and output meters, a scanned VST3 plugin list, and the canvas routing an ASIO input through a VST3 plugin node into an ASIO output over Voicemeeter insert ASIO."
+            alt="PatchTray main window showing a Voicemeeter Insert ASIO route through a VST3 plugin as one supported audio-device setup."
           />
           <figcaption>
             <span>patchtray / main window</span>
-            <strong>actual capture — live route over voicemeeter insert asio</strong>
+            <strong>actual capture — one supported VoiceMeeter Patch Insert setup</strong>
           </figcaption>
         </figure>
       </div>

@@ -19,8 +19,8 @@ export function DownloadPage() {
           for Windows.
         </h1>
         <p className="page-lead">
-          Download the public beta and build a live VST3 chain between your ASIO input and output. Start with
-          Free, then upgrade if you need more nodes or presets.
+          Download the public beta and build a live VST3 chain around one compatible duplex audio device. Start
+          with Free, then upgrade if you need more nodes or presets.
         </p>
       </section>
 
@@ -57,14 +57,15 @@ export function DownloadPage() {
             <p>
               <i aria-hidden="true">✓</i>
               <span>
-                <strong>choose your ASIO device</strong> in PatchTray before deciding where your signal goes.
+                <strong>choose a compatible duplex audio device</strong> through ASIO, Windows Audio, or
+                DirectSound. PatchTray uses one logical device at a time.
               </span>
             </p>
             <p>
               <i aria-hidden="true">✓</i>
               <span>
-                <strong>set up the input and output ports</strong> that match the channels you route through
-                your mixer.
+                <strong>set up the input and output ports</strong> exposed by that device for the route you want
+                to build.
               </span>
             </p>
             <p>
@@ -91,11 +92,11 @@ export function DownloadPage() {
             width={1280}
             height={720}
             sizes="(max-width: 980px) calc(100vw - 32px), 42vw"
-            alt="PatchTray audio device settings screen with ASIO device, sample rate, and buffer size fields."
+            alt="PatchTray audio settings showing an ASIO device as one supported duplex-device configuration example."
           />
           <figcaption>
             <span>current app view</span>
-            <strong>[ audio device ]</strong>
+            <strong>[ ASIO example / one supported backend ]</strong>
           </figcaption>
         </figure>
       </section>

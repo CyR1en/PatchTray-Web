@@ -188,10 +188,11 @@ signal, upstream of everything.
 
 ## Running it live with PatchTray
 
-PatchTray is a standalone Windows VST3 host that runs from the system tray.
-It takes a live ASIO input, runs it through a chain of VST3 processors, and
-delivers the result to an ASIO output, no DAW session involved. If the
-routing concepts are new, the
+PatchTray is a visual VST3 host for live audio on Windows that runs from the
+system tray. It builds a chain around one compatible logical duplex device;
+supported backends include duplex ASIO and DirectSound, plus Windows Audio in
+Shared, Exclusive, and Low Latency modes. This walkthrough uses ASIO for its
+specific microphone route. If the routing concepts are new, the
 [Run VST3 effects without a DAW](/guides/run-vst3-without-daw) guide covers
 the basic signal path; what follows is the noise-suppression-specific part.
 
@@ -228,10 +229,9 @@ signal arriving at it is already clean, and double suppression is a recipe
 for exactly the warbling artifacts you set out to avoid.
 
 A few honest caveats. Every neural suppressor adds latency: DeepFilterNet
-works in 10 ms frames plus buffering, so expect a small, fixed delay on the
-monitored signal. It is irrelevant for voice chat and streaming, but worth
-knowing about if you monitor your own voice live. CPU cost is real but modest; it runs in
-the same league as the rest of a live chain. And no algorithm creates
+works in 10 ms frames plus buffering, so account for that delay when evaluating
+the monitored signal for your own workflow. CPU cost also depends on the system
+and the rest of the chain. And no algorithm creates
 information. If the noise is louder than your voice, no amount of attenuation
 will make the result sound good, and the fix is to move the mic closer rather
 than to turn the knob further.

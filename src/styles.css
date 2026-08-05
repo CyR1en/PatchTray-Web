@@ -729,7 +729,7 @@ img { display: block; max-width: 100%; }
 .plugin-node__page em { font-style: normal; color: var(--graphite); }
 .plugin-node__page strong { color: var(--orange); font-weight: 400; }
 .plugin-node__cfg { justify-self: center; color: var(--steel); }
-.plugin-node__latency { justify-self: end; font-size: 8px; }
+.plugin-node__meta { justify-self: end; font-size: 8px; }
 .port-label {
   position: absolute;
   z-index: 2;

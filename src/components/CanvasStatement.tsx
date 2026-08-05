@@ -22,7 +22,7 @@ const PLUGIN_NAME = "spectral comp";
 
 /**
  * The plugin node as the app draws it: header (led · name · actions), a knob
- * grid, and the footer with page, cfg, and reported latency. Same parts as
+ * grid, and the footer with page, cfg, and a plugin-type marker. Same parts as
  * `PluginNode` in the hero demo — this one just sits in a card instead of on
  * the graph, so it carries no jacks or cables.
  */
@@ -66,7 +66,7 @@ function ControlNode({ knobsAmount, guiActive }: { knobsAmount: number; guiActiv
           <i aria-hidden="true">▶</i>
         </span>
         <span className="plugin-node__cfg">[ cfg ]</span>
-        <span className="plugin-node__latency">0 smp</span>
+        <span className="plugin-node__meta">audio fx</span>
       </div>
     </div>
   );

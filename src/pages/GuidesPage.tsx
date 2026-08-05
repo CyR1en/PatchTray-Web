@@ -13,8 +13,8 @@ export function GuidesPage() {
           <p className="terminal-label">patchtray / field notes</p>
           <h1>guides for live VST3 audio on Windows.</h1>
           <p className="page-lead">
-            Practical routes for building your first VST3 chain, Voicemeeter inserts, standalone effects,
-            and ASIO signal chains. Each guide shows the actual PatchTray interface, names the assumptions,
+            Practical routes for building your first VST3 chain, VoiceMeeter Patch Inserts, standalone effects,
+            and audio-device signal chains. Each guide shows the actual PatchTray interface, names the assumptions,
             and leaves configuration-specific choices with your system.
           </p>
         </div>
@@ -22,7 +22,7 @@ export function GuidesPage() {
           <span>collection</span>
           <strong>{String(guideArticles.length).padStart(2, "0")} guides</strong>
           <span>platform</span>
-          <strong>Windows / ASIO</strong>
+          <strong>Windows / VST3</strong>
           <span>status</span>
           <strong>maintained</strong>
         </aside>
@@ -58,8 +58,8 @@ export function GuidesPage() {
           <SectionRule>the interface in the guide</SectionRule>
           <h2 id="guides-proof-title">The nodes and cables are the product.</h2>
           <p>
-            The screenshots are current PatchTray captures. The example route is deliberately small: one ASIO
-            input, one processor, and one ASIO output. Add complexity only after that path passes audio.
+            The screenshots are current PatchTray captures. This one shows a deliberately small VoiceMeeter Insert
+            ASIO example: one input, one processor, and one output. It is one supported setup, not a requirement.
           </p>
           <a
             className="button button--text"
@@ -77,7 +77,7 @@ export function GuidesPage() {
             width={1745}
             height={1073}
             sizes="(max-width: 980px) calc(100vw - 32px), 56vw"
-            alt="PatchTray canvas showing an ASIO input connected through a VST3 plugin node to an ASIO output."
+            alt="PatchTray canvas showing a VoiceMeeter Insert ASIO route through a VST3 plugin as one supported setup example."
           />
           <figcaption>
             <span>guide reference</span>

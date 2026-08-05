@@ -21,7 +21,7 @@ function UnpatchedStage() {
       </header>
       <svg viewBox="0 0 480 240">
         <rect className="nf-node" x="24" y="76" width="128" height="88" />
-        <text className="nf-text" x="40" y="103">asio input</text>
+        <text className="nf-text" x="40" y="103">audio input</text>
         <text className="nf-sub" x="40" y="122">source · idle</text>
         <text className="nf-sub" x="40" y="140">output</text>
         <rect className="nf-jack" x="146" y="114" width="12" height="12" />

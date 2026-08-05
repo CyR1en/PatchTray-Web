@@ -131,7 +131,7 @@ export function PricingPage() {
               </li>
               <li>
                 <i aria-hidden="true">✓</i>
-                <span>the full ASIO routing canvas</span>
+                <span>the full visual routing canvas</span>
               </li>
               <li>
                 <i aria-hidden="true">✓</i>
