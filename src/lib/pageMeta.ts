@@ -99,7 +99,7 @@ export const pageMeta: Record<PageName, PageMeta> = {
   pricing: definePage({
     title: "PatchTray pricing — Free, Pro monthly, and Pro lifetime",
     description:
-      "PatchTray Pro pricing: unlimited VST3 nodes and presets for a monthly subscription or a one-time lifetime purchase, with a 14-day refund window.",
+      "PatchTray Pro pricing: unlimited VST3 nodes and presets for a monthly subscription or a one-time lifetime purchase, with a 7-day refund window on lifetime.",
     canonicalPath: "/pricing",
     openGraphTitle: "PatchTray pricing — buy a Pro license",
     openGraphImage: TELEMETRY_IMAGE,

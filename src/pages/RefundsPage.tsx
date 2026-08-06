@@ -9,21 +9,86 @@ const sections: readonly DocSection[] = [
   {
     id: "policy",
     nav: "the policy",
-    title: "fourteen days, on either plan.",
+    title: "the rule is different on each plan.",
     body: (
       <>
+        <ul className="legal-rows">
+          <li>
+            <strong>monthly</strong>
+            <span>
+              A {siteConfig.proMonthlyPrice} charge is refundable only while its license key is unused. Once the
+              key has been activated, no charge on that subscription can be refunded — not the first one, and not
+              a later renewal.
+            </span>
+          </li>
+          <li>
+            <strong>lifetime</strong>
+            <span>
+              The {siteConfig.proLifetimePrice} purchase is refundable within <strong>7 days</strong> of the
+              charge, whether or not the key has been used.
+            </span>
+          </li>
+        </ul>
         <p>
-          If PatchTray Pro is not what you needed, ask for a refund within <strong>14 days</strong> of the charge
-          and it will be refunded. That applies to both the {siteConfig.proMonthlyPrice} monthly subscription and
-          the {siteConfig.proLifetimePrice} lifetime purchase.
+          If you are on monthly and the key is already in use, cancelling is the thing to do instead. It stops the
+          next charge and you keep Pro through the period you paid for — see <a href="#cancelling">below</a>.
         </p>
         <p>
-          For a monthly subscription the window applies to each charge, so a renewal you did not intend to keep can
-          be refunded within 14 days of that renewal.
+          A charge made before this policy took effect — the date is at the top of this page — is covered by the
+          previous policy of 14 days on either plan.
         </p>
         <p>
           Statutory rights come first. Where the law where you live gives you a longer or stronger cancellation
           right, that right applies instead of this policy.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: "used",
+    nav: "what counts as used",
+    title: "activation is what spends a key.",
+    body: (
+      <>
+        <p>
+          A key is <strong>used</strong> once it has been activated on a device. That is the moment PatchTray runs
+          as Pro on a machine, and it is recorded against the license.
+        </p>
+        <p>Two things follow from that, and both catch people out:</p>
+        <ul>
+          <li>
+            deactivating a device afterwards frees the slot, but it does not make the key unused again — the
+            activation still happened;
+          </li>
+          <li>
+            key recovery activates the device that asked for it, so recovering a key is itself a use of it.
+          </li>
+        </ul>
+        <p>
+          You do not have to prove any of this. The licensing record shows whether a key was ever activated, and
+          that record is what a refund request is checked against.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: "cancelling",
+    nav: "cancelling instead",
+    title: "cancelling and refunding are different things.",
+    body: (
+      <>
+        <p>
+          Cancelling a monthly subscription stops future charges and leaves your Pro access in place until the
+          period you already paid for runs out. A refund reverses a charge and revokes the license immediately.
+        </p>
+        <p>
+          Because a used monthly key cannot be refunded, cancelling is the remedy for a subscription you no longer
+          want — and cancelling before the period ends is what prevents the next charge rather than arguing about
+          it afterwards. See the <a href="/terms">terms</a> for how renewal works.
+        </p>
+        <p>
+          A lifetime purchase does not renew and has nothing to cancel. Within its 7 days it is a refund or
+          nothing.
         </p>
       </>
     ),
@@ -69,19 +134,6 @@ const sections: readonly DocSection[] = [
         </p>
         <p>Stripe returns the money to your original payment method on its own schedule, typically within days.</p>
       </>
-    ),
-  },
-  {
-    id: "cancelling",
-    nav: "cancelling instead",
-    title: "cancelling and refunding are different things.",
-    body: (
-      <p>
-        Cancelling a monthly subscription stops future charges and leaves your Pro access in place until the period
-        you already paid for runs out. A refund reverses a charge and revokes the license immediately. If you only
-        want to stop paying, cancel — you keep what you paid for. See the{" "}
-        <a href="/terms">terms</a> for how renewal works.
-      </p>
     ),
   },
   {
@@ -145,12 +197,12 @@ export function RefundsPage() {
       label="patchtray / refunds and disputes"
       heading={
         <>
-          fourteen days
+          an unused key,
           <br />
-          to change your mind.
+          or seven days.
         </>
       }
-      lead="How to ask for a refund on a PatchTray Pro purchase, what happens to your license afterwards, and why emailing works better than opening a payment dispute."
+      lead="What makes a PatchTray Pro charge refundable on each plan, how to ask, what happens to your license afterwards, and why emailing works better than opening a payment dispute."
       effective={EFFECTIVE}
       sections={sections}
     />

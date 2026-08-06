@@ -59,7 +59,7 @@ type ComparisonRow = {
 
 /**
  * Every published limit in one table. Values are the ones the terms already
- * state — device counts, offline leases, and the refund window — so the page a
+ * state — device counts, offline leases, and the refund rules — so the page a
  * buyer reads before paying cannot disagree with the agreement they accept.
  */
 const comparisonRows: readonly ComparisonRow[] = [
@@ -74,7 +74,7 @@ const comparisonRows: readonly ComparisonRow[] = [
     monthly: `${siteConfig.proMonthlyPrice} each month`,
     lifetime: "one charge",
   },
-  { label: "refund window", free: "—", monthly: "14 days per charge", lifetime: "14 days" },
+  { label: "refunds", free: "—", monthly: "while the key is unused", lifetime: "7 days from the charge" },
 ];
 
 export function PricingPage() {
@@ -94,7 +94,7 @@ export function PricingPage() {
         <ul className="pricing-flags">
           <li>
             <span className="state-square state-square--green" aria-hidden="true" />
-            14-day refund
+            7-day refund on lifetime
           </li>
           <li>secure checkout by stripe</li>
           <li>no account on this site</li>
@@ -302,8 +302,8 @@ export function PricingPage() {
           <div>
             <h3>can I get a refund?</h3>
             <p>
-              Yes — within 14 days of the charge, on either plan. A refund revokes the license it paid for, and
-              PatchTray drops back to the Free limits.
+              Lifetime, within 7 days of the charge. Monthly, only while the key is still unused — after that,
+              cancel instead and keep Pro through the period you paid for.
             </p>
             <a className="button button--text" href="/refunds">
               [ read the refund policy ] <ArrowMark />
@@ -336,7 +336,7 @@ export function PricingPage() {
         <SectionRule>ready when you are</SectionRule>
         <h2 id="pricing-close-title">buy once.</h2>
         <p>
-          {siteConfig.proLifetimePrice} for unlimited nodes and presets on up to three machines, with 14 days to
+          {siteConfig.proLifetimePrice} for unlimited nodes and presets on up to three machines, with 7 days to
           change your mind.
         </p>
         <div className="pricing-close__actions">

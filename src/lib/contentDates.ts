@@ -18,15 +18,15 @@ import type { FixedPageName } from "./types";
  */
 export const legalEffective = {
   privacy: "2026-07-27",
-  terms: "2026-07-25",
-  refunds: "2026-07-25",
+  terms: "2026-08-05",
+  refunds: "2026-08-05",
 } as const;
 
 /** Pages whose copy carries no date of its own. Bump when the wording changes. */
 const editorialReviewed = {
   home: "2026-07-27",
   download: "2026-07-27",
-  pricing: "2026-08-04",
+  pricing: "2026-08-05",
   support: "2026-07-27",
 } as const;
 

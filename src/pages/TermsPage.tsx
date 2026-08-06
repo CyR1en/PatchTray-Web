@@ -157,8 +157,12 @@ const sections: readonly DocSection[] = [
           payment is refunded or reversed.
         </p>
         <p>
-          A lifetime purchase does not renew and cannot be cancelled — it is a single charge. Refunds for either
-          plan are covered by the <a href="/refunds">refund policy</a>.
+          A lifetime purchase does not renew and cannot be cancelled — it is a single charge.
+        </p>
+        <p>
+          Eligibility differs by plan: a monthly charge is refundable only while its license key is unused, and a
+          lifetime purchase is refundable within 7 days of the charge. Both are covered in full by the{" "}
+          <a href="/refunds">refund policy</a>, and statutory rights apply where they are stronger.
         </p>
       </>
     ),
